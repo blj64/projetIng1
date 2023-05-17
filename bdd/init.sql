@@ -47,7 +47,7 @@ CREATE TABLE `Student` (
     FOREIGN KEY (`idTeam`) REFERENCES `Team`(`id`)
 );
 
-CREATE TABLE Gestionnaire (
+CREATE TABLE `Gestionnaire` (
     `idUser` INT NOT NULL,
     `company` VARCHAR(255) NOT NULL,
     `startDate` date,
@@ -63,5 +63,3 @@ CREATE TABLE `Gerer` (
     FOREIGN KEY (`idUser`) REFERENCES `Users`(`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`id`)
 );
-
-/*c'est un test
