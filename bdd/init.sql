@@ -30,21 +30,21 @@ CREATE TABLE `Group` (
     `idLeader` INT NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`id`),
-    FOREIGN KEY (`idLeader`) REFERENCES `Users`(`id`)
+    FOREIGN KEY (`idLeader`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Admin` (
     `idUser` INT NOT NULL,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `Users`(`id`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Student` (
     `idUser` INT NOT NULL,
-    `idTeam` INT NOT NULL,
+    `idGroup` INT NOT NULL,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `Users`(`id`),
-    FOREIGN KEY (`idTeam`) REFERENCES `Team`(`id`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`)
 );
 
 CREATE TABLE Gestionnaire (
@@ -53,14 +53,14 @@ CREATE TABLE Gestionnaire (
     `startDate` date,
     `endDate` date,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `Users`(`id`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Gerer` (
     `idUser` INT NOT NULL,
     `idDataC` INT NOT NULL,
     PRIMARY KEY (`idUser`, `idDataC`),
-    FOREIGN KEY (`idUser`) REFERENCES `Users`(`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`id`)
 );
 
