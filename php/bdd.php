@@ -106,15 +106,17 @@ function disconnect_db() : bool {
 }
 
 /* -------------------------------------------------------------------------- */
-
-/**
+/*
+ *
  *  *fn function request_db($request)
  *  *author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  *version 0.1
  *  *date Tue 16 May 2023 - 15:58:42
- *  @brief send a request to the database
+ * */
+/**
+ *  brief send a request to the database
  *  @param $request   : the request to send
- *  @return the result of the request
+ *  @return array w/ the result of the request
  *  @remarks throw an exception if the request is not valid
  */
 function request_db($request = NULL) : array {
@@ -140,4 +142,88 @@ function request_db($request = NULL) : array {
 
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function GetAllUsers()
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 09:48:15
+*/
+/**
+ *  brief get all users from the database 
+ *  @param none
+ *  @return array w/ all users
+ *  @remarks throw an exception if the request is not valid
+ */
+function GetAllUsers() : array {
+    $request = "SELECT * FROM users";
+    try {
+        $result = request_db($request);
+    } catch (Exception $e) {
+        throw new Exception("Error GetAllUsers : " . $e->getMessage());
+    }
+    
+    /* return an array of users */
+    return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getUserByEmail($email)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 09:51:43
+*/
+/**
+ *  brief get a user from the database by his email
+ *  @param $email   : the email of the user
+ *  @return array w/ the data of the user
+ *  @remarks throw an exception if the request is not valid
+ */
+function getUserByEmail($email) : array {
+    $request ="SELECT * FROM users WHERE email = '$email'";
+    
+    try {
+        $result = request_db($request);
+    } catch (Exception $e) {
+        throw new Exception("Error GetUsersByEmail : " . $e->getMessage());
+    }
+
+    /* check if the user exists and is unique */
+    $count = count($result);
+    if ($count == 0)
+        throw new Exception("Error GetUsersByEmail : no user found.");
+
+    if ($count > 1)
+        throw new Exception("Error GetUsersByEmail : more than one user found. (<=> more than 1 user w/ the same email)");
+
+    /* return the first (and only) user */
+    return ($result[0]);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getAllAdmin()
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 09:59:24
+*/
+/**
+ *  brief 
+ *  @param 
+ *  @return 
+ *  @remarks 
+ */
+function getAllAdmin() {
+    $request = "Select * FROM users WHERE id IN (SELECT idUser FROM Admin)";
+
+    try {
+        $result = request_db($request);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllAdmin : " . $e->getMessage());
+    }
+
+    return ($result);
+}
 ?>
