@@ -29,7 +29,7 @@
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "");
-define("DB_NAME", "IAPAU");
+define("DB_NAME", "IAPau");
     
 /* **************************************************************************** */
 /*                          GLOBAL VARIABLES                                    */
@@ -143,6 +143,33 @@ function request_db($request = NULL) : array {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function isUnique($arr)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 10:29:22
+*/
+/**
+ *  brief check if an 2Darray contains only one element
+ *  @param $arr   : the array to check
+ *  @return the only element of the array
+ *  @remarks throw an exception if the array is empty or contains more than one element
+ */
+function isUnique($arr) {
+    /* check if the user exists and is unique */
+    $count = count($arr);
+    if ($count == 0)
+        throw new Exception("Error isUnique : no item found.");
+
+    if ($count > 1)
+        throw new Exception("Error isUnique : more than one item found.");
+
+    /* return the only element of the array */
+    return ($arr[0]);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function GetAllUsers()
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
@@ -155,7 +182,7 @@ function request_db($request = NULL) : array {
  *  @remarks throw an exception if the request is not valid
  */
 function GetAllUsers() : array {
-    $request = "SELECT * FROM users";
+    $request = "SELECT * FROM `User`";
     try {
         $result = request_db($request);
     } catch (Exception $e) {
@@ -181,21 +208,13 @@ function GetAllUsers() : array {
  *  @remarks throw an exception if the request is not valid
  */
 function getUserByEmail($email) : array {
-    $request ="SELECT * FROM users WHERE email = '$email'";
+    $request ="SELECT * FROM `User` WHERE email = '$email'";
     
     try {
         $result = request_db($request);
     } catch (Exception $e) {
         throw new Exception("Error GetUsersByEmail : " . $e->getMessage());
     }
-
-    /* check if the user exists and is unique */
-    $count = count($result);
-    if ($count == 0)
-        throw new Exception("Error GetUsersByEmail : no user found.");
-
-    if ($count > 1)
-        throw new Exception("Error GetUsersByEmail : more than one user found. (<=> more than 1 user w/ the same email)");
 
     /* return the first (and only) user */
     return ($result[0]);
@@ -210,20 +229,86 @@ function getUserByEmail($email) : array {
  *  date Wed 17 May 2023 - 09:59:24
 */
 /**
- *  brief 
- *  @param 
- *  @return 
- *  @remarks 
+ *  brief get all admins from the database
+ *  @param none
+ *  @return array w/ all admins
+ *  @remarks throw an exception if the request is not valid
  */
 function getAllAdmin() {
-    $request = "Select * FROM users WHERE id IN (SELECT idUser FROM Admin)";
+    $request = "Select * FROM `User` WHERE id IN (SELECT idUser FROM Admin)";
 
     try {
         $result = request_db($request);
+        $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmin : " . $e->getMessage());
     }
 
     return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function ExistUserByEmail($email)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 10:28:11
+*/
+/**
+ *  brief Verify if a user exists in the database by his email
+ *  @param $email   : the email of the user
+ *  @return true if the user exists
+ *  @remarks do not verify if the user is unique
+ */
+function ExistUserByEmail($email) {
+    $request = "SELECT * FROM `User` WHERE email = '$email'";
+
+    try {
+        $result = request_db($request);
+    } catch (Exception $e) {
+        throw new Exception("Error ExistUserByEmail : " . $e->getMessage());
+    }
+
+    return ($result != array());
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function CreateUser($firstname, $lastname, $email, $password, $phone, $address, $city, $zipCode, $country, $isAdmin)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 17 May 2023 - 10:42:06
+*/
+/**
+ *  brief insert a new user in the database
+ *  @param $firstname   : the firstname of the user
+ *  @param $lastname    : the lastname of the user
+ *  @param $email       : the email of the user
+ *  @param $password    : the password of the user
+ *  @param $phone       : the phone of the user
+ *  @param $address     : the address of the user
+ *  @return true if the user has been created
+ *  @remarks re-check if the email already existe before inserting the user
+ */
+function CreateUser($firstname, $lastname, $password, $phone, $email) {
+    
+    if (ExistUserByEmail($email))
+        throw new Exception("Error CreateUser : email already used.");
+    
+    $hashpwd = password_hash($password, PASSWORD_BCRYPT);
+    if ($hashpwd == false)
+        throw new Exception("Error CreateUser : password hash failed.");
+
+    $request = "INSERT INTO User VALUES (null, '$firstname', '$lastname', '$hashpwd', '$phone', '$email')";
+
+    try {
+        request_db($request);
+    } catch (Exception $e) {
+        throw new Exception("Error CreateUser : " . $e->getMessage());
+    }
+
+    return (true);
 }
 ?>
