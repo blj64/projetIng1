@@ -6,7 +6,7 @@ USE IAPau;
 
 CREATE TABLE `DataChallenge` (
     `idDataC` INT NOT NULL AUTO_INCREMENT,
-    `nom` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
     `startDate` DATE NOT NULL,
     `endDate` DATE NOT NULL,
     `image` VARCHAR(255) NOT NULL,
