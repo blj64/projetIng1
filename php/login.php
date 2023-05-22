@@ -23,10 +23,10 @@
                 }
             }
             /* Verify if the user is registered */
-            if (ExistUserByEmail($login)) {
+            if (existUserByEmail($login)) {
                 $hashpwd = password_hash($pwd, PASSWORD_BCRYPT);
                 try {
-                    $result = request_db("SELECT * FROM `User` WHERE `password` = $hashpwd AND `email` = $login");
+                    $result = request_db(DB_RETRIEVE, "SELECT * FROM `User` WHERE `password` = $hashpwd AND `email` = $login");
                 } catch (Exception $e) {
                     echo $e -> getMessage();
                     exit();
