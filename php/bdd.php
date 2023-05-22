@@ -12,13 +12,13 @@
 /*                                                                              */
 /* **************************************************************************** */
 
-/*! 
+/*!
  *  \file bdd.php
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Tue 16 May 2023 - 15:00:15
  *
- *  \brief 
+ *  \brief
  *      This file contains the database connection and the functions to interact with it.
  *
  */
@@ -30,6 +30,9 @@ define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "");
 define("DB_NAME", "IAPau");
+
+define("DB_RETRIEVE", 1);
+define("DB_ALTER", 2);
     
 /* **************************************************************************** */
 /*                          GLOBAL VARIABLES                                    */
@@ -38,7 +41,7 @@ static $bdd;
 /* **************************************************************************** */
 /*                          FUNCTIONS                                           */
 
-/** 
+/**
  *  fn function connect_db($host = DB_HOST, $user = DB_USER, $pass = DB_PASS, $db = DB_NAME)
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
@@ -56,9 +59,9 @@ function connect_db($host = DB_HOST, $user = DB_USER, $pass = DB_PASS, $db = DB_
 
     $bdd = mysqli_connect($host, $user, $pass, $db);
 
-    if (mysqli_connect_errno()) 
+    if (mysqli_connect_errno()) {
         throw new Exception("Échec de la connexion : " . mysqli_connect_error());
-    
+    }
     return (true);
 }
 
@@ -74,7 +77,7 @@ function connect_db($host = DB_HOST, $user = DB_USER, $pass = DB_PASS, $db = DB_
  *  @return true if the database is connected, false otherwise
  *  @remarks if no parameters are given, the function will use the global variable $bdd
  */
-function is_connected_db() : bool{
+function is_connected_db() : bool {
     global $bdd;
     return (isset($bdd) && $bdd != NULL);
 }
@@ -94,50 +97,101 @@ function is_connected_db() : bool{
 function disconnect_db() : bool {
     global $bdd;
 
-    if ( !is_connected_db() )
-        throw new mysqli_sql_exception("bdd not connected.");
-
+    if (!is_connected_db()) {
+        throw new mysqli_sql_exception("db not connected.");
+    }
     mysqli_close($bdd);
 
-    if (is_connected_db())
-        throw new mysqli_sql_exception("bdd not disconnected.");
-    
+    if (is_connected_db()) {
+        throw new mysqli_sql_exception("db not disconnected.");
+    }
     return (true);
 }
 
 /* -------------------------------------------------------------------------- */
+
 /*
  *
- *  *fn function request_db($request)
- *  *author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  *fn function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
- *  *date Tue 16 May 2023 - 15:58:42
+ *  *date Sat 20 May 2023 - 17:11:25
  * */
 /**
- *  brief send a request to the database
- *  @param $request   : the request to send
- *  @return array w/ the result of the request
- *  @remarks throw an exception if the request is not valid
+ * brief send a request to alter the `User` table
+ * @param $idUser  : the id of the user to which data is updated
+ * @param $newFirstName  : the new first name
+ * @param $newLastName  : the new last name
+ * @param $newPassword  : the new password
+ * @param $newPhone  : the new phone number
+ * @param $newEmail  : the new email
+ * @remarks throw an exception if the request is not valid
  */
-function request_db($request = NULL) : array {
+function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : void {
     global $bdd;
 
-    if ( !is_connected_db() )
-        throw new mysqli_sql_exception("bdd not connected.");
-
-    if ( !isset($request) )
-        throw new mysqli_sql_exception("request not set.");
-
+    if (!is_connected_db()) {
+        throw new mysqli_sql_exception("db not connected.");
+    }
+    if (!isset($idUser)) {
+        throw new mysqli_sql_exception("id not set.");
+    }
+    $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+    $request = 
+    "UPDATE `User` 
+    SET `firstName` = $newFirstName, `lastName` = $newLastName, `password` = $newHashpwd, `number` = $newPhone, `email` = $newEmail 
+    WHERE `id` = $idUser";
     $queryR = mysqli_query($bdd, $request);
 
-    if ( !$queryR )
+    if (!$queryR) {
         throw new mysqli_sql_exception("request not valid.");
+    }
+}
 
-    $result = array();
-    while ($row = mysqli_fetch_assoc($queryR))
-        $result[] = $row;
-    
-    return ($result);
+/* -------------------------------------------------------------------------- */
+
+/*
+ *
+ *  *fn function request_db($dbRequestType, $request = null)
+ *  *author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sat 20 May 2023 - 17:35:25
+ * */
+/**
+ *  brief send a request to alter the database or retrieve data
+ *  @param $dbRequestType : DB_RETRIEVE to retrieve data or DB_ALTER to alter the database
+ *  @param $request   : the request to send
+ *  @return array w/ null if altering the database else is the result of the request when retrieving data
+ *  @remarks throw an exception if the request is not valid
+ */
+function request_db($dbRequestType, $request = null) : array {
+    global $bdd;
+
+    if (!is_connected_db()) {
+        throw new mysqli_sql_exception("db not connected.");
+    }
+    if (!isset($dbRequestType)) {
+        throw new mysqli_sql_exception("request type not defined.");
+    }
+    if (!isset($request)) {
+        throw new mysqli_sql_exception("request not set.");
+    }
+    $queryR = mysqli_query($bdd, $request);
+
+    if (!$queryR) {
+        throw new mysqli_sql_exception("request not valid.");
+    }
+
+    if ($dbRequestType == DB_RETRIEVE) {
+        $result = array();
+        while ($row = mysqli_fetch_assoc($queryR)) {
+            $result[] = $row;
+        }
+        return ($result);
+    } else {
+        return(null);
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -157,12 +211,12 @@ function request_db($request = NULL) : array {
 function isUnique($arr) {
     /* check if the user exists and is unique */
     $count = count($arr);
-    if ($count == 0)
+    if ($count == 0) {
         throw new Exception("Error isUnique : no item found.");
-
-    if ($count > 1)
+    }
+    if ($count > 1) {
         throw new Exception("Error isUnique : more than one item found.");
-
+    }
     /* return the only element of the array */
     return ($arr[0]);
 }
@@ -170,23 +224,23 @@ function isUnique($arr) {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function GetAllUsers()
+ *  fn function getAllUsers()
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 09:48:15
 */
 /**
- *  brief get all users from the database 
+ *  brief get all users from the database
  *  @param none
  *  @return array w/ all users
  *  @remarks throw an exception if the request is not valid
  */
-function GetAllUsers() : array {
+function getAllUsers() : array {
     $request = "SELECT * FROM `User`";
     try {
         $result = request_db($request);
     } catch (Exception $e) {
-        throw new Exception("Error GetAllUsers : " . $e->getMessage());
+        throw new Exception("Error getAllUsers : " . $e->getMessage());
     }
     
     /* return an array of users */
@@ -213,7 +267,7 @@ function getUserByEmail($email) : array {
     try {
         $result = request_db($request);
     } catch (Exception $e) {
-        throw new Exception("Error GetUsersByEmail : " . $e->getMessage());
+        throw new Exception("Error getUsersByEmail : " . $e->getMessage());
     }
 
     /* return the first (and only) user */
@@ -223,7 +277,61 @@ function getUserByEmail($email) : array {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function getAllAdmin()
+ *  *fn function getAllManagers()
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sat 21 May 2023 - 18:30:45
+ * */
+/**
+ * brief get all managers from the database
+ * @param none
+ * @return array w/ all managers
+ * @remarks throw an exception if the request is not valid
+ */
+function getAllManagers() {
+    $request = "Select * FROM `User` AS U JOIN `Manager` AS G ON U.`id` = G.`idUser`";
+
+    try {
+        $result = request_db($request);
+        $result = isUnique($result);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllManagers : " . $e->getMessage());
+    }
+
+    return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function getAllStudents()
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sat 21 May 2023 - 18:58:00
+ * */
+/**
+ * brief get all students from the database
+ * @param none
+ * @return array w/ all students
+ * @remarks throw an exception if the request is not valid
+ */
+function getAllStudents() {
+    $request = "Select * FROM `User` AS U JOIN `Student` AS S ON U.`id` = S.`idUser`";
+
+    try {
+        $result = request_db($request);
+        $result = isUnique($result);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllStudents : " . $e->getMessage());
+    }
+
+    return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getAllAdmins()
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 09:59:24
@@ -234,14 +342,14 @@ function getUserByEmail($email) : array {
  *  @return array w/ all admins
  *  @remarks throw an exception if the request is not valid
  */
-function getAllAdmin() {
-    $request = "Select * FROM `User` WHERE id IN (SELECT idUser FROM Admin)";
+function getAllAdmins() {
+    $request = "Select * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
 
     try {
         $result = request_db($request);
         $result = isUnique($result);
     } catch (Exception $e) {
-        throw new Exception("Error getAllAdmin : " . $e->getMessage());
+        throw new Exception("Error getAllAdmins : " . $e->getMessage());
     }
 
     return ($result);
@@ -250,7 +358,39 @@ function getAllAdmin() {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function ExistUserByEmail($email)
+ *  *fn function getManagersDataChallenges()
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sat 21 May 2023 - 18:58:00
+ * */
+/**
+ * brief get all data challenges and managers handling them
+ * @param none
+ * @return array w/ all data challenges and managers handling them
+ * @remarks throw an exception if the request is not valid
+ */
+function getGestionnairesDataChallenges() {
+    $request = 
+    "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`nom`, 
+    DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
+    JOIN `Manager` AS M ON U.`id` = M.`idUser` 
+    JOIN `Gerer` AS G ON G.`idUser` = G.`idUser` 
+    JOIN DataChallenge AS DC ON DC.`idDataC` = G.`idDataC`";
+
+    try {
+        $result = request_db($request);
+        $result = isUnique($result);
+    } catch (Exception $e) {
+        throw new Exception("Error getManagersDataChallenges : " . $e->getMessage());
+    }
+
+    return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function existUserByEmail($email)
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 10:28:11
@@ -261,13 +401,13 @@ function getAllAdmin() {
  *  @return true if the user exists
  *  @remarks do not verify if the user is unique
  */
-function ExistUserByEmail($email) {
+function existUserByEmail($email) {
     $request = "SELECT * FROM `User` WHERE email = '$email'";
 
     try {
         $result = request_db($request);
     } catch (Exception $e) {
-        throw new Exception("Error ExistUserByEmail : " . $e->getMessage());
+        throw new Exception("Error existUserByEmail : " . $e->getMessage());
     }
 
     return ($result != array());
@@ -276,7 +416,7 @@ function ExistUserByEmail($email) {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function CreateUser($firstname, $lastname, $email, $password, $phone, $address, $city, $zipCode, $country, $isAdmin)
+ *  fn function createUser($firstname, $lastname, $email, $password, $phone, $address, $city, $zipCode, $country, $isAdmin)
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 10:42:06
@@ -292,21 +432,21 @@ function ExistUserByEmail($email) {
  *  @return true if the user has been created
  *  @remarks re-check if the email already existe before inserting the user
  */
-function CreateUser($firstname, $lastname, $password, $phone, $email) {
+function createUser($firstname, $lastname, $password, $phone, $email) {
     
-    if (ExistUserByEmail($email))
-        throw new Exception("Error CreateUser : email already used.");
-    
+    if (existUserByEmail($email)) {
+        throw new Exception("Error createUser : email already used.");
+    }
     $hashpwd = password_hash($password, PASSWORD_BCRYPT);
-    if ($hashpwd == false)
-        throw new Exception("Error CreateUser : password hash failed.");
-
+    if ($hashpwd == false) {
+        throw new Exception("Error createUser : password hash failed.");
+    }
     $request = "INSERT INTO User VALUES (null, '$firstname', '$lastname', '$hashpwd', '$phone', '$email')";
 
     try {
         request_db($request);
     } catch (Exception $e) {
-        throw new Exception("Error CreateUser : " . $e->getMessage());
+        throw new Exception("Error createUser : " . $e->getMessage());
     }
 
     return (true);
