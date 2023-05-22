@@ -138,9 +138,9 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     }
     $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
     $request = 
-    "UPDATE `User` 
-    SET `firstName` = $newFirstName, `lastName` = $newLastName, `password` = $newHashpwd, `number` = $newPhone, `email` = $newEmail 
-    WHERE `id` = $idUser";
+    "UPDATE `User` '
+    SET `firstName` = '$newFirstName', `lastName` = '$newLastName', `password` = '$newHashpwd', `number` = '$newPhone', `email` = '$newEmail 
+    WHERE `id` = '$idUser'S";
     $queryR = mysqli_query($bdd, $request);
 
     if (!$queryR) {
@@ -238,7 +238,7 @@ function isUnique($arr) {
 function getAllUsers() : array {
     $request = "SELECT * FROM `User`";
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error getAllUsers : " . $e->getMessage());
     }
@@ -265,7 +265,7 @@ function getUserByEmail($email) : array {
     $request ="SELECT * FROM `User` WHERE email = '$email'";
     
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error getUsersByEmail : " . $e->getMessage());
     }
@@ -280,7 +280,7 @@ function getUserByEmail($email) : array {
  *  *fn function getAllManagers()
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
- *  *date Sat 21 May 2023 - 18:30:45
+ *  *date Sun 21 May 2023 - 18:30:45
  * */
 /**
  * brief get all managers from the database
@@ -292,7 +292,7 @@ function getAllManagers() {
     $request = "Select * FROM `User` AS U JOIN `Manager` AS G ON U.`id` = G.`idUser`";
 
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
         $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllManagers : " . $e->getMessage());
@@ -307,7 +307,7 @@ function getAllManagers() {
  *  *fn function getAllStudents()
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
- *  *date Sat 21 May 2023 - 18:58:00
+ *  *date Sun 21 May 2023 - 18:58:00
  * */
 /**
  * brief get all students from the database
@@ -319,7 +319,7 @@ function getAllStudents() {
     $request = "Select * FROM `User` AS U JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
         $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllStudents : " . $e->getMessage());
@@ -346,7 +346,7 @@ function getAllAdmins() {
     $request = "Select * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
 
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
         $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmins : " . $e->getMessage());
@@ -361,7 +361,7 @@ function getAllAdmins() {
  *  *fn function getManagersDataChallenges()
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
- *  *date Sat 21 May 2023 - 18:58:00
+ *  *date Sun 21 May 2023 - 18:58:00
  * */
 /**
  * brief get all data challenges and managers handling them
@@ -369,7 +369,7 @@ function getAllAdmins() {
  * @return array w/ all data challenges and managers handling them
  * @remarks throw an exception if the request is not valid
  */
-function getGestionnairesDataChallenges() {
+function getManagersDataChallenges() {
     $request = 
     "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`nom`, 
     DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
@@ -378,7 +378,7 @@ function getGestionnairesDataChallenges() {
     JOIN DataChallenge AS DC ON DC.`idDataC` = G.`idDataC`";
 
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
         $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getManagersDataChallenges : " . $e->getMessage());
@@ -405,7 +405,7 @@ function existUserByEmail($email) {
     $request = "SELECT * FROM `User` WHERE email = '$email'";
 
     try {
-        $result = request_db($request);
+        $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error existUserByEmail : " . $e->getMessage());
     }
@@ -430,7 +430,7 @@ function existUserByEmail($email) {
  *  @param $phone       : the phone of the user
  *  @param $address     : the address of the user
  *  @return true if the user has been created
- *  @remarks re-check if the email already existe before inserting the user
+ *  @remarks re-check if the email already exists before inserting the user
  */
 function createUser($firstname, $lastname, $password, $phone, $email) {
     
@@ -444,11 +444,44 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
     $request = "INSERT INTO User VALUES (null, '$firstname', '$lastname', '$hashpwd', '$phone', '$email')";
 
     try {
-        request_db($request);
+        request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
     return (true);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function checkManagerDates($idUser, $idDataC)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Mon 22 May 2023 - 10:13:36
+*/
+/**
+ *  brief check if the current date is between the manager startDate and endDate for a given data challenge
+ *  @param 
+ *  @return true if the manager has the right to manage a given data challenge
+ */
+function checkManagerDates($idUser, $idDataC) : boolean {
+    $request = 
+    "SELECT M.`startDate`, M.`endDate` FROM `Manager` AS M
+    JOIN `Gerer` AS G ON M.`idUser` = G.`idUser`
+    WHERE G.`idDataC` = '$idDataC' AND M.`idUser` = '$idUser'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error checkManagerDates : " . $e->getMessage());
+    }
+
+    $startDate = $result['startDate'];
+    $endDate = $result['endDate'];
+    $currentDate = date('Y-m-d');
+    
+    return($currentDate < $startDate || $currentDate > $endDate);
+}
+
 ?>
