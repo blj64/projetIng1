@@ -14,7 +14,11 @@
     if (SESSION_STATUS() == PHP_SESSION_NONE)
         session_start();
 
+<<<<<<< HEAD
     $retrive = isset($_SESSION['old']);
+=======
+    $retrive = isset($_GET['error']);
+>>>>>>> origin/main
      ?>
     <div class="main">
         <div class="center">
@@ -26,7 +30,11 @@
             <div class="sign-box">
                 <img src="" alt="">
                 <h1>Inscrivez-vous à IA Pau</h1>
+<<<<<<< HEAD
                 <form action="/php/inscription.php" method="POST">
+=======
+                <form action="/php/verifFormSignUp.php" method="POST">
+>>>>>>> origin/main
                     <input type="text" name="firstname" id="name" placeholder="prenom" value="<?php if($retrive) echo $_SESSION['old']['firstname'];?>">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['firstname'])) echo $_SESSION['error']['firstname'];  ?></span>
                     
