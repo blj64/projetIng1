@@ -387,6 +387,40 @@ function getGroupsDataC($idDataC) : array {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  *fn function getStudentsGroup($idGroup)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Mon 22 May 2023 - 13:35:28
+ * */
+/**
+ * brief get all students of a given group
+ * @param $idGroup : the id of the group
+ * @return array w/ the students of the given group
+ * @remarks throw an exception if the request is not valid
+ */
+function getStudentsGroup($idGroup) : array  {
+    $request =
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`
+    FROM `Student` AS S
+    JOIN `User` AS U ON S.`idUser` = U.`id`
+    WHERE S.`idGroup` = '$idGroup'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request); 
+    } catch (Exception $e) {
+        throw new Exception("Error getStudentsGroup : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+
+
+
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  *fn function getManagersDataChallenges()
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
