@@ -35,6 +35,7 @@ body{
 
 .box-left{
     margin: 0 auto;
+    padding: 2% 2% 2% 2%;
     min-width: 481px;
     background-color: white;
     margin-bottom: 25px;
