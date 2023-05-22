@@ -137,6 +137,11 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
         throw new mysqli_sql_exception("id not set.");
     }
     $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+
+    if (!newHashpwd) {
+        throw new Exception("Error alterUser_db : password hash failed.");
+    }
+
     $request = 
     "UPDATE `User` '
     SET `firstName` = '$newFirstName', `lastName` = '$newLastName', `password` = '$newHashpwd', `number` = '$newPhone', `email` = '$newEmail 
@@ -430,7 +435,7 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`nom`, 
+    "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Gerer` AS G ON G.`idUser` = G.`idUser` 
@@ -497,7 +502,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
         throw new Exception("Error createUser : email already used.");
     }
     $hashpwd = password_hash($password, PASSWORD_BCRYPT);
-    if ($hashpwd == false) {
+    if (!$hashpwd) {
         throw new Exception("Error createUser : password hash failed.");
     }
     $request = "INSERT INTO User VALUES (null, '$firstname', '$lastname', '$hashpwd', '$phone', '$email')";
@@ -546,6 +551,35 @@ function checkManagerDates($idUser, $idDataC) : bool {
     $currentDate = date('Y-m-d');
     
     return(!($currentDate < $startDate || $currentDate > $endDate));
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getAllDataCStarted()
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Mon 22 May 2023 - 15:33:50
+*/
+/**
+ *  brief get all data challenges that have already started but have not ended yet
+ *  @param none
+ *  @return array w/ all data challenges already started but not ended
+ */
+function getAllDataCStarted() : array {
+    $currentDate = date('Y-m-d');
+    $request = "
+    SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
+    FROM `DataChallenge`
+    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllDataCStarted : " . $e->getMessage());
+    }
+
+    return($result);
 }
 
 ?>
