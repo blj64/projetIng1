@@ -5,12 +5,12 @@ CREATE DATABASE IAPau;
 USE IAPau;
 
 CREATE TABLE `DataChallenge` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `idDataC` INT NOT NULL AUTO_INCREMENT,
     `nom` VARCHAR(255) NOT NULL,
     `startDate` DATE NOT NULL,
     `endDate` DATE NOT NULL,
     `image` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`idDataC`)
 );
 
 CREATE TABLE `User` (
@@ -29,7 +29,7 @@ CREATE TABLE `Group` (
     `idDataC` INT NOT NULL,
     `idLeader` INT NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`id`),
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`),
     FOREIGN KEY (`idLeader`) REFERENCES `User`(`id`)
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE `Student` (
     FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`)
 );
 
-CREATE TABLE `Gestionnaire` (
+CREATE TABLE `Manager` (
     `idUser` INT NOT NULL,
     `company` VARCHAR(255) NOT NULL,
     `startDate` date,
@@ -61,5 +61,5 @@ CREATE TABLE `Gerer` (
     `idDataC` INT NOT NULL,
     PRIMARY KEY (`idUser`, `idDataC`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
-    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`id`)
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`)
 );

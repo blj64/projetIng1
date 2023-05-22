@@ -11,7 +11,7 @@ INSERT INTO `User` VALUES (null, "Lucas", "Fernandes", "123456", "0606060606", "
 
 INSERT INTO `Admin` VALUES (3);
 
-INSERT INTO `Gestionnaire` VALUES (4, "Cy-Tech", "2020-04-28", "2020-05-28");
+INSERT INTO `Manager` VALUES (4, "Cy-Tech", "2020-04-28", "2020-05-28");
 
 INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2020-05-28", "image1");
 
