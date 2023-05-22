@@ -165,7 +165,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
  *  @return array w/ null if altering the database else is the result of the request when retrieving data
  *  @remarks throw an exception if the request is not valid
  */
-function request_db($dbRequestType, $request = null) : array {
+function request_db($dbRequestType, $request = null) : array|null {
     global $bdd;
 
     if (!is_connected_db()) {
@@ -189,9 +189,9 @@ function request_db($dbRequestType, $request = null) : array {
             $result[] = $row;
         }
         return ($result);
-    } else {
-        return(null);
     }
+
+    return(null);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -529,7 +529,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
  *  @param $iddataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
  */
-function checkManagerDates($idUser, $idDataC) : boolean {
+function checkManagerDates($idUser, $idDataC) : bool {
     $request = 
     "SELECT M.`startDate`, M.`endDate` FROM `Manager` AS M
     JOIN `Gerer` AS G ON M.`idUser` = G.`idUser`
