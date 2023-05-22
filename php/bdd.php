@@ -119,12 +119,12 @@ function disconnect_db() : bool {
  * */
 /**
  * brief send a request to alter the `User` table
- * @param $idUser  : the id of the user to which data is updated
- * @param $newFirstName  : the new first name
- * @param $newLastName  : the new last name
- * @param $newPassword  : the new password
- * @param $newPhone  : the new phone number
- * @param $newEmail  : the new email
+ * @param $idUser         : the id of the user to which data is updated
+ * @param $newFirstName   : the new first name
+ * @param $newLastName    : the new last name
+ * @param $newPassword    : the new password
+ * @param $newPhone       : the new phone number
+ * @param $newEmail       : the new email
  * @remarks throw an exception if the request is not valid
  */
 function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : void {
@@ -160,8 +160,8 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
  * */
 /**
  *  brief send a request to alter the database or retrieve data
- *  @param $dbRequestType : DB_RETRIEVE to retrieve data or DB_ALTER to alter the database
- *  @param $request   : the request to send
+ *  @param $dbRequestType   : DB_RETRIEVE to retrieve data or DB_ALTER to alter the database
+ *  @param $request         : the request to send
  *  @return array w/ null if altering the database else is the result of the request when retrieving data
  *  @remarks throw an exception if the request is not valid
  */
@@ -358,6 +358,35 @@ function getAllAdmins() {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  *fn function getGroupsDataC($idDataC)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Mon 22 May 2023 - 13:04:00
+ * */
+/**
+ * brief get the groups for a given data challenge
+ * @param $idDataC : the id of the data challenge
+ * @return array w/ the groups for the given data challenge
+ * @remarks throw an exception if the request is not valid
+ */
+function getGroupsDataC($idDataC) : array {
+    $request =
+    "SELECT `id`, `name`, `idLeader`
+    FROM `Group` AS G 
+    WHERE `idDataC` = '$idDataC'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request); 
+    } catch (Exception $e) {
+        throw new Exception("Error getGroupsDataC : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  *fn function getManagersDataChallenges()
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
@@ -462,7 +491,8 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 */
 /**
  *  brief check if the current date is between the manager startDate and endDate for a given data challenge
- *  @param 
+ *  @param $idUser  : the id of the manager
+ *  @param $iddataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
  */
 function checkManagerDates($idUser, $idDataC) : boolean {
@@ -481,7 +511,7 @@ function checkManagerDates($idUser, $idDataC) : boolean {
     $endDate = $result['endDate'];
     $currentDate = date('Y-m-d');
     
-    return($currentDate < $startDate || $currentDate > $endDate);
+    return(!($currentDate < $startDate || $currentDate > $endDate));
 }
 
 ?>
