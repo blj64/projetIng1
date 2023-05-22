@@ -12,13 +12,13 @@
 /*                                                                              */
 /* **************************************************************************** */
 
-/** 
+/**
  *  @file inscription.php
  *  @author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  @version 0.1
  *  @date Wed 17 May 2023 - 10:23:51
  *
- *  @brief 
+ *  @brief
  *      sign up user in the database
  *      check if the email is already used => user already exists
  *
@@ -37,7 +37,7 @@ require_once("bdd.php");
 /*                                    MAIN                                     */
 
 /* Start session if needed */
-if( session_status() != PHP_SESSION_ACTIVE )
+if ( session_status() != PHP_SESSION_ACTIVE )
     session_start();
 
 /* connect to the database if needed */
@@ -51,7 +51,7 @@ if ( !is_connected_db() )
 
 /* check if the user exists and is unique */
 try {
-    $exist = ExistUserByEmail($_POST['email']);
+    $exist = existUserByEmail($_POST['email']);
 } catch (Exception $e) {
     echo $e->getMessage();
     exit();
@@ -65,14 +65,14 @@ if ($exist) {
 
 /* if the user doesn't exist, create it */
 try {
-    /* create the user 
+    /* create the user
      *  =============================================
-     * 
+     *
      * C'EST ICI QU'IL FAUDRA MODIFER LE POST EN FONCTION DU FORMULAIRE
-     * 
+     *
      *  =============================================
      */
-    $result = CreateUser($_POST['firstname'], $_POST['lastname'], $_POST['password'], $_POST['number'], $_POST['email']);
+    $result = createUser($_POST['firstname'], $_POST['lastname'], $_POST['password'], $_POST['number'], $_POST['email']);
 } catch (Exception $e) {
     echo $e->getMessage();
     exit();
