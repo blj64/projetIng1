@@ -263,3 +263,79 @@ body{
 
 
 /* css for 'Messagerie' sub-page */
+#Messagerie {
+    background-color: aqua;
+}
+
+.left-bar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: burlywood;
+    width: 30%;
+    height: 80%;
+    margin: auto;
+    margin-bottom: 0;
+    margin-right: 0;
+}
+
+.new-message {
+    position: relative;
+    background-color: darkgray;
+    width: 90%;
+    height: 6%;
+    margin: 5%;   
+}
+
+.new-message div {
+    margin-top: 0;
+    width: 100%;
+    height: auto;
+}
+
+.new-message div p {
+    padding-left: 2%;
+    font-weight: bold;
+}
+
+.new-message div img {
+    bottom: 0;
+    filter: opacity(0.6);
+}
+
+.list-contact {
+    position: relative;
+    background-color: darkcyan;
+    width: 100%;
+    height: 90%;
+}
+
+
+
+
+.messagerie {
+    background-color: plum;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    margin-bottom: 0;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.history {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    background-color: bisque;
+}
+
+.entry {
+    position: relative;
+    width: 100%;
+    height: 10%;
+    background-color: lightgreen;
+}

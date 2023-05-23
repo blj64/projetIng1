@@ -14,14 +14,14 @@
 
         <div class="center">
             <nav class="menu">
-                    <a href="#Main" class="list active" onclick="changeMenu(this)">Mon équipe</a>
-                    <a href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
+                    <a href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
+                    <a href="#Messagerie" class="list active" onclick="changeMenu(this)">Messagerie</a>
                     <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
                 </nav>
             <div class="rest">
 
                 <!-- Mon équipe -->
-                <div class="content-box" id="Main">
+                <div class="content-box" id="Main" style="display: none;">
                     <div class="left-box">
                         <div class="banner-group-name">
                             <h1>Nom du groupe</h1>
@@ -57,8 +57,27 @@
                 </div>
 
                 <!-- Messagerie -->
-                <div class="content-box" id="Messagerie" style="display: none;">
+                <div class="content-box" id="Messagerie">
+                    <div class="left-bar">
+                        <div class="new-message">
+                            <div class="student" id="new-msg">
+                                <p>Nouveau message</p>
+                                <img class="mini-menu" src="/asset/icon/plus.ico" alt="menu">
+                            </div>
+                        </div>
+                        <div class="list-contact">
 
+                        </div>
+                    </div>
+
+                    <div class="messagerie">
+                        <div class="history">
+
+                        </div>
+                        <div class="entry">
+
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Paramètre -->
