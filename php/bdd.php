@@ -138,7 +138,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     }
     $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
 
-    if (!newHashpwd) {
+    if (!$newHashpwd) {
         throw new Exception("Error alterUser_db : password hash failed.");
     }
 
