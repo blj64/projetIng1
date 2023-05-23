@@ -602,4 +602,35 @@ function getAllDataCStarted() : array {
     return($result);
 }
 
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getAllDataCEnded()
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 13:26:40
+*/
+/**
+ *  brief get all data challenges that have ended
+ *  @param none
+ *  @return array w/ all data challenges that have ended
+ */
+function getAllDataCEnded() : array {
+    $currentDate = date('Y-m-d');
+    $request = 
+    "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
+    FROM `DataChallenge`
+    WHERE '$currentDate' > `endDate`";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllDataCEnded: " . $e->getMessage());
+    }
+    
+    return($result);
+}
+
+
+
 ?>
