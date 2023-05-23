@@ -1,0 +1,26 @@
+
+
+#StripMid2 {
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+#Z1SM2 {
+    padding: 5%;
+    height: auto;
+    background-color: #0e8769;
+}
+
+#Z2SM2 {
+    padding: 10%;
+    height: auto;
+    background-image: url("../asset/img/marketing-bg6.png");
+}
+
+#Z3SM2 {
+    padding: 5%;
+    height: auto;
+    background-color: #0e8769;
+}

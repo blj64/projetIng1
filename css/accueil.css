@@ -1,0 +1,19 @@
+body {
+    height: auto;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+#part1, #part7 {
+    height: 10%;
+}
+
+#part2, #part3, #part4, #part5, #part6{
+    height: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+

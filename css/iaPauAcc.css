@@ -1,0 +1,39 @@
+#IAPauAcc {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    
+    
+}
+
+#ZIAP1 {
+    display: flex;
+    align-items: start;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#ZIAP1_left {
+    width: 50%;
+    
+}
+
+#ZIAP1_right {
+    width: 50%;
+    padding-left: 5%;
+}
+
+#ZIAP1 p, h1 {
+    text-align: justify;
+}
+
+#ZIAP2 {
+    text-align: center;
+    padding: 5%;
+}
+
+.spaceBetweenButtonIAP {
+    margin-right: 20%;
+}

@@ -1,0 +1,26 @@
+
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: #0e8769;
+    height: 10%; 
+    width: 100%;
+}
+
+#contenairF {
+    margin-left: 30%;
+    margin-right: 30%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mid {
+    padding-bottom: 15px;
+    margin-right: 20px;
+    padding-bottom: 0;
+}
+
