@@ -19,6 +19,8 @@
                     <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
                 </nav>
             <div class="rest">
+
+
                 <div class="content-box">
                     <div class="left-box">
                         <div class="banner-group-name">
@@ -42,9 +44,19 @@
                         </div>
                     </div>
                     <div class="right-box">
-
+                        <a class="card" href="#LINK TO THE DATA">
+                            <div class="filter">
+                                <div class="dataC-img">
+                                    <div class="dataC-text">
+                                        <h1>DATA CHALL NAME</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
+
+
             </div>
         </div>
         
