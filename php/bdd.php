@@ -539,6 +539,52 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function createManager($idUser, $company, $startDate, $endDate)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 14:44:37
+*/
+/**
+ *  brief insert a new manager in the database
+ *  @param $idUser    : the id of the user
+ *  @param $company   : the company of the manager
+ *  @param $startDate : the start date of the manager
+ *  @param $endDate   : the end date of the manager
+ *  @return true if the manager has been inserted successfully
+ *  @remarks check if a user with the id $userId exits
+ */
+function createManager($idUser, $company, $startDate, $endDate) : bool {
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    if (!$result) {
+        throw new Exception("Error createManager : the corresponding user does not exist");
+    }
+
+    /* Inserting the new manager in the database */
+    $request = "
+    INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    return(true);
+    
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function deleteUser($idUser)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
