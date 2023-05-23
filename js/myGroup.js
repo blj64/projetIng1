@@ -21,29 +21,23 @@
  *
  */
 
-/*!
- *  \fn function changeMenu(that)
- *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
- *  \version 0.1
- *  \date Mon 22 May 2023 - 22:26:18
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+/** 
+ *  @fn function changeMenu(that)
+ *  @author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  @version 0.1
+ *  @date Mon 22 May 2023 - 22:26:18
+ *  @brief change active class on menu 
+ *  @param that     : element clicked
+ *  @return --
+ *  @remarks --
  */
 function changeMenu(that) {
-    /* get # of the url */
-    var hmenu = window.location.href.split("#")[1];
-
-    if( hmenu == that.href.split("#")[1] ) {
-        console.log("same menu");
-        return;
-    }
-
     /* change active class */
-    var active = document.getElementsByClassName("active");
+    let active = document.getElementsByClassName("active");
+
+    if (active[0] == that)
+        return;
+
     active[0].className = active[0].className.replace(" active", "");
     that.className += " active";
-
-    /* change content */
 }

@@ -8,9 +8,16 @@
     background: transparent;
 }
 
+html{
+    min-width: 1080px;
+    min-height: 720px;
+}
+
 body{
+    min-width: 1080px;
     width: 100vw;
     max-width: 100vw;
+    min-height: 720px;
     height: 100vh;
     max-height: 100vh;
     font-family: 'Poppins', sans-serif;
@@ -42,6 +49,7 @@ body{
 
 .rest {
     width: 100%;
+    min-width: 782px;
     height: 90%;
     margin: auto;
     background-color: #f8f8f8;
@@ -93,4 +101,103 @@ body{
 }
 .menu a:hover:not(.active){
     margin-top: -8px;
+}
+
+
+/* css for 'My Team' page */
+.content-box{
+    width: 96%;
+    height: 96%;
+    min-width: 720px;
+    margin: auto;   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2%;
+}
+
+.left-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-group-name {
+    position: relative;
+    background-color: rgb(100,100,100, 0.6);
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+    border-radius: 40px;
+}
+
+.banner-group-name h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.list-group-name {
+    position: relative;
+    text-align: left;
+    padding: 15px;
+}
+
+.list-group-name fieldset {
+    border: 1px solid rgba(100,100,100, 0.4);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.list-group-name fieldset legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 5%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.student {
+    margin-top: 5%;
+    width: 95%;
+    height: min-content;
+    border: 3px solid rgb(0,0,0,0.2);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+}
+
+.student p {
+    position: relative;
+    font-size: 15px;
+    padding-left: 15%;
+}
+
+.leader {
+    position: absolute;
+    height: 160%;
+    top: -40%;
+    padding-left: 2%;
+    object-fit: cover;
+}
+
+.me {
+    font-weight: bold;
+}
+
+.mini-menu {
+    position: absolute;
+    height: 80%;
+    right: 2%;
+    top: 10%;
+    padding-left: 2%;
+    object-fit: cover;
+}
+.right-box {
+    width: 100%;
+    height: 100%;
+    background-color: blue;
 }

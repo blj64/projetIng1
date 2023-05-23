@@ -19,7 +19,32 @@
                     <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
                 </nav>
             <div class="rest">
+                <div class="content-box">
+                    <div class="left-box">
+                        <div class="banner-group-name">
+                            <h1>Nom du groupe</h1>
+                        </div>
+                        <div class="list-group-name">
+                            <fieldset>
+                                <legend>My team</legend>
+                                    
+                                <div class="student">
+                                    <img  class="leader" src="/asset/icon/crown.ico" alt="chef">
+                                    <p class="me">Nicolas Durand</p>
+                                </div>
 
+                                <div class="student">
+                                    <p> Lucas Fernandes </p>
+                                    <!--<img class="mini-menu" src="/asset/icon/menu.ico" alt="menu"> -->
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="right-box">
+
+                    </div>
+                </div>
             </div>
         </div>
         
