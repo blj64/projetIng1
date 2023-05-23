@@ -539,6 +539,34 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function deleteUser($idUser)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 14:05:00
+*/
+/**
+ *  brief delete a user in the database
+ *  @param $idUser  : the id of the user
+ *  @return true if the user has been deleted
+ */
+function deleteUser($idUser) : bool {
+    $request =
+    "DELETE FROM `User` 
+    WHERE `id` = '$idUser'";
+
+    try {
+        request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error deleteUser : " . $e->getMessage());
+    }
+
+    return(true);
+
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function checkManagerDates($idUser, $idDataC)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
@@ -547,7 +575,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /**
  *  brief check if the current date is between the manager startDate and endDate for a given data challenge
  *  @param $idUser  : the id of the manager
- *  @param $iddataC : the id of the data challenge
+ *  @param $idDataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
  */
 function checkManagerDates($idUser, $idDataC) : bool {
@@ -627,10 +655,8 @@ function getAllDataCEnded() : array {
     } catch (Exception $e) {
         throw new Exception("Error getAllDataCEnded: " . $e->getMessage());
     }
-    
+
     return($result);
 }
-
-
 
 ?>
