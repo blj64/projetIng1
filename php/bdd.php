@@ -321,7 +321,10 @@ function getAllManagers() {
  * @remarks throw an exception if the request is not valid
  */
 function getAllStudents() {
-    $request = "Select * FROM `User` AS U JOIN `Student` AS S ON U.`id` = S.`idUser`";
+    $request = 
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    FROM `User` AS U 
+    JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -405,7 +408,7 @@ function getGroupsDataC($idDataC) : array {
  */
 function getStudentsGroup($idGroup) : array  {
     $request =
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
     WHERE S.`idGroup` = '$idGroup'";
