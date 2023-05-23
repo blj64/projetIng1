@@ -65,3 +65,14 @@ CREATE TABLE `Gerer` (
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE
 );
+
+CREATE TABLE `Message` (
+    `idMessage` INT NOT NULL AUTO_INCREMENT,
+    `idSender` INT UNSIGNED,
+    `idReceiver` INT UNSIGNED,
+    `messageContent` TEXT,
+    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`idMessage`),
+    FOREIGN KEY (`idSender`) REFERENCES `User`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`idReceiver`) REFERENCES `User`(`id`) ON DELETE CASCADE
+);

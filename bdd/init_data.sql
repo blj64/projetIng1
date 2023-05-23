@@ -22,3 +22,5 @@ INSERT INTO `Student` VALUES (2, 1, "CY Tech", "Cergy");
 INSERT INTO `Student` VALUES (5, 1, "EISTI", "Pau");
 
 INSERT INTO `Gerer` VALUES (4, 1);
+
+INSERT INTO `Message` (`idSender`, `idReceiver`, `messageContent`) VALUES (3, 4, "Hello World!");
