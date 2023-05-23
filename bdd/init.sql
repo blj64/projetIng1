@@ -5,7 +5,7 @@ CREATE DATABASE IAPau;
 USE IAPau;
 
 CREATE TABLE `DataChallenge` (
-    `idDataC` INT NOT NULL AUTO_INCREMENT,
+    `idDataC` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `startDate` DATE NOT NULL,
     `endDate` DATE NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `DataChallenge` (
 );
 
 CREATE TABLE `User` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `firstName` VARCHAR(20) NOT NULL,
     `lastName` VARCHAR(31) NOT NULL,
     `password` VARCHAR(60) NOT NULL,
@@ -24,24 +24,24 @@ CREATE TABLE `User` (
 );
 
 CREATE TABLE `Group` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
-    `idDataC` INT NOT NULL,
-    `idLeader` INT NOT NULL,
+    `idDataC` INT UNSIGNED NOT NULL,
+    `idLeader` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`),
     FOREIGN KEY (`idLeader`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Admin` (
-    `idUser` INT NOT NULL,
+    `idUser` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`idUser`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Student` (
-    `idUser` INT NOT NULL,
-    `idGroup` INT NOT NULL,
+    `idUser` INT UNSIGNED NOT NULL,
+    `idGroup` INT UNSIGNED NOT NULL,
     `school` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`idUser`),
@@ -50,7 +50,7 @@ CREATE TABLE `Student` (
 );
 
 CREATE TABLE `Manager` (
-    `idUser` INT NOT NULL,
+    `idUser` INT UNSIGNED NOT NULL,
     `company` VARCHAR(255) NOT NULL,
     `startDate` date,
     `endDate` date,
@@ -59,8 +59,8 @@ CREATE TABLE `Manager` (
 );
 
 CREATE TABLE `Gerer` (
-    `idUser` INT NOT NULL,
-    `idDataC` INT NOT NULL,
+    `idUser` INT UNSIGNED NOT NULL,
+    `idDataC` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`idUser`, `idDataC`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`)
