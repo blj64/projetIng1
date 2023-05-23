@@ -659,4 +659,35 @@ function getAllDataCEnded() : array {
     return($result);
 }
 
+/*
+ *
+ *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
+ *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sat 20 May 2023 - 17:11:25
+ * */
+/**
+ * brief send a request to alter the `Message` table
+
+ * @remarks throw an exception if the request is not valid
+ */
+function alterMessage_db($idSender, $idReceiver, $Message = null) : bool {
+    
+    global $bdd;
+
+    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$Message', null)";
+    
+
+    try {
+        request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+    }
+    
+
+    return (true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+
 ?>
