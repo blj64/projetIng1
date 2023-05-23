@@ -317,15 +317,29 @@ body{
 .contact {
     position: relative;
     background-color: darkgray;
-    width: 90%;
+    width: 85%;
     height: 15%;
-    margin: 5%;
-    border-radius: 20px;
+    padding: 5%;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    border-radius: 5px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     overflow: hidden;
+}
+
+.contact:hover {
+    background-color: rgb(255,255,255,0.3);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact:active , .contact.active{
+    background-color: rgb(255,255,255,0.5);
 }
 
 .contact-img {
@@ -333,7 +347,6 @@ body{
     height: 90%;
     border: 1px solid black;
     border-radius: 50px;
-    margin: 0 auto;
     overflow: hidden;
 }
 
@@ -359,11 +372,11 @@ body{
 }
 
 .contact-text p {
-    font-weight: bold;
+    color: black;   
 }
 
 .contact-text span {
-    font-size: 12   px;
+    font-size: 12px;
 }
 
 #online {
@@ -372,6 +385,10 @@ body{
 
 #offline {
     color: red;
+}
+
+#ghost {
+    color: rgb(0, 0, 0, 0);
 }
 
 .messagerie {
@@ -388,14 +405,104 @@ body{
 
 .history {
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 90%;
     background-color: bisque;
 }
 
+.msg {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: fit-content;
+    height: fit-content;
+    width: 70%;
+    max-width: 70%;
+    margin-top : 3%;   
+    background-color: darkgray;
+}
+
+.msg.left {
+    position: relative;
+    align-self: flex-start;
+    padding-left: 10%;
+    max-width: 60%;
+}
+
+
+.msg.left img {
+    object-fit: cover;
+    width: 20%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.msg.right {
+    align-self: flex-end;
+    background-color: darkgray;
+}
+
+.sub-msg {
+    position: relative;
+    width: fit-content;
+    height: auto;
+    background-color: darkcyan;
+    border-radius: 20px;
+    padding-right: 2%;
+    padding-left: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.msg.right .sub-msg {
+    align-self: flex-end;
+}
+
 .entry {
     position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 10%;
     background-color: lightgreen;
 }
+
+.entry-bar {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 0 auto; 
+    background-color: lightblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.entry-bar input[type="button"] {
+    margin-right: 2%;
+    height: 100%;
+    border: none;
+    border-left: 2px solid rgb(0, 0, 0, 0.3);
+    outline: none;
+    padding-left: 5%;
+    font-size: 20px;
+}
+
+.entry-bar input[type="text"] {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
