@@ -418,8 +418,25 @@ function getStudentsGroup($idGroup) : array  {
     } catch (Exception $e) {
         throw new Exception("Error getStudentsGroup : " . $e->getMessage());
     }
+    $request = 
+    "SELECT `idLeader` 
+    FROM `Group` 
+    WHERE `idGroup` = '$idGroup'";
 
-    return($result);
+    try {
+        $result2 = request_db(DB_RETRIEVE, $request); 
+    } catch (Exception $e) {
+        throw new Exception("Error getStudentsGroup : " . $e->getMessage());
+    }
+
+    $student = array();
+    foreach ($result as $row) {
+        /* Add a 'leader' column to the previous result containing a bool which defines if the student is the leader or not */
+        $row['leader'] = ($row['id'] == $result2['idLeader']);
+        $student[] = $row;
+    }
+
+    return($student);
 }
 
 /* -------------------------------------------------------------------------- */
