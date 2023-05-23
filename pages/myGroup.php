@@ -20,8 +20,8 @@
                 </nav>
             <div class="rest">
 
-
-                <div class="content-box">
+                <!-- Mon équipe -->
+                <div class="content-box" id="Main">
                     <div class="left-box">
                         <div class="banner-group-name">
                             <h1>Nom du groupe</h1>
@@ -54,6 +54,16 @@
                             </div>
                         </a>
                     </div>
+                </div>
+
+                <!-- Messagerie -->
+                <div class="content-box" id="Messagerie" style="display: none;">
+
+                </div>
+
+                <!-- Paramètre -->
+                <div class="content-box" id="Setting" style="display: none;">
+
                 </div>
 
 

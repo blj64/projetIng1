@@ -32,12 +32,20 @@
  *  @remarks --
  */
 function changeMenu(that) {
-    /* change active class */
+    const pages = { 
+                "Main": document.getElementById("Main"),
+                "Messagerie": document.getElementById("Messagerie"),
+                "Setting": document.getElementById("Setting")
+    };
+    
+    /* get active class */
     let active = document.getElementsByClassName("active");
+    
+    /* hide active page and show new one */
+    pages[active[0].href.split("#")[1]].style.display = "none";
+    pages[that.href.split("#")[1]].style.display = "flex";
 
-    if (active[0] == that)
-        return;
-
+    /* change active class */
     active[0].className = active[0].className.replace(" active", "");
     that.className += " active";
 }
