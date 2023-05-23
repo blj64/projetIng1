@@ -309,10 +309,70 @@ body{
     background-color: darkcyan;
     width: 100%;
     height: 90%;
+    overflow:scroll;
+    overflow-x:hidden;
+    scrollbar-color: rgb(0,0,0,0.4) rgb(0,0,0,0);
 }
 
+.contact {
+    position: relative;
+    background-color: darkgray;
+    width: 90%;
+    height: 15%;
+    margin: 5%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
 
+.contact-img {
+    width: 20%;
+    height: 90%;
+    border: 1px solid black;
+    border-radius: 50px;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
+.contact-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    height: 100%;
+    background-color: aqua;
+}
+
+.contact-text * {
+    margin: 0;
+    padding-left: 5%;
+}
+
+.contact-text p {
+    font-weight: bold;
+}
+
+.contact-text span {
+    font-size: 12   px;
+}
+
+#online {
+    color:chartreuse;
+}
+
+#offline {
+    color: red;
+}
 
 .messagerie {
     background-color: plum;

@@ -67,6 +67,78 @@
                         </div>
                         <div class="list-contact">
 
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span id="online">online</span>
+                                </div>
+                            </div>
+
+
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span id="offline">offline</span>
+                                </div>
+                            </div>
+
+
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span>online</span>
+                                </div>
+                            </div>
+
+
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span>online</span>
+                                </div>
+                            </div>
+
+
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span>online</span>
+                                </div>
+                            </div>
+
+
+                            <div class="contact">
+                                <div class="contact-img">
+                                    <img src="/asset/icon/crown.ico" alt="PP">
+                                </div>
+                                
+                                <div class="contact-text">
+                                    <p>Nicolas Durand</p>
+                                    <span>online</span>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
 
