@@ -29,14 +29,14 @@ CREATE TABLE `Group` (
     `idDataC` INT UNSIGNED NOT NULL,
     `idLeader` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`),
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE,
     FOREIGN KEY (`idLeader`) REFERENCES `User`(`id`)
 );
 
 CREATE TABLE `Admin` (
     `idUser` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `Student` (
@@ -45,7 +45,7 @@ CREATE TABLE `Student` (
     `school` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`)
 );
 
@@ -55,13 +55,13 @@ CREATE TABLE `Manager` (
     `startDate` date,
     `endDate` date,
     PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `Gerer` (
     `idUser` INT UNSIGNED NOT NULL,
     `idDataC` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`idUser`, `idDataC`),
-    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
-    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`)
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE
 );
