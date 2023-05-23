@@ -42,6 +42,8 @@ CREATE TABLE `Admin` (
 CREATE TABLE `Student` (
     `idUser` INT NOT NULL,
     `idGroup` INT NOT NULL,
+    `school` VARCHAR(255) NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`idUser`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
     FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`)
