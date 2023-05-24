@@ -59,7 +59,7 @@ CREATE TABLE `Manager` (
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `Gerer` (
+CREATE TABLE `Handle` (
     `idUser` INT UNSIGNED NOT NULL,
     `idDataC` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`idUser`, `idDataC`),
@@ -79,11 +79,11 @@ CREATE TABLE `Message` (
 );
 
 CREATE TABLE `Quiz` (
-    `idQuiz` INT NOT NULL AUTO_INCREMENT,
+    `idQuiz` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idDataC` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
     `startDate` DATE,
     `endDate` DATE,
-    `idDataC` INT NOT NULL,
     PRIMARY KEY (`idQuiz`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE
 );
