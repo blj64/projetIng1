@@ -26,9 +26,9 @@
 /* **************************************************************************** */
 /*                          DEFINE                                             */
 
-define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_HOST", "localhost:3306");
+define("DB_USER", "blj");
+define("DB_PASS", "root");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -758,7 +758,12 @@ function getAllDataCEnded() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
+<<<<<<< HEAD
+ *
+ *  *fn function $msgSend = alterMessage_db($idSender, $idReceiver, $Message = null)
+=======
  *  *fn function alterMessage_db($idSender, $ideReceiver, $Message = null)
+>>>>>>> refs/remotes/origin/main
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
@@ -839,5 +844,38 @@ function roleUser($idUser, $role) : bool {
 
     return($result[0]);
 }
+
+
+/*
+*
+*  *fn function getAllMessageFromUser($idReceiver)
+*  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
+*  *version 0.1
+*  *date Sat 20 May 2023 - 17:11:25
+* */
+/**
+* brief send a request to alter the `Message` table
+
+* @remarks throw an exception if the request is not valid
+*/
+function getAllMessageFromUser($idReceiver) {
+   global $bdd;
+
+   $query = "SELECT * FROM `Message` WHERE `idSender` = 'idReceive' OR `idReceiver`='idReceive' "; // Replace 'table' with the actual table name
+   
+   // Call the request_db function and pass the query
+   $result = request_db(DB_RETRIEVE, $query);
+   
+   // Check if the query was successful
+   if ($result !== null) {
+       // Retrieve the rows from the result and return them
+       return $result;
+   } else {
+       // Return null or handle the error condition as per your requirement
+       return null;
+   }
+}
+
+/* -------------------------------------------------------------------------- */
 
 ?>
