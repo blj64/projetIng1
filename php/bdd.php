@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_USER", "blj");
+define("DB_PASS", "root");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -182,7 +182,7 @@ function request_db($dbRequestType, $request = null) : array | null {
 
     if (!is_connected_db()) {
         throw new mysqli_sql_exception("db not connected.");
-    }
+    } 
     if (!isset($dbRequestType)) {
         throw new mysqli_sql_exception("request type not defined.");
     }
@@ -882,7 +882,7 @@ function roleUser($idUser, $role) : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
-*
+
 *  *fn function getAllMessageFromUser($idReceiver)
 *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
 *  *version 0.1
@@ -893,14 +893,21 @@ function roleUser($idUser, $role) : bool {
 
 * @remarks throw an exception if the request is not valid
 */
-function getAllMessageFromUser($idReceiver) : array{
-    $query = "SELECT * FROM `Message` WHERE `idSender` = '$idReceiver' OR `idReceiver`='$idReceiver'";
+function getAllMessageFromUser($idUser) : array{
+    if ( !is_connected_db() )
+    try {
+        connect_db();
+    } catch (Exception $e){
+        echo $e->getMessage();
+        exit();
+    }
+    $query = "SELECT * FROM `Message` where `idSender` = '$idUser' or `idReceiver` = '$idUser'";
     
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);
     } catch (Exception $e) {
-        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage);
+        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
     }
 
     return($result);

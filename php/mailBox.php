@@ -25,16 +25,11 @@ require_once("bdd.php");
                     <div id="msg-container-div">
                             <?php
                                 $messages = getAllMessageFromUser(2);
-                                if ($messages !== null) {
-                                    foreach ($messages as $message) {
-                                        echo "Message ID: " . $message['idMessage'] . "\n";
-                                        echo "Sender ID: " . $message['idSender'] . "\n";
-                                        echo "Message Content: " . $message['messageContent'] . "\n";
-                                        echo "Timestamp: " . $message['timestamp'] . "\n";
-                                        echo "---------------------------\n";
+                                foreach($messages as $message) {
+                                    foreach($message as $column) {
+                                        echo "<span>".$column . ": ".$value ;
                                     }
-                                } else {
-                                    echo "No messages found for the receiver.";
+                                    echo "<br>";
                                 }
                             ?>
                     </div>
