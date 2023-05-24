@@ -42,6 +42,7 @@ CREATE TABLE `Admin` (
 CREATE TABLE `Student` (
     `idUser` INT UNSIGNED NOT NULL,
     `idGroup` INT UNSIGNED NOT NULL,
+    `lvStudy` VARCHAR(2) NOT NULL,
     `school` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`idUser`),

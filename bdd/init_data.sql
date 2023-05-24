@@ -17,9 +17,9 @@ INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2020-
 
 INSERT INTO `Group` VALUES (null, "Group1", 1, 1);
 
-INSERT INTO `Student` VALUES (1, 1, "CY Tech", "Pau");
-INSERT INTO `Student` VALUES (2, 1, "CY Tech", "Cergy");
-INSERT INTO `Student` VALUES (5, 1, "EISTI", "Pau");
+INSERT INTO `Student` VALUES (1, 1, "L1", "CY Tech", "Pau");
+INSERT INTO `Student` VALUES (2, 1, "L2", "CY Tech", "Cergy");
+INSERT INTO `Student` VALUES (5, 1, "L3", "EISTI", "Pau");
 
 INSERT INTO `Gerer` VALUES (4, 1);
 
