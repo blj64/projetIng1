@@ -1,3 +1,6 @@
+<?php
+require_once("bdd.php");
+?>
 
         <!DOCTYPE html>
         <html lang="en">
@@ -20,7 +23,7 @@
                         <h2>Personne</h2>
                     </div>
                     <div id="msg-container-div">
-
+                           
                     </div>
                     <div id="msg-new-div">
                         <form action="sendMsg.php" method="POST">
