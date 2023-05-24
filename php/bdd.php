@@ -861,7 +861,7 @@ function roleUser($idUser, $role) : bool {
 function getAllMessageFromUser($idReceiver) {
    global $bdd;
 
-   $query = "SELECT * FROM Message WHERE `idReceiver` = '$idReceiver'"; // Replace 'table' with the actual table name
+   $query = "SELECT * FROM `Message` WHERE `idSender` = 'idReceive' OR `idReceiver`='idReceive' "; // Replace 'table' with the actual table name
    
    // Call the request_db function and pass the query
    $result = request_db(DB_RETRIEVE, $query);
