@@ -754,7 +754,7 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
  */
 function roleUser($idUser, $role) : bool {
     $reqDeb = "SELECT EXISTS(SELECT * FROM ";
-    $reqFin = "WHERE `idUser` = '$idUser')";
+    $reqFin = " WHERE `idUser` = '$idUser')";
     switch ($role) {
         case ADMIN :
             $request = $reqDeb . "`Admin`" . $reqFin;
