@@ -263,29 +263,31 @@ body{
 
 
 /* css for 'Messagerie' sub-page */
-#Messagerie {
-    background-color: aqua;
-}
+/*#Messagerie */
 
 .left-bar {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: burlywood;
+    background-color: lightgrey;
     width: 30%;
     height: 80%;
     margin: auto;
     margin-bottom: 0;
     margin-right: 0;
+    border-top-right-radius: 10px;
+    overflow:scroll;
+    overflow-x:hidden;
+    scrollbar-color: rgb(0,0,0,0.4) rgb(0,0,0,0);
 }
 
 .new-message {
     position: relative;
-    background-color: darkgray;
     width: 90%;
     height: 6%;
-    margin: 5%;   
+    margin: 5%;
+    border-top-right-radius: 10px;
 }
 
 .new-message div {
@@ -306,17 +308,12 @@ body{
 
 .list-contact {
     position: relative;
-    background-color: darkcyan;
     width: 100%;
     height: 90%;
-    overflow:scroll;
-    overflow-x:hidden;
-    scrollbar-color: rgb(0,0,0,0.4) rgb(0,0,0,0);
 }
 
 .contact {
     position: relative;
-    background-color: darkgray;
     width: 85%;
     height: 15%;
     padding: 5%;
@@ -363,7 +360,6 @@ body{
     justify-content: center;
     width: 70%;
     height: 100%;
-    background-color: aqua;
 }
 
 .contact-text * {
@@ -388,11 +384,10 @@ body{
 }
 
 #ghost {
-    color: rgb(0, 0, 0, 0);
+    visibility: hidden;
 }
 
 .messagerie {
-    background-color: plum;
     width: 80%;
     height: 100%;
     margin: auto;
@@ -407,9 +402,12 @@ body{
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 96%;
     height: 90%;
-    background-color: bisque;
+    background-color: rgb(161, 161, 161);
+    border: 1px solid grey;
+    border-radius: 25px;
+    margin: 2%;
 }
 
 .msg {
@@ -421,8 +419,8 @@ body{
     height: fit-content;
     width: 70%;
     max-width: 70%;
-    margin-top : 3%;   
-    background-color: darkgray;
+    margin-top : 3%;
+    color: white;   
 }
 
 .msg.left {
@@ -443,23 +441,23 @@ body{
 
 .msg.right {
     align-self: flex-end;
-    background-color: darkgray;
 }
 
 .sub-msg {
     position: relative;
     width: fit-content;
     height: auto;
-    background-color: darkcyan;
     border-radius: 20px;
     padding-right: 2%;
     padding-left: 2%;
+    background-color: #4f4f4f;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .msg.right .sub-msg {
+    background-color: rgb(67, 143, 214);
     align-self: flex-end;
 }
 
@@ -469,7 +467,6 @@ body{
     align-items: center;
     width: 100%;
     height: 10%;
-    background-color: lightgreen;
 }
 
 .entry-bar {
@@ -479,7 +476,6 @@ body{
     border: 1px solid black;
     border-radius: 20px;
     margin: 0 auto; 
-    background-color: lightblue;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
