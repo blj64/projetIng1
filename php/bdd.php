@@ -791,10 +791,10 @@ function roleUser($idUser, $role) : bool {
     }
 
     if (!isset($result)) {
-        throw new Exception("Error roleUser : " . $role . "is not defined");
+        throw new Exception("Error roleUser : " . $role . " is not defined");
     }
 
-    return($result);
+    return($result[0]);
 }
 
 ?>
