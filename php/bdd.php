@@ -329,7 +329,7 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
     JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
@@ -415,7 +415,7 @@ function getGroupsDataC($idDataC) : array {
  */
 function getStudentsGroup($idGroup) : array  {
     $request =
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
     WHERE S.`idGroup` = '$idGroup'";
@@ -642,7 +642,7 @@ function createAdmin($idUser) : bool {
 /**
  *  brief delete a user in the database
  *  @param $idUser  : the id of the user
- *  @return true if the user has been deleted
+ *  @return true if the user has been successfully deleted
  */
 function deleteUser($idUser) : bool {
     $request =
@@ -672,6 +672,7 @@ function deleteUser($idUser) : bool {
  *  @param $idUser  : the id of the manager
  *  @param $idDataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
+ *  @remarks if $idUser is not the id of a manager the function returns false
  */
 function checkManagerDates($idUser, $idDataC) : bool {
     $request = 
@@ -757,7 +758,7 @@ function getAllDataCEnded() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
+ *  *fn function alterMessage_db($idSender, $ideReceiver, $Message = null)
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
