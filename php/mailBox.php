@@ -23,7 +23,20 @@ require_once("bdd.php");
                         <h2>Personne</h2>
                     </div>
                     <div id="msg-container-div">
-                           
+                            <?php
+                                $messages = getAllMessageFromUser(2);
+                                if ($messages !== null) {
+                                    foreach ($messages as $message) {
+                                        echo "Message ID: " . $message['idMessage'] . "\n";
+                                        echo "Sender ID: " . $message['idSender'] . "\n";
+                                        echo "Message Content: " . $message['messageContent'] . "\n";
+                                        echo "Timestamp: " . $message['timestamp'] . "\n";
+                                        echo "---------------------------\n";
+                                    }
+                                } else {
+                                    echo "No messages found for the receiver.";
+                                }
+                            ?>
                     </div>
                     <div id="msg-new-div">
                         <form action="sendMsg.php" method="POST">

@@ -758,8 +758,12 @@ function getAllDataCEnded() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
+<<<<<<< HEAD
  *
- *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
+ *  *fn function $msgSend = alterMessage_db($idSender, $idReceiver, $Message = null)
+=======
+ *  *fn function alterMessage_db($idSender, $ideReceiver, $Message = null)
+>>>>>>> refs/remotes/origin/main
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
@@ -784,5 +788,94 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
 
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function roleUser($idUser, $role)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 15:42:59
+*/
+/**
+ *  brief check if a user has a certain role
+ *  @param $idUser : the id of the user
+ *  @param $role : ADMIN for administrator, MANAGER for manager and STUDENT for student
+ *  @return true if the user has the given role
+ */
+function roleUser($idUser, $role) : bool {
+    $reqDeb = "SELECT EXISTS(SELECT * FROM ";
+    $reqFin = " WHERE `idUser` = '$idUser')";
+    switch ($role) {
+        case ADMIN :
+            $request = $reqDeb . "`Admin`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+        
+        case MANAGER :
+            $request = $reqDeb . "`Manager`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+
+        case STUDENT :
+            $request = $reqDeb . "`Student`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+
+        default :
+            break;
+    }
+
+    if (!isset($result)) {
+        throw new Exception("Error roleUser : " . $role . " is not defined");
+    }
+
+    return($result[0]);
+}
+
+
+/*
+*
+*  *fn function getAllMessageFromUser($idReceiver)
+*  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
+*  *version 0.1
+*  *date Sat 20 May 2023 - 17:11:25
+* */
+/**
+* brief send a request to alter the `Message` table
+
+* @remarks throw an exception if the request is not valid
+*/
+function getAllMessageFromUser($idReceiver) {
+   global $bdd;
+
+   $query = "SELECT * FROM Message WHERE `idReceiver` = '$idReceiver'"; // Replace 'table' with the actual table name
+   
+   // Call the request_db function and pass the query
+   $result = request_db(DB_RETRIEVE, $query);
+   
+   // Check if the query was successful
+   if ($result !== null) {
+       // Retrieve the rows from the result and return them
+       return $result;
+   } else {
+       // Return null or handle the error condition as per your requirement
+       return null;
+   }
+}
+
+/* -------------------------------------------------------------------------- */
 
 ?>
