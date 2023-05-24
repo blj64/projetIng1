@@ -26,9 +26,9 @@
 /* **************************************************************************** */
 /*                          DEFINE                                             */
 
-define("DB_HOST", "localhost:3306");
-define("DB_USER", "blj");
-define("DB_PASS", "root");
+define("DB_HOST", "localhost");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -301,7 +301,7 @@ function getUserByEmail($email) : array {
  * @remarks throw an exception if the request is not valid
  */
 function getAllManagers() {
-    $request = "Select * FROM `User` AS U JOIN `Manager` AS G ON U.`id` = G.`idUser`";
+    $request = "Select * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -462,11 +462,11 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
-    JOIN `Gerer` AS G ON G.`idUser` = G.`idUser` 
-    JOIN DataChallenge AS DC ON DC.`idDataC` = G.`idDataC`";
+    JOIN `Handle` AS H ON H.`idUser` = H.`idUser` 
+    JOIN DataChallenge AS DC ON DC.`idDataC` = H.`idDataC`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -546,6 +546,45 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function createStudent($idUser, $idGroup, $lvStudy, $school, $city)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 24 May 2023 - 15:00:00
+*/
+/**
+ *  brief insert a new student in the database
+ *  @param $idUser : the id of the user
+ *  @return true if the student has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createStudent : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createStudent : the corresponding user does not exist");
+    }
+
+    $request =
+    "INSERT INTO `Student` VALUES ('$idUser', '$idGroup', '$lvStudy', '$school', '$city')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createStudent: " . $e->getMessage());
+    }
+
+    return(true);
+}
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function createManager($idUser, $company, $startDate, $endDate)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
@@ -576,8 +615,8 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
     }
 
     /* Insert the new manager in the database */
-    $request = "
-    INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
+    $request = 
+    "INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
 
     try {
         $result = request_db(DB_ALTER, $request);
@@ -595,7 +634,7 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
  *  fn function createAdmin($idUser)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
- *  date Wed 24 May 2023 - 13:08:51S
+ *  date Wed 24 May 2023 - 13:08:51
 */
 /**
  *  brief insert a new admin in the database
@@ -677,8 +716,8 @@ function deleteUser($idUser) : bool {
 function checkManagerDates($idUser, $idDataC) : bool {
     $request = 
     "SELECT M.`startDate`, M.`endDate` FROM `Manager` AS M
-    JOIN `Gerer` AS G ON M.`idUser` = G.`idUser`
-    WHERE G.`idDataC` = '$idDataC' AND M.`idUser` = '$idUser'";
+    JOIN `Handle` AS H ON M.`idUser` = H.`idUser`
+    WHERE H.`idDataC` = '$idDataC' AND M.`idUser` = '$idUser'";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -758,12 +797,7 @@ function getAllDataCEnded() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
-<<<<<<< HEAD
- *
- *  *fn function $msgSend = alterMessage_db($idSender, $idReceiver, $Message = null)
-=======
  *  *fn function alterMessage_db($idSender, $ideReceiver, $Message = null)
->>>>>>> refs/remotes/origin/main
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
@@ -845,6 +879,7 @@ function roleUser($idUser, $role) : bool {
     return($result[0]);
 }
 
+/* -------------------------------------------------------------------------- */
 
 /*
 *
@@ -852,30 +887,30 @@ function roleUser($idUser, $role) : bool {
 *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
 *  *version 0.1
 *  *date Sat 20 May 2023 - 17:11:25
-* */
+*/
 /**
 * brief send a request to alter the `Message` table
 
 * @remarks throw an exception if the request is not valid
 */
 function getAllMessageFromUser($idReceiver) {
-   global $bdd;
-
-   $query = "SELECT * FROM `Message` WHERE `idSender` = 'idReceive' OR `idReceiver`='idReceive' "; // Replace 'table' with the actual table name
-   
-   // Call the request_db function and pass the query
-   $result = request_db(DB_RETRIEVE, $query);
-   
-   // Check if the query was successful
-   if ($result !== null) {
-       // Retrieve the rows from the result and return them
-       return $result;
-   } else {
-       // Return null or handle the error condition as per your requirement
-       return null;
-   }
-}
-
+    global $bdd;
+ 
+    $query = "SELECT * FROM `Message` WHERE `idSender` = 'idReceive' OR `idReceiver`='idReceive' "; // Replace 'table' with the actual table name
+    
+    // Call the request_db function and pass the query
+    $result = request_db(DB_RETRIEVE, $query);
+    
+    // Check if the query was successful
+    if ($result !== null) {
+        // Retrieve the rows from the result and return them
+        return $result;
+    } else {
+        // Return null or handle the error condition as per your requirement
+        return null;
+    }
+ }
+ 
 /* -------------------------------------------------------------------------- */
 
 ?>
