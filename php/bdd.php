@@ -801,7 +801,7 @@ function getAllDataCEnded() : array {
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
- * */
+*/
 /**
  * brief send a request to alter the `Message` table
 
@@ -893,22 +893,17 @@ function roleUser($idUser, $role) : bool {
 
 * @remarks throw an exception if the request is not valid
 */
-function getAllMessageFromUser($idReceiver) {
-    global $bdd;
- 
-    $query = "SELECT * FROM `Message` WHERE `idSender` = 'idReceive' OR `idReceiver`='idReceive' "; // Replace 'table' with the actual table name
+function getAllMessageFromUser($idReceiver) : array{
+    $query = "SELECT * FROM `Message` WHERE `idSender` = '$idReceiver' OR `idReceiver`='$idReceiver'";
     
-    // Call the request_db function and pass the query
-    $result = request_db(DB_RETRIEVE, $query);
-    
-    // Check if the query was successful
-    if ($result !== null) {
-        // Retrieve the rows from the result and return them
-        return $result;
-    } else {
-        // Return null or handle the error condition as per your requirement
-        return null;
+    try {
+        // Call the request_db function and pass the query
+        $result = request_db(DB_RETRIEVE, $query);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage);
     }
+
+    return($result);
  }
  
 /* -------------------------------------------------------------------------- */
