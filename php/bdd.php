@@ -33,6 +33,10 @@ define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
 define("DB_ALTER", 2);
+
+define("ADMIN", 5);
+define("MANAGER", 4);
+define("STUDENT", 3);
     
 /* **************************************************************************** */
 /*                          GLOBAL VARIABLES                                    */
@@ -125,9 +129,10 @@ function disconnect_db() : bool {
  * @param $newPassword    : the new password
  * @param $newPhone       : the new phone number
  * @param $newEmail       : the new email
+ * @return true if the database was altered successfully
  * @remarks throw an exception if the request is not valid
  */
-function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : void {
+function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : bool {
     global $bdd;
 
     if (!is_connected_db()) {
@@ -151,6 +156,8 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     if (!$queryR) {
         throw new mysqli_sql_exception("request not valid.");
     }
+
+    return(true);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -322,7 +329,7 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
     JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
@@ -355,7 +362,7 @@ function getAllAdmins() {
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
+        // $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmins : " . $e->getMessage());
     }
@@ -408,7 +415,7 @@ function getGroupsDataC($idDataC) : array {
  */
 function getStudentsGroup($idGroup) : array  {
     $request =
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
     WHERE S.`idGroup` = '$idGroup'";
@@ -539,6 +546,94 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function createManager($idUser, $company, $startDate, $endDate)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 14:44:37
+*/
+/**
+ *  brief insert a new manager in the database
+ *  @param $idUser    : the id of the user
+ *  @param $company   : the company of the manager
+ *  @param $startDate : the start date of the manager
+ *  @param $endDate   : the end date of the manager
+ *  @return true if the manager has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createManager($idUser, $company, $startDate, $endDate) : bool {
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createManager : the corresponding user does not exist");
+    }
+
+    /* Insert the new manager in the database */
+    $request = "
+    INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    return(true);
+    
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createAdmin($idUser)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 24 May 2023 - 13:08:51S
+*/
+/**
+ *  brief insert a new admin in the database
+ *  @param $idUser : the id of the user
+ *  @return true if the admin has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createAdmin($idUser) : bool {
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createAdmin : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createAdmin : the corresponding user does not exist");
+    }
+
+    /* Insert the new admin in the database */
+    $request = "
+    INSERT INTO `Admin` VALUES ('$idUser')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function deleteUser($idUser)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
@@ -547,7 +642,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /**
  *  brief delete a user in the database
  *  @param $idUser  : the id of the user
- *  @return true if the user has been deleted
+ *  @return true if the user has been successfully deleted
  */
 function deleteUser($idUser) : bool {
     $request =
@@ -577,6 +672,7 @@ function deleteUser($idUser) : bool {
  *  @param $idUser  : the id of the manager
  *  @param $idDataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
+ *  @remarks if $idUser is not the id of a manager the function returns false
  */
 function checkManagerDates($idUser, $idDataC) : bool {
     $request = 
@@ -653,15 +749,17 @@ function getAllDataCEnded() : array {
     try {
         $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error getAllDataCEnded: " . $e->getMessage());
+        throw new Exception("Error getAllDataCEnded : " . $e->getMessage());
     }
 
     return($result);
 }
 
+/* -------------------------------------------------------------------------- */
+
 /*
  *
- *  *fn function $msgSend = alterMessage_db($idSender, $idReceiver, $Message = null)
+ *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
@@ -671,54 +769,20 @@ function getAllDataCEnded() : array {
 
  * @remarks throw an exception if the request is not valid
  */
-function alterMessage_db($idSender, $idReceiver, $Message = null) : bool {
-    
-    global $bdd;
+function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
 
-    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$Message', null)";
+    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', null)";
     
-
     try {
         request_db(DB_ALTER, $request);
     } catch (Exception $e) {
+        throw new Exception("Error alterMessage_db : " . $e->getMessage());
     }
     
-
     return (true);
 }
 
 /* -------------------------------------------------------------------------- */
 
-/*
- *
- *  *fn function getAllMessageFromUser($idReceiver)
- *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
- *  *version 0.1
- *  *date Sat 20 May 2023 - 17:11:25
- * */
-/**
- * brief send a request to alter the `Message` table
-
- * @remarks throw an exception if the request is not valid
- */
-function getAllMessageFromUser($idReceiver) {
-    global $bdd;
-
-    $query = "SELECT * FROM Message WHERE `idReceiver` = '$idReceiver'"; // Replace 'table' with the actual table name
-    
-    // Call the request_db function and pass the query
-    $result = request_db(DB_RETRIEVE, $query);
-    
-    // Check if the query was successful
-    if ($result !== null) {
-        // Retrieve the rows from the result and return them
-        return $result;
-    } else {
-        // Return null or handle the error condition as per your requirement
-        return null;
-    }
-}
-
-/* -------------------------------------------------------------------------- */
 
 ?>

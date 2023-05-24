@@ -42,6 +42,7 @@ CREATE TABLE `Admin` (
 CREATE TABLE `Student` (
     `idUser` INT UNSIGNED NOT NULL,
     `idGroup` INT UNSIGNED NOT NULL,
+    `lvStudy` VARCHAR(2) NOT NULL,
     `school` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`idUser`),
@@ -52,8 +53,8 @@ CREATE TABLE `Student` (
 CREATE TABLE `Manager` (
     `idUser` INT UNSIGNED NOT NULL,
     `company` VARCHAR(255) NOT NULL,
-    `startDate` date,
-    `endDate` date,
+    `startDate` DATE,
+    `endDate` DATE,
     PRIMARY KEY (`idUser`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
@@ -75,4 +76,14 @@ CREATE TABLE `Message` (
     PRIMARY KEY (`idMessage`),
     FOREIGN KEY (`idSender`) REFERENCES `User`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`idReceiver`) REFERENCES `User`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE `Quiz` (
+    `idQuiz` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255),
+    `startDate` DATE,
+    `endDate` DATE,
+    `idDataC` INT NOT NULL,
+    PRIMARY KEY (`idQuiz`),
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE
 );
