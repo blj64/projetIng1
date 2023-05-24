@@ -362,7 +362,7 @@ function getAllAdmins() {
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
+        // $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmins : " . $e->getMessage());
     }
@@ -558,7 +558,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
  *  @param $startDate : the start date of the manager
  *  @param $endDate   : the end date of the manager
  *  @return true if the manager has been inserted successfully
- *  @remarks check if a user with the id $userId exits
+ *  @remarks check if a user with the id $userId exists
  */
 function createManager($idUser, $company, $startDate, $endDate) : bool {
     /* Check if the user exists */
@@ -571,11 +571,11 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
         throw new Exception("Error createManager : " . $e->getMessage());
     }
 
-    if (!$result) {
+    if (!$result[0]) {
         throw new Exception("Error createManager : the corresponding user does not exist");
     }
 
-    /* Inserting the new manager in the database */
+    /* Insert the new manager in the database */
     $request = "
     INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
 
@@ -587,6 +587,48 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
 
     return(true);
     
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createAdmin($idUser)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 24 May 2023 - 13:08:51S
+*/
+/**
+ *  brief insert a new admin in the database
+ *  @param $idUser : the id of the user
+ *  @return true if the admin has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createAdmin($idUser) : bool {
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createAdmin : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createAdmin : the corresponding user does not exist");
+    }
+
+    /* Insert the new admin in the database */
+    $request = "
+    INSERT INTO `Admin` VALUES ('$idUser')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    return(true);
 }
 
 /* -------------------------------------------------------------------------- */
