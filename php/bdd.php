@@ -33,6 +33,10 @@ define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
 define("DB_ALTER", 2);
+
+define("ADMIN", 5);
+define("MANAGER", 4);
+define("STUDENT", 3);
     
 /* **************************************************************************** */
 /*                          GLOBAL VARIABLES                                    */
@@ -125,9 +129,10 @@ function disconnect_db() : bool {
  * @param $newPassword    : the new password
  * @param $newPhone       : the new phone number
  * @param $newEmail       : the new email
+ * @return true if the database was altered successfully
  * @remarks throw an exception if the request is not valid
  */
-function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : void {
+function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : bool {
     global $bdd;
 
     if (!is_connected_db()) {
@@ -151,6 +156,8 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     if (!$queryR) {
         throw new mysqli_sql_exception("request not valid.");
     }
+
+    return(true);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -699,14 +706,15 @@ function getAllDataCEnded() : array {
     try {
         $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error getAllDataCEnded: " . $e->getMessage());
+        throw new Exception("Error getAllDataCEnded : " . $e->getMessage());
     }
 
     return($result);
 }
 
+/* -------------------------------------------------------------------------- */
+
 /*
- *
  *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
@@ -717,23 +725,76 @@ function getAllDataCEnded() : array {
 
  * @remarks throw an exception if the request is not valid
  */
-function alterMessage_db($idSender, $idReceiver, $Message = null) : bool {
-    
-    global $bdd;
+function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
 
-    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$Message', null)";
+    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', null)";
     
-
     try {
         request_db(DB_ALTER, $request);
     } catch (Exception $e) {
+        throw new Exception("Error alterMessage_db : " . $e->getMessage());
     }
     
-
     return (true);
 }
 
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function roleUser($idUser, $role)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 15:42:59
+*/
+/**
+ *  brief check if a user has a certain role
+ *  @param $idUser : the id of the user
+ *  @param $role : ADMIN for administrator, MANAGER for manager and STUDENT for student
+ *  @return true if the user has the given role
+ */
+function roleUser($idUser, $role) : bool {
+    $reqDeb = "SELECT EXISTS(SELECT * FROM ";
+    $reqFin = "WHERE `idUser` = '$idUser')";
+    switch ($role) {
+        case ADMIN :
+            $request = $reqDeb . "`Admin`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+        
+        case MANAGER :
+            $request = $reqDeb . "`Manager`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+
+        case STUDENT :
+            $request = $reqDeb . "`Student`" . $reqFin;
+
+            try {
+                $result = request_db(DB_RETRIEVE, $request);
+            } catch (Exception $e) {
+                throw new Exception("Error roleUser : " . $e->getMessage());
+            }
+            break;
+
+        default :
+            break;
+    }
+
+    if (!isset($result)) {
+        throw new Exception("Error roleUser : " . $role . "is not defined");
+    }
+
+    return($result);
+}
 
 ?>
