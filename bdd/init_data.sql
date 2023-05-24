@@ -24,3 +24,7 @@ INSERT INTO `Student` VALUES (5, 1, "L3", "EISTI", "Pau");
 INSERT INTO `Gerer` VALUES (4, 1);
 
 INSERT INTO `Message` (`idSender`, `idReceiver`, `messageContent`) VALUES (3, 4, "Hello World!");
+
+INSERT INTO `Quiz` VALUES (null, "quiz", "2023-05-24", "2023-09-03");
+
+INSERT INTO `Quiz` VALUES (null, "notAvailable", "2023-05-20", "2023-05-23");
