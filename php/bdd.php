@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_USER", "blj");
+define("DB_PASS", "root");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -182,7 +182,7 @@ function request_db($dbRequestType, $request = null) : array | null {
 
     if (!is_connected_db()) {
         throw new mysqli_sql_exception("db not connected.");
-    }
+    } 
     if (!isset($dbRequestType)) {
         throw new mysqli_sql_exception("request type not defined.");
     }
@@ -301,7 +301,7 @@ function getUserByEmail($email) : array {
  * @remarks throw an exception if the request is not valid
  */
 function getAllManagers() {
-    $request = "Select * FROM `User` AS U JOIN `Manager` AS G ON U.`id` = G.`idUser`";
+    $request = "Select * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -329,7 +329,7 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
     JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
@@ -362,7 +362,7 @@ function getAllAdmins() {
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
+        // $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmins : " . $e->getMessage());
     }
@@ -415,7 +415,7 @@ function getGroupsDataC($idDataC) : array {
  */
 function getStudentsGroup($idGroup) : array  {
     $request =
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
     WHERE S.`idGroup` = '$idGroup'";
@@ -462,11 +462,11 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "Select `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
-    JOIN `Gerer` AS G ON G.`idUser` = G.`idUser` 
-    JOIN DataChallenge AS DC ON DC.`idDataC` = G.`idDataC`";
+    JOIN `Handle` AS H ON H.`idUser` = H.`idUser` 
+    JOIN DataChallenge AS DC ON DC.`idDataC` = H.`idDataC`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -546,6 +546,45 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function createStudent($idUser, $idGroup, $lvStudy, $school, $city)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 24 May 2023 - 15:00:00
+*/
+/**
+ *  brief insert a new student in the database
+ *  @param $idUser : the id of the user
+ *  @return true if the student has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createStudent : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createStudent : the corresponding user does not exist");
+    }
+
+    $request =
+    "INSERT INTO `Student` VALUES ('$idUser', '$idGroup', '$lvStudy', '$school', '$city')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createStudent: " . $e->getMessage());
+    }
+
+    return(true);
+}
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function createManager($idUser, $company, $startDate, $endDate)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
@@ -558,7 +597,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
  *  @param $startDate : the start date of the manager
  *  @param $endDate   : the end date of the manager
  *  @return true if the manager has been inserted successfully
- *  @remarks check if a user with the id $userId exits
+ *  @remarks check if a user with the id $userId exists
  */
 function createManager($idUser, $company, $startDate, $endDate) : bool {
     /* Check if the user exists */
@@ -571,13 +610,13 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
         throw new Exception("Error createManager : " . $e->getMessage());
     }
 
-    if (!$result) {
+    if (!$result[0]) {
         throw new Exception("Error createManager : the corresponding user does not exist");
     }
 
-    /* Inserting the new manager in the database */
-    $request = "
-    INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
+    /* Insert the new manager in the database */
+    $request = 
+    "INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
 
     try {
         $result = request_db(DB_ALTER, $request);
@@ -592,6 +631,48 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
+ *  fn function createAdmin($idUser)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 24 May 2023 - 13:08:51
+*/
+/**
+ *  brief insert a new admin in the database
+ *  @param $idUser : the id of the user
+ *  @return true if the admin has been inserted successfully
+ *  @remarks check if a user with the id $userId exists
+ */
+function createAdmin($idUser) : bool {
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createAdmin : " . $e->getMessage());
+    }
+
+    if (!$result[0]) {
+        throw new Exception("Error createAdmin : the corresponding user does not exist");
+    }
+
+    /* Insert the new admin in the database */
+    $request = "
+    INSERT INTO `Admin` VALUES ('$idUser')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
  *  fn function deleteUser($idUser)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
@@ -600,7 +681,7 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
 /**
  *  brief delete a user in the database
  *  @param $idUser  : the id of the user
- *  @return true if the user has been deleted
+ *  @return true if the user has been successfully deleted
  */
 function deleteUser($idUser) : bool {
     $request =
@@ -630,12 +711,13 @@ function deleteUser($idUser) : bool {
  *  @param $idUser  : the id of the manager
  *  @param $idDataC : the id of the data challenge
  *  @return true if the manager has the right to manage a given data challenge
+ *  @remarks if $idUser is not the id of a manager the function returns false
  */
 function checkManagerDates($idUser, $idDataC) : bool {
     $request = 
     "SELECT M.`startDate`, M.`endDate` FROM `Manager` AS M
-    JOIN `Gerer` AS G ON M.`idUser` = G.`idUser`
-    WHERE G.`idDataC` = '$idDataC' AND M.`idUser` = '$idUser'";
+    JOIN `Handle` AS H ON M.`idUser` = H.`idUser`
+    WHERE H.`idDataC` = '$idDataC' AND M.`idUser` = '$idUser'";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -715,11 +797,11 @@ function getAllDataCEnded() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  *fn function $msgSend = alterMessage_db($idSender, $ideReceiver, $Message = null)
+ *  *fn function alterMessage_db($idSender, $ideReceiver, $Message = null)
  *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
  *  *version 0.1
  *  *date Sat 20 May 2023 - 17:11:25
- * */
+*/
 /**
  * brief send a request to alter the `Message` table
 
@@ -754,7 +836,7 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
  */
 function roleUser($idUser, $role) : bool {
     $reqDeb = "SELECT EXISTS(SELECT * FROM ";
-    $reqFin = "WHERE `idUser` = '$idUser')";
+    $reqFin = " WHERE `idUser` = '$idUser')";
     switch ($role) {
         case ADMIN :
             $request = $reqDeb . "`Admin`" . $reqFin;
@@ -796,5 +878,41 @@ function roleUser($idUser, $role) : bool {
 
     return($result[0]);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*
+
+*  *fn function getAllMessageFromUser($idReceiver)
+*  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
+*  *version 0.1
+*  *date Sat 20 May 2023 - 17:11:25
+*/
+/**
+* brief send a request to alter the `Message` table
+
+* @remarks throw an exception if the request is not valid
+*/
+function getAllMessageFromUser($idUser) : array{
+    if ( !is_connected_db() )
+    try {
+        connect_db();
+    } catch (Exception $e){
+        echo $e->getMessage();
+        exit();
+    }
+    $query = "SELECT * FROM `Message` where `idSender` = '$idUser' or `idReceiver` = '$idUser'";
+    
+    try {
+        // Call the request_db function and pass the query
+        $result = request_db(DB_RETRIEVE, $query);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
+    }
+
+    return($result);
+ }
+ 
+/* -------------------------------------------------------------------------- */
 
 ?>

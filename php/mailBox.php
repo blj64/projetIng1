@@ -1,3 +1,6 @@
+<?php
+require_once("bdd.php");
+?>
 
         <!DOCTYPE html>
         <html lang="en">
@@ -20,7 +23,15 @@
                         <h2>Personne</h2>
                     </div>
                     <div id="msg-container-div">
-
+                            <?php
+                                $messages = getAllMessageFromUser(2);
+                                foreach($messages as $message) {
+                                    foreach($message as $column) {
+                                        echo "<span>".$column . ": ".$value ;
+                                    }
+                                    echo "<br>";
+                                }
+                            ?>
                     </div>
                     <div id="msg-new-div">
                         <form action="sendMsg.php" method="POST">
