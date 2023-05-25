@@ -115,7 +115,6 @@ function disconnect_db() : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
- *
  *  *fn function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null)
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
@@ -126,35 +125,52 @@ function disconnect_db() : bool {
  * @param $idUser         : the id of the user to which data is updated
  * @param $newFirstName   : the new first name
  * @param $newLastName    : the new last name
- * @param $newPassword    : the new password
+ * @param $newPassword    : the new password (not hashed)
  * @param $newPhone       : the new phone number
  * @param $newEmail       : the new email
  * @return true if the database was altered successfully
- * @remarks throw an exception if the request is not valid
+ * @remarks throw an exception if a request is not valid
  */
 function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : bool {
-    global $bdd;
+    $error = "Error alterUser_db : ";
 
-    if (!is_connected_db()) {
-        throw new mysqli_sql_exception("db not connected.");
-    }
-    if (!isset($idUser)) {
-        throw new mysqli_sql_exception("id not set.");
-    }
-    $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+    $request =
+    "SHOW COLUMNS FROM `User`";
 
-    if (!$newHashpwd) {
-        throw new Exception("Error alterUser_db : password hash failed.");
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
     }
 
-    $request = 
-    "UPDATE `User` '
-    SET `firstName` = '$newFirstName', `lastName` = '$newLastName', `password` = '$newHashpwd', `number` = '$newPhone', `email` = '$newEmail 
-    WHERE `id` = '$idUser'";
-    $queryR = mysqli_query($bdd, $request);
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
 
-    if (!$queryR) {
-        throw new mysqli_sql_exception("request not valid.");
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            if ($i == 3) {
+                $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+                if (!$newHashpwd) {
+                    throw new Exception($error . "password hash failed.");
+                }
+                $request =
+                "UPDATE `User` SET `password` = '$newHashpwd' WHERE `id` = '$idUser'";
+                try {
+                    $result = request_db(DB_ALTER, $request);
+                } catch (Exception $e) {
+                    throw new Exception($error . $e->getMessage()); 
+                } 
+            } else {
+                $column = $list_columns[$i]['Field'];
+                $request =
+                "UPDATE `User` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idUser'";
+                try {
+                    $result = request_db(DB_ALTER, $request);
+                } catch (Exception $e) {
+                    throw new Exception($error . $e->getMessage());
+                }
+            }
+        }
     }
 
     return(true);
