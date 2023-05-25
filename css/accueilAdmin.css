@@ -1,0 +1,26 @@
+body {
+    height: 100;
+    margin: 0;
+}
+
+#part3Admin {
+    margin: 0;
+    padding: 5%;
+    background-image: url("../asset/img/marketing-bg6.png");
+}
+
+#cardAdmin {
+    display: flex;
+    width: 100%;
+    justify-content: center ;
+
+}
+
+#card2Admin {
+    position: relative;
+    top: 50px;
+}
+
+.spaceBetweenCards {
+    margin-right: 20%;
+}
