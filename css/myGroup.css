@@ -502,3 +502,106 @@ body{
     font-size: 20px;
 }
 
+
+/* css for 'Setting' sub-page */
+
+
+
+/* css for 'Rendu' sub-page */
+
+.left-box {
+    background-color: aqua;
+    overflow: hidden;
+}
+
+.rendu-box {
+    width: 100%;
+    height: 100%;
+    background-color: lightgreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
+}
+
+.box {
+    position: relative;
+    width: 100%;
+    height: 50%;
+}
+
+.drop-zone {
+    position: relative;
+    width: 90%;
+    height: 50%;
+    margin: 0 auto;
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: #113e4d;
+    border: 2px dashed hsl(185, 18%, 64%);
+    border-radius: 10px;
+    background-color: #c8dadf;
+  }
+  
+  .drop-zone--over {
+    border-style: solid;
+    background-color: lightblue;
+  }
+  
+  .drop-zone__input {
+    display: none;
+  }
+  
+  .drop-zone__thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+  }
+  
+  .drop-zone__thumb::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #click {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+
+
+.stats-box {
+    width: 100%;
+    height: 100%;
+    background-color: lightblue;
+}
+
+.right-box {
+    background-color: lightpink;
+}
+

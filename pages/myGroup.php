@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,17 +8,22 @@
     <link rel="stylesheet" href="/css/myGroup.css">
     <title>IAPau my group</title>
 </head>
+
 <body>
-    <?php //require_once $_SERVER["DOCUMENT_ROOT"] . '/php/header.php'; ?>
-    <div style="height: 10vh; background-color:blueviolet;"><h1>I'm a header</h1></div>
+    <?php //require_once $_SERVER["DOCUMENT_ROOT"] . '/php/header.php'; 
+    ?>
+    <div style="height: 10vh; background-color:blueviolet;">
+        <h1>I'm a header</h1>
+    </div>
     <div class="main">
 
         <div class="center">
             <nav class="menu">
-                    <a href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
-                    <a href="#Messagerie" class="list active" onclick="changeMenu(this)">Messagerie</a>
-                    <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
-                </nav>
+                <a href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
+                <a href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
+                <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
+                <a href="#Rendu" class="list active" onclick="changeMenu(this)">Rendu</a>
+            </nav>
             <div class="rest">
 
                 <!-- Mon équipe -->
@@ -29,9 +35,9 @@
                         <div class="list-group-name">
                             <fieldset>
                                 <legend>My team</legend>
-                                    
+
                                 <div class="student">
-                                    <img  class="leader" src="/asset/icon/crown.ico" alt="chef">
+                                    <img class="leader" src="/asset/icon/crown.ico" alt="chef">
                                     <p class="me">Nicolas Durand</p>
                                 </div>
 
@@ -57,7 +63,7 @@
                 </div>
 
                 <!-- Messagerie -->
-                <div class="content-box" id="Messagerie">
+                <div class="content-box" id="Messagerie" style="display: none;">
                     <div class="left-bar">
                         <div class="new-message">
                             <div class="student" id="new-msg">
@@ -71,7 +77,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="online">online</span>
@@ -83,7 +89,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="offline">offline</span>
@@ -95,7 +101,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="ghost">online</span>
@@ -107,7 +113,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="ghost">online</span>
@@ -119,7 +125,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="ghost">online</span>
@@ -131,7 +137,7 @@
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
-                                
+
                                 <div class="contact-text">
                                     <p>Nicolas Durand</p>
                                     <span id="ghost">online</span>
@@ -184,21 +190,49 @@
                     </div>
                 </div>
 
+
                 <!-- Paramètre -->
                 <div class="content-box" id="Setting" style="display: none;">
-
                 </div>
 
 
+                <!-- Rendu -->
+                <div class="content-box" id="Rendu">
+                    <div class="left-box">
+                        <div class="rendu-box">
+                            <form class="box" method="post" action="" enctype="multipart/form-data">
+                                <div class="drop-zone">
+                                    <span class="drop-zone__prompt">Drop file here or <span id="click">click</span> to upload</span>
+                                    <input type="file" name="myFile" class="drop-zone__input">
+                                </div>
+                                <div class="box__uploading">Uploading…</div>
+                                <div class="box__success">Done!</div>
+                                <div class="box__error">Error! <span></span>.</div>
+                            </form>
+                        </div>
+                        <div class="stats-box">
+
+                        </div>
+                    </div>
+
+                    <div class="right-box">
+
+                    </div>
+                </div>
+
             </div>
         </div>
-        
+
     </div>
-    
-    <div style="height: 10vh; background-color:red;padding-top:0px;"><h1>I'm a footer</h1></div>
-    <?php //require_once $_SERVER["DOCUMENT_ROOT"] . '/php/footer.php'; ?>
+
+    <div style="height: 10vh; background-color:red;padding-top:0px;">
+        <h1>I'm a footer</h1>
+    </div>
+    <?php //require_once $_SERVER["DOCUMENT_ROOT"] . '/php/footer.php'; 
+    ?>
 </body>
 <script src="/js/myGroup.js"></script>
+
 </html>
 
 <!-- author : DURAND Nicolas -->
