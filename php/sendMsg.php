@@ -16,9 +16,6 @@ $receiver = isset($_POST["receiver"]) ? $_POST["receiver"] : "5";
 $datetime = isset($_POST["datetime"]) ? $_POST["datetime"] : "";
 
 $msgSend = alterMessage_db($sender, $receiver, $msg);
-if ($msgSend) {
-  echo "msg send";
-}else{
-  echo "marche po";
-}
+
+echo $msgSend === true ? $msg : "marche po";
 ?>
