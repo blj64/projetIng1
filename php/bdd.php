@@ -150,7 +150,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     $request = 
     "UPDATE `User` '
     SET `firstName` = '$newFirstName', `lastName` = '$newLastName', `password` = '$newHashpwd', `number` = '$newPhone', `email` = '$newEmail 
-    WHERE `id` = '$idUser'S";
+    WHERE `id` = '$idUser'";
     $queryR = mysqli_query($bdd, $request);
 
     if (!$queryR) {
@@ -882,7 +882,6 @@ function roleUser($idUser, $role) : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
-
 *  *fn function getAllMessageFromUser($idReceiver)
 *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
 *  *version 0.1
@@ -893,13 +892,14 @@ function roleUser($idUser, $role) : bool {
 
 * @remarks throw an exception if the request is not valid
 */
-function getAllMessageFromUser($idUser) : array{
-    if ( !is_connected_db() )
-    try {
-        connect_db();
-    } catch (Exception $e){
-        echo $e->getMessage();
-        exit();
+function getAllMessageFromUser($idUser) : array {
+    if (!is_connected_db()) {
+        try {
+            connect_db();
+        } catch (Exception $e){
+            echo $e->getMessage();
+            exit();
+        }
     }
     $query = "SELECT * FROM `Message` where `idSender` = '$idUser' or `idReceiver` = '$idUser'";
     
@@ -911,7 +911,7 @@ function getAllMessageFromUser($idUser) : array{
     }
 
     return($result);
- }
+}
  
 /* -------------------------------------------------------------------------- */
 
