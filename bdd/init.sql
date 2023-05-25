@@ -69,9 +69,9 @@ CREATE TABLE `Handle` (
 
 CREATE TABLE `Message` (
     `idMessage` INT NOT NULL AUTO_INCREMENT,
-    `idSender` INT UNSIGNED,
-    `idReceiver` INT UNSIGNED,
-    `messageContent` TEXT,
+    `idSender` INT UNSIGNED NOT NULL,
+    `idReceiver` INT UNSIGNED NOT NULL,
+    `messageContent` TEXT NOT NULL,
     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`idMessage`),
     FOREIGN KEY (`idSender`) REFERENCES `User`(`id`) ON DELETE CASCADE,
@@ -81,9 +81,18 @@ CREATE TABLE `Message` (
 CREATE TABLE `Quiz` (
     `idQuiz` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `idDataC` INT UNSIGNED NOT NULL,
-    `name` VARCHAR(255),
-    `startDate` DATE,
-    `endDate` DATE,
+    `name` VARCHAR(255) NOT NULL,
+    `startDate` DATE NOT NULL,
+    `endDate` DATE NOT NULL,
     PRIMARY KEY (`idQuiz`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE
 );
+
+CREATE TABLE `Resource` (
+    `idResource` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idDataC` INT UNSIGNED NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `path` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`idResource`),
+    FOREIGN KEY (`idDataC`) REFERENCES DataChallenge(`idDataC`) ON DELETE CASCADE
+)
