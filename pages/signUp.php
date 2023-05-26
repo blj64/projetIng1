@@ -19,7 +19,7 @@
     <div class="main">
         <div class="center">
 
-            <div class="box-left">
+            <div class="box-left" style="display: none;">
                 <h1>Venez challenger vos données</h1>
             </div>
             

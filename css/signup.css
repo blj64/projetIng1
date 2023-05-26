@@ -79,6 +79,10 @@ body{
     border-color: #e0e0e0;
 }
 
+.sign-box form input {
+    padding-left: 20px;
+    border-radius: 4px;
+}
 
 .error-msg {
     position: relative;
