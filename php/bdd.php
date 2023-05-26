@@ -264,7 +264,7 @@ function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Manager` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idManager'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
