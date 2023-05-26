@@ -200,6 +200,7 @@
                 <div class="content-box" id="Rendu">
                     <div class="left-box">
                         <div class="rendu-box">
+                            <h1>Mettez votre fichier python ici ↓↓</h1>
                             <form class="box" method="post" action="" enctype="multipart/form-data">
                                 <div class="drop-zone">
                                     <span class="drop-zone__prompt">Drop file here or <span id="click">click</span> to upload</span>
@@ -209,6 +210,9 @@
                                 <div class="box__success">Upload success!</div>
                                 <div class="box__error">Upload error! <span id="add_error"></span>.</div>
                             </form>
+                            <div class="send-data">
+                                <button type="submit">Générer les statistiques</button>
+                            </div>
                         </div>
                         <div class="stats-box">
 
