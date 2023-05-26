@@ -4,12 +4,14 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/signup.css">
+        <link rel="stylesheet" href="../css/signup.css">
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/footer.css">
         <title>IAPau</title>
     </head>
 <body>
     <?php 
-    //require_once '../php/header.php';
+    include('../php/header.php');
     
     if (SESSION_STATUS() == PHP_SESSION_NONE)
         session_start();
@@ -54,6 +56,6 @@
         </div>
     </div>
 
-    <?php //require_once '../php/footer.php'; ?>
+    <?php include('../php/footer.php'); ?>
 </body>
 </html>
