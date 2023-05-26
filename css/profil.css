@@ -1,6 +1,10 @@
 body {
-    height: 100;
     margin: 0;
+    padding: 0;
+    min-width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 #part3Profil {
@@ -47,14 +51,4 @@ body {
 .sign-box form input:focus {
     color: black;
     border-color: #e0e0e0;
-}
-
-
-.error-msg {
-    position: relative;
-    width: 100%;
-    height: 20px;
-    color: red;
-    font-size: 12px;
-    margin-bottom: 2%;
 }
