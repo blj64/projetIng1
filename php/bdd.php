@@ -83,7 +83,7 @@ function connect_db($host = DB_HOST, $user = DB_USER, $pass = DB_PASS, $db = DB_
  */
 function is_connected_db() : bool {
     global $bdd;
-    return (isset($bdd) && $bdd != NULL);
+    return (isset($bdd) && $bdd != null);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -672,7 +672,6 @@ function getAllAdmins() {
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        // $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllAdmins : " . $e->getMessage());
     }
