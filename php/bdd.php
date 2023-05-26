@@ -156,16 +156,17 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
                 $request =
                 "UPDATE `User` SET `password` = '$newHashpwd' WHERE `id` = '$idUser'";
                 try {
-                    $result = request_db(DB_ALTER, $request);
+                    request_db(DB_ALTER, $request);
                 } catch (Exception $e) {
                     throw new Exception($error . $e->getMessage()); 
                 } 
             } else {
+                /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `User` table */
                 $column = $list_columns[$i]['Field'];
                 $request =
                 "UPDATE `User` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idUser'";
                 try {
-                    $result = request_db(DB_ALTER, $request);
+                    request_db(DB_ALTER, $request);
                 } catch (Exception $e) {
                     throw new Exception($error . $e->getMessage());
                 }
@@ -175,6 +176,107 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
 
     return(true);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Thu 25 May 2023 - 11:04:06
+ * */
+/**
+ * brief send a request to alter the `DataChallenge` table
+ * @param $idDataC      : the id of the data challenge to which data is updated
+ * @param $newName      : the new name of the data challenge
+ * @param $newStartDate : the new start date of the data challenge
+ * @param $newEndDate   : the new end date of the data challenge
+ * @param $newImage     : the new image of the data challenge
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage) {
+    $error = "Error alterDataC_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `DataChallenge`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `DataChallenge` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `DataChallenge` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 09:33:40
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idManager    : the id of the manager to which data is updated
+ * @param $newCompany   : the new company name of the manager
+ * @param $newStartDate : the new start date of the manager
+ * @param $newEndDate   : the new end date of the manager
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
+    $error = "Error alterManager_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Manager`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Manager` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+
 
 /* -------------------------------------------------------------------------- */
 
@@ -278,7 +380,7 @@ function getAllUsers() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function getUserByEmail($email)
+ *  fn function ByEmail($email)
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 09:51:43
