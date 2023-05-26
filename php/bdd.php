@@ -149,7 +149,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     for ($i = 1; $i < $numArgs; $i++) {
         if ($listArgs[$i] != null) {
             if ($i == 3) {
-                $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+                $newHashpwd = password_hash($newPassword, PASSWORD_DEFAULT);
                 if (!$newHashpwd) {
                     throw new Exception($error . "password hash failed.");
                 }
@@ -505,8 +505,10 @@ function request_db($dbRequestType, $request = null) : array | null {
 
     if ($dbRequestType == DB_RETRIEVE) {
         $result = array();
-        while ($row = mysqli_fetch_assoc($queryR)) {
-            $result[] = $row;
+        if (mysqli_num_rows($queryR) > 0) {
+            while ($row = mysqli_fetch_assoc($queryR)) {
+                $result[] = $row;
+            }
         }
         return ($result);
     } else {
@@ -800,17 +802,16 @@ function getManagersDataChallenges() {
  *  @return true if the user exists
  *  @remarks do not verify if the user is unique
  */
-function existUserByEmail($email) {
+function existUserByEmail($email) : bool {
     $request = "SELECT * FROM `User` WHERE email = '$email'";
-    $result = false;
-    
+
     try {
         $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error existUserByEmail : " . $e->getMessage());
     }
 
-    return ($result);
+    return (!empty($result));
 }
 
 /* -------------------------------------------------------------------------- */
