@@ -46,6 +46,8 @@
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['number'])) echo $_SESSION['error']['number'];  ?></span>
                     
                     <input type="submit" value="S'inscrire">
+
+                <p class="message">Pas encore inscrit? <a href="/pages/signIn.php">Créer votre compte</a></p>
                 </form>
                 
             </div>
