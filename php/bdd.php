@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "blj");
-define("DB_PASS", "root");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -264,7 +264,7 @@ function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Manager` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idManager'";
+            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idManager'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -276,7 +276,55 @@ function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
     return(true);
 }
 
+/* -------------------------------------------------------------------------- */
 
+/*
+ *  *fn function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newCity)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 09:33:40
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idStudent    : the id of the student to which data is updated
+ * @param $newIdGroup   : the id of the new group for the student
+ * @param $newLvStudy   : the new study level of the student
+ * @param $newSchool    : the new school of the student
+ * @param $newCity      : the new city of the student
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newCity) {
+    $error = "Error alterStudent_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Student`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Student` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
 
 /* -------------------------------------------------------------------------- */
 
