@@ -27,8 +27,13 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
+<<<<<<< Updated upstream
 define("DB_USER", "root");
 define("DB_PASS", "");
+=======
+define("DB_USER", "fernandes");
+define("DB_PASS", "zoiHohyu3eiw");
+>>>>>>> Stashed changes
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);

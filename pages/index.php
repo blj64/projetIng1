@@ -14,6 +14,7 @@ session_start();
 		<link rel="stylesheet" href="../css/join.css">
         <link rel="stylesheet" href="../css/footer.css">
         <link rel="stylesheet" href="../css/dataCAcc.css">
+		<link rel="stylesheet" href="../css/signup.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Accueil</title>
 	</head>

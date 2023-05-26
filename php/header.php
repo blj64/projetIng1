@@ -13,7 +13,7 @@
             <div class="dropdown">
                 <img id="menu" src="../asset/icon/menu.png" alt="3barres">
                 <div class="dropdown-content">
-                    <a href="url">Connection</a>
+                    <a href="../pages/signUp.php">Connection</a>
                 </div>
             </div>        
         </div>
