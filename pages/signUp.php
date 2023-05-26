@@ -21,7 +21,7 @@
     <div class="main">
         <div class="center">
 
-            <div class="box-left">
+            <div class="box-left" style="display: none;">
                 <h1>Venez challenger vos données</h1>
             </div>
             
@@ -47,7 +47,8 @@
                     <input type="text" name="number" id="number" placeholder="numero" value="<?php if($retrive) echo $_SESSION['old']['number   ']; unset($_SESSION['old']);?>">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['number'])) echo $_SESSION['error']['number'];  ?></span>
                     
-                    <input type="submit" value="S'inscrire">
+                    <input type="submit" value="S'inscrire">    
+                    <p class="message">Déjà inscrit? <a href="/pages/signIn.php">Connectez-vous</a></p>
                 </form>
                 
             </div>

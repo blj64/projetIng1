@@ -17,7 +17,7 @@ CREATE TABLE `User` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `firstName` VARCHAR(20) NOT NULL,
     `lastName` VARCHAR(31) NOT NULL,
-    `password` VARCHAR(60) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
     `number` VARCHAR(11) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
