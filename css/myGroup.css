@@ -1,0 +1,640 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+html{
+    min-width: 1080px;
+    min-height: 720px;
+}
+
+body{
+    min-width: 1080px;
+    width: 100vw;
+    max-width: 100vw;
+    min-height: 720px;
+    height: 100vh;
+    max-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.main{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 80%;
+    background-image: url('/asset/img/background.png') !important;
+    background-size: cover;
+}
+
+.center {
+    position: relative;
+    width: 60%;
+    height: 70vh;
+    margin: 0 auto;
+}
+
+.menu {
+    width: auto;
+    height: 10%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.rest {
+    width: 100%;
+    min-width: 782px;
+    height: 90%;
+    margin: auto;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0px 8px 10px gray, -10px 8px 15px gray, 10px 8px 15px gray;
+    border-top-left-radius: 10px;
+}
+
+
+
+/* Merci Ugo pour le code de la barre de navigation */
+.menu a{
+    text-decoration: none;
+    text-align: center;
+    color: #4f4f4f;
+    font-size: 20px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.menu .active{
+    color: black;
+    text-decoration: none;
+    background-color: #f3f3f3;
+    margin-top: -8px;
+}
+
+.menu a:hover:not(.active){
+    background-color: #d8dbda;
+    color: black;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.menu{
+    padding: 0 10px 0 10px;
+    display: flex;
+    min-width: 500px;
+    width: 40%;
+}
+
+.menu a{
+    padding: 5px;
+    width: 25%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #e0e0e0;
+}
+.menu a:hover:not(.active){
+    margin-top: -8px;
+}
+
+
+/* css for 'My Team' page */
+.content-box{
+    width: 96%;
+    height: 96%;
+    min-width: 720px;
+    margin: auto;   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2%;
+}
+
+.left-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-group-name {
+    position: relative;
+    background-color: rgb(100,100,100, 0.6);
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+    border-radius: 40px;
+}
+
+.banner-group-name h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.list-group-name {
+    position: relative;
+    text-align: left;
+    padding: 15px;
+}
+
+.list-group-name fieldset {
+    border: 1px solid rgba(100,100,100, 0.4);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.list-group-name fieldset legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 5%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.student {
+    margin-top: 5%;
+    width: 95%;
+    height: min-content;
+    border: 3px solid rgb(0,0,0,0.2);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+}
+
+.student p {
+    position: relative;
+    font-size: 15px;
+    padding-left: 15%;
+}
+
+.leader {
+    position: absolute;
+    height: 160%;
+    top: -40%;
+    padding-left: 2%;
+    object-fit: cover;
+}
+
+.me {
+    font-weight: bold;
+}
+
+.mini-menu {
+    position: absolute;
+    height: 80%;
+    right: 2%;
+    top: 10%;
+    padding-left: 2%;
+    object-fit: cover;
+}
+
+
+
+.right-box {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    position: relative;
+    width: 70%;
+    height: 70%;
+    border-radius: 20px;
+    margin: auto;
+    box-shadow: 8px 8px 10px darkgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.filter {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.3);
+    border-radius: 20px;    
+    transition: 0.5s;
+}
+
+
+.filter:hover{
+    background-color: rgb(0, 0, 0, 0.1);
+}
+
+.dataC-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background-image: url('/asset/img/background.png') !important;
+    background-size: cover;
+}
+
+.dataC-text {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.dataC-text * {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+
+/* css for 'Messagerie' sub-page */
+/*#Messagerie */
+
+.left-bar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: lightgrey;
+    width: 30%;
+    height: 80%;
+    margin: auto;
+    margin-bottom: 0;
+    margin-right: 0;
+    border-top-right-radius: 10px;
+    overflow:scroll;
+    overflow-x:hidden;
+    scrollbar-color: rgb(0,0,0,0.4) rgb(0,0,0,0);
+}
+
+.new-message {
+    position: relative;
+    width: 90%;
+    height: 6%;
+    margin: 5%;
+    border-top-right-radius: 10px;
+}
+
+.new-message div {
+    margin-top: 0;
+    width: 100%;
+    height: auto;
+}
+
+.new-message div p {
+    padding-left: 2%;
+    font-weight: bold;
+}
+
+.new-message div img {
+    bottom: 0;
+    filter: opacity(0.6);
+}
+
+.list-contact {
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.contact {
+    position: relative;
+    width: 85%;
+    height: 15%;
+    padding: 5%;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+}
+
+.contact:hover {
+    background-color: rgb(255,255,255,0.3);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact:active , .contact.active{
+    background-color: rgb(255,255,255,0.5);
+}
+
+.contact-img {
+    width: 20%;
+    height: 90%;
+    border: 1px solid black;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.contact-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    height: 100%;
+}
+
+.contact-text * {
+    margin: 0;
+    padding-left: 5%;
+}
+
+.contact-text p {
+    color: black;   
+}
+
+.contact-text span {
+    font-size: 12px;
+}
+
+#online {
+    color:chartreuse;
+}
+
+#offline {
+    color: red;
+}
+
+#ghost {
+    visibility: hidden;
+}
+
+.messagerie {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    margin-bottom: 0;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.history {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    height: 90%;
+    background-color: rgb(161, 161, 161);
+    border: 1px solid grey;
+    border-radius: 25px;
+    margin: 2%;
+}
+
+.msg {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: fit-content;
+    height: fit-content;
+    width: 70%;
+    max-width: 70%;
+    margin-top : 3%;
+    color: white;   
+}
+
+.msg.left {
+    position: relative;
+    align-self: flex-start;
+    padding-left: 10%;
+    max-width: 60%;
+}
+
+
+.msg.left img {
+    object-fit: cover;
+    width: 20%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.msg.right {
+    align-self: flex-end;
+}
+
+.sub-msg {
+    position: relative;
+    width: fit-content;
+    height: auto;
+    border-radius: 20px;
+    padding-right: 2%;
+    padding-left: 2%;
+    background-color: #4f4f4f;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.msg.right .sub-msg {
+    background-color: rgb(67, 143, 214);
+    align-self: flex-end;
+}
+
+.entry {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+.entry-bar {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.entry-bar input[type="button"] {
+    margin-right: 2%;
+    height: 100%;
+    border: none;
+    border-left: 2px solid rgb(0, 0, 0, 0.3);
+    outline: none;
+    padding-left: 5%;
+    font-size: 20px;
+}
+
+.entry-bar input[type="text"] {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
+
+/* css for 'Setting' sub-page */
+
+
+
+/* css for 'Rendu' sub-page */
+
+.rendu-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: chocolate;
+}
+
+.rendu-box h1 {
+    margin: 0 auto;
+    font-size: large;
+}
+
+.send-data {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    padding: 2%;
+    border-radius: 25px;
+    background-color: rgb(17, 62, 77, 1);
+}
+
+.send-data:hover {
+    background-color: rgb(17, 62, 77, 0.8);
+    cursor: pointer;
+}
+
+.send-data:active {
+    background-color: rgb(17, 62, 77, 0.5);
+}
+
+.send-data * {
+    cursor: pointer;
+}
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+    display: none;
+}
+
+.box__error {
+    color: red;
+}
+
+.box__success {
+    color: chartreuse;
+}
+
+.box {
+    position: relative;
+    width: 90%;
+    height: 50%;
+    margin: 0 auto;
+}
+
+.drop-zone {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: #113e4d;
+    border: 2px dashed hsl(185, 18%, 64%);
+    border-radius: 10px;
+    background-color: #c8dadf;
+  }
+  
+  .drop-zone--over {
+    border-style: solid;
+    background-color: lightblue;
+  }
+  
+  .drop-zone__input {
+    display: none;
+  }
+  
+  .drop-zone__thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-size: cover;
+    position: relative;
+    display: flex;
+  }
+  
+  .drop-zone__thumb::after {
+    content: attr(data-label);
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+    padding: 2%;
+    color: rgb(66,66,66);
+    background-color: rgba(128,128,128, 0.2);
+    border-radius: 50px;
+    font-size: 14px;
+    text-align: center;
+    align-self: center;
+  }
+
+  #click {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+
+
+.stats-box {
+    width: 100%;
+    height: 100%;
+    background-color: lightblue;
+}
+
+.right-box {
+    background-color: lightpink;
+}
+
