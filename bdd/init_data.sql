@@ -28,3 +28,5 @@ INSERT INTO `Message` (`idSender`, `idReceiver`, `messageContent`) VALUES (3, 4,
 INSERT INTO `Quiz` VALUES (null, 1, "quiz", "2023-05-24", "2023-09-03");
 
 INSERT INTO `Quiz` VALUES (null, 1, "notAvailable", "2023-05-20", "2023-05-23");
+
+INSERT INTO `Resource` VALUES (null, 1, "test", "resource/Sujet_Projet_ING1_GI_2023.pdf");

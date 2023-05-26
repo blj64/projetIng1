@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "blj");
-define("DB_PASS", "root");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -115,7 +115,6 @@ function disconnect_db() : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
- *
  *  *fn function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null)
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
@@ -126,35 +125,202 @@ function disconnect_db() : bool {
  * @param $idUser         : the id of the user to which data is updated
  * @param $newFirstName   : the new first name
  * @param $newLastName    : the new last name
- * @param $newPassword    : the new password
+ * @param $newPassword    : the new password (not hashed)
  * @param $newPhone       : the new phone number
  * @param $newEmail       : the new email
  * @return true if the database was altered successfully
- * @remarks throw an exception if the request is not valid
+ * @remarks throw an exception if a request is not valid
  */
 function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPassword = null, $newPhone = null, $newEmail = null) : bool {
-    global $bdd;
+    $error = "Error alterUser_db : ";
 
-    if (!is_connected_db()) {
-        throw new mysqli_sql_exception("db not connected.");
-    }
-    if (!isset($idUser)) {
-        throw new mysqli_sql_exception("id not set.");
-    }
-    $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+    $request =
+    "SHOW COLUMNS FROM `User`";
 
-    if (!$newHashpwd) {
-        throw new Exception("Error alterUser_db : password hash failed.");
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
     }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            if ($i == 3) {
+                $newHashpwd = password_hash($newPassword, PASSWORD_BCRYPT);
+                if (!$newHashpwd) {
+                    throw new Exception($error . "password hash failed.");
+                }
+                $request =
+                "UPDATE `User` SET `password` = '$newHashpwd' WHERE `id` = '$idUser'";
+                try {
+                    request_db(DB_ALTER, $request);
+                } catch (Exception $e) {
+                    throw new Exception($error . $e->getMessage()); 
+                } 
+            } else {
+                /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `User` table */
+                $column = $list_columns[$i]['Field'];
+                $request =
+                "UPDATE `User` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idUser'";
+                try {
+                    request_db(DB_ALTER, $request);
+                } catch (Exception $e) {
+                    throw new Exception($error . $e->getMessage());
+                }
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Thu 25 May 2023 - 11:04:06
+ * */
+/**
+ * brief send a request to alter the `DataChallenge` table
+ * @param $idDataC      : the id of the data challenge to which data is updated
+ * @param $newName      : the new name of the data challenge
+ * @param $newStartDate : the new start date of the data challenge
+ * @param $newEndDate   : the new end date of the data challenge
+ * @param $newImage     : the new image of the data challenge
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage) {
+    $error = "Error alterDataC_db : ";
 
     $request = 
-    "UPDATE `User` '
-    SET `firstName` = '$newFirstName', `lastName` = '$newLastName', `password` = '$newHashpwd', `number` = '$newPhone', `email` = '$newEmail 
-    WHERE `id` = '$idUser'S";
-    $queryR = mysqli_query($bdd, $request);
+    "SHOW COLUMNS FROM `DataChallenge`";
 
-    if (!$queryR) {
-        throw new mysqli_sql_exception("request not valid.");
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `DataChallenge` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `DataChallenge` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 09:33:40
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idManager    : the id of the manager to which data is updated
+ * @param $newCompany   : the new company name of the manager
+ * @param $newStartDate : the new start date of the manager
+ * @param $newEndDate   : the new end date of the manager
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
+    $error = "Error alterManager_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Manager`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Manager` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idManager'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newCity)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 09:33:40
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idStudent    : the id of the student to which data is updated
+ * @param $newIdGroup   : the id of the new group for the student
+ * @param $newLvStudy   : the new study level of the student
+ * @param $newSchool    : the new school of the student
+ * @param $newCity      : the new city of the student
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newCity) {
+    $error = "Error alterStudent_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Student`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Student` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
     }
 
     return(true);
@@ -262,7 +428,7 @@ function getAllUsers() : array {
 /* -------------------------------------------------------------------------- */
 
 /*
- *  fn function getUserByEmail($email)
+ *  fn function ByEmail($email)
  *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  version 0.1
  *  date Wed 17 May 2023 - 09:51:43
@@ -882,7 +1048,6 @@ function roleUser($idUser, $role) : bool {
 /* -------------------------------------------------------------------------- */
 
 /*
-
 *  *fn function getAllMessageFromUser($idReceiver)
 *  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
 *  *version 0.1
@@ -893,13 +1058,14 @@ function roleUser($idUser, $role) : bool {
 
 * @remarks throw an exception if the request is not valid
 */
-function getAllMessageFromUser($idUser) : array{
-    if ( !is_connected_db() )
-    try {
-        connect_db();
-    } catch (Exception $e){
-        echo $e->getMessage();
-        exit();
+function getAllMessageFromUser($idUser) : array {
+    if (!is_connected_db()) {
+        try {
+            connect_db();
+        } catch (Exception $e){
+            echo $e->getMessage();
+            exit();
+        }
     }
     $query = "SELECT * FROM `Message` where `idSender` = '$idUser' or `idReceiver` = '$idUser'";
     
@@ -911,7 +1077,7 @@ function getAllMessageFromUser($idUser) : array{
     }
 
     return($result);
- }
+}
  
 /* -------------------------------------------------------------------------- */
 
