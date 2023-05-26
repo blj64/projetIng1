@@ -27,21 +27,32 @@ session_start();
         <div id="part3">
             <div id ="card" class="card-box">
 
-                <div id="card1" class="card">
+                <a href="/pages/myGroup.php" id="Team" class="card">
                     <div class="filter">
-                        <a href="">carte 1</a>
+                        <div class="card-img">
+                            <h1>Mon équipe</h1>
+                        </div>
                     </div>
-                </div>
+                </a>
 
 
-                <div id="card2" class="card">
-                    <a href="">carte 2</a> 
-                </div>
+                <a href="/pages/dataC.php" id="DataC" class="card">
+                    <div class="filter">
+                            <div class="card-img">
+                            <h1>Les challenges</h1>
+                        </div>
+                    </div>
+                </a>
+
                 
-                
-                <div id="card3" class="card">
-                    <a href="">carte 3</a>
-                </div>
+                <a href="/pages/myGroup.php" id="profile" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mon profil</h1>
+                        </div>
+                    </div>
+                </a>
+
             </div>
 		</div>
 
