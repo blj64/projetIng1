@@ -17,6 +17,7 @@
     text-align: center;
     justify-content: center;
     border-bottom: solid 2px;
+    background-color: white;
 }
 
 #logo {
@@ -70,7 +71,7 @@
   }
   
 .dropdown-content {
-    display: block;
+    display: none;
     height: 0;
     position: fixed;
     right: 0;
@@ -90,6 +91,7 @@
 }
   
 .dropdown:hover .dropdown-content {
+    display: block;
     height: auto;
     padding-right: 50px;
     padding-top: 50px;
