@@ -1145,7 +1145,7 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
  */
 function roleUser($idUser, $role) : bool {
     $reqDeb = "SELECT EXISTS(SELECT * FROM ";
-    $reqFin = " WHERE `idUser` = '$idUser')";
+    $reqFin = " WHERE `idUser` = '$idUser') AS Res";
     switch ($role) {
         case ADMIN :
             $request = $reqDeb . "`Admin`" . $reqFin;
@@ -1185,7 +1185,7 @@ function roleUser($idUser, $role) : bool {
         throw new Exception("Error roleUser : " . $role . " is not defined");
     }
 
-    return($result[0] == 1);
+    return($result[0]["Res"] == 1);
 }
 
 /* -------------------------------------------------------------------------- */
