@@ -282,7 +282,7 @@ function alterManager_db($idManager, $newCompany, $newStartDate, $newEndDate) {
  *  *fn function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newCity)
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
- *  *date Fri 26 May 2023 - 09:33:40
+ *  *date Fri 26 May 2023 - 09:50:35
  * */
 /**
  * brief send a request to alter the `Manager` table
@@ -325,6 +325,67 @@ function alterStudent_db($idStudent, $newIdGroup, $newLvStudy, $newSchool, $newC
 
     return(true);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterGroup_db($idGroup, $newName, $newIdLeader)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 10:34:47
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idGroup     : the id of the group to which data is updated
+ * @param $newName     : the new name of the group
+ * @param $newIdLeader : the new leader of the group
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterGroup_db($idGroup, $newName, $newIdLeader) {
+    $error = "Error alterGroup_db : ";
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            if ($i == 1) {
+                $request =
+                "UPDATE `Group` SET `name` = '$listArgs[$i]' WHERE `id` = '$idGroup'";
+            } else {
+                $request =
+                "UPDATE `Group` SET `idLeader` = '$listArgs[$i]' WHERE `id` = '$idGroup'";
+            }
+            
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterGroup_db($idGroup, $newName, $newIdLeader)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 10:34:47
+ * */
+/**
+ * brief send a request to alter the `Manager` table
+ * @param $idGroup     : the id of the group to which data is updated
+ * @param $newName     : the new name of the group
+ * @param $newIdLeader : the new leader of the group
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+//to do
 
 /* -------------------------------------------------------------------------- */
 
