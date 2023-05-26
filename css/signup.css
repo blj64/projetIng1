@@ -88,3 +88,14 @@ body{
     font-size: 12px;
     margin-bottom: 2%;
 }
+
+.message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+
+.message a {
+    color: #0693e3;
+    text-decoration: none;
+}
