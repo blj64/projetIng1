@@ -552,7 +552,6 @@ body{
 .box__success,
 .box__error {
     display: none;
-    margin-left: ;
 }
 
 .box__error {
@@ -613,11 +612,9 @@ body{
     position: relative;
     width: 50%;
     margin: 0 auto;
-    padding: 5px 0;
-    color: black
-    background-color: gray;
-    background: rgba(128,128,128, 0.2);
     padding: 2%;
+    color: rgb(66,66,66);
+    background-color: rgba(128,128,128, 0.2);
     border-radius: 50px;
     font-size: 14px;
     text-align: center;

@@ -116,13 +116,16 @@ function updateThumbnail(dropZoneElement, file) {
 
     const box_success   = document.getElementsByClassName("box__success")[0];
     const box_error     = document.getElementsByClassName("box__error")[0];
+    const send_button   = document.getElementById("send_button");
     if(file.name.endsWith(".py"))
     {
         box_error.style.display = "none";
         box_success.style.display = "block";
+        send_button.disabled = false;
     } else {
         box_error.style.display = "block"
         box_success.style.display = "none";
-        box_error.children[0].innerHTML = "Must upload a .py file"
+        box_error.children[0].innerHTML = "Must upload a .py file";
+        send_button.disabled = true;
     }
 }

@@ -19,15 +19,15 @@
 
         <div class="center">
             <nav class="menu">
-                <a href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
+                <a href="#Main" class="list active" onclick="changeMenu(this)">Mon équipe</a>
                 <a href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
                 <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
-                <a href="#Rendu" class="list active" onclick="changeMenu(this)">Rendu</a>
+                <a href="#Rendu" class="list" onclick="changeMenu(this)">Rendu</a>
             </nav>
             <div class="rest">
 
                 <!-- Mon équipe -->
-                <div class="content-box" id="Main" style="display: none;">
+                <div class="content-box" id="Main">
                     <div class="left-box">
                         <div class="banner-group-name">
                             <h1>Nom du groupe</h1>
@@ -197,7 +197,7 @@
 
 
                 <!-- Rendu -->
-                <div class="content-box" id="Rendu">
+                <div class="content-box" id="Rendu" style="display:none">
                     <div class="left-box">
                         <div class="rendu-box">
                             <h1>Mettez votre fichier python ici ↓↓</h1>
@@ -211,7 +211,7 @@
                                 <div class="box__error">Upload error! <span id="add_error"></span>.</div>
                             </form>
                             <div class="send-data">
-                                <button type="submit">Générer les statistiques</button>
+                                <button id=send_button type="submit">Générer les statistiques</button>
                             </div>
                         </div>
                         <div class="stats-box">
