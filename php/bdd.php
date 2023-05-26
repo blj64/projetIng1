@@ -1186,7 +1186,7 @@ function roleUser($idUser, $role) : bool {
         throw new Exception("Error roleUser : " . $role . " is not defined");
     }
 
-    return($result[0]);
+    return($result[0] == 1);
 }
 
 /* -------------------------------------------------------------------------- */
