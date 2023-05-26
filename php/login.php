@@ -11,8 +11,9 @@ require "./bdd.php";
 $login = $_POST['login'];
 $pwd = $_POST['password'];
 
-if (SESSION_STATUS() == PHP_SESSION_NONE)
+if (SESSION_STATUS() == PHP_SESSION_NONE) {
     session_start();
+}
 
 $_SESSION['old']['login'] = $_POST['login'];
 $_SESSION['error'] = array();
@@ -61,8 +62,8 @@ try {
 
 /* Case there is no User w/ that email */
 if (!isset($result[0])) {
-    $_SESSION['error']['login'] = "The password is incorrect";
-    header("Location: /pages/signIn.php?error=IncorrectPassword");
+    $_SESSION['error']['login'] = "The login is incorrect";
+    header("Location: /pages/signIn.php?error=IncorrectLogin");
     exit();
 }
 
