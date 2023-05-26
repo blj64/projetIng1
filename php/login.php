@@ -24,15 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: /pages/signIn.php?error=empty_fields");
         exit();
     }
-    
+
     /* Case of completed fields */
     /* Verification of the database connection */
     if (!is_connected_db()) {
         try {
             connect_db(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         } catch (Exception $e) {
-            echo
-            header("Location: /pages/signIn.php?error=connect_db line 26 : " . $e->getMessage());
+            header("Location: /pages/signIn.php?error=connect_db line 32 : " . $e->getMessage());
             exit();
         }
     }
@@ -45,13 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $hashpwd = password_hash($pwd, PASSWORD_BCRYPT);
     /* get the user */
     try {
-        $result = request_db(DB_RETRIEVE, "SELECT * FROM `User` WHERE `email` = $login");
+        $result = request_db(DB_RETRIEVE, "SELECT * FROM `User` WHERE `email` = '$login'");
     } catch (Exception $e) {
-        echo $e->getMessage();
-        header("Location: /pages/signIn.php?error=request_db line 45 : " . $e->getMessage());
+        header("Location: /pages/signIn.php?error=request_db line 49 : " . $e->getMessage());
         exit();
     }
 
@@ -67,12 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         isUnique($result);
     } catch (Exception $e) {
         echo $e->getMessage();
-        header("Location: /pages/signIn.php?error=isUnique line 59 : " . $e->getMessage());
+        header("Location: /pages/signIn.php?error=isUnique line 64 : " . $e->getMessage());
         exit();
     }
 
     /* Case the password is incorrect */
-    if (!password_verify($pwd, $result[0]["password"])) {
+    if (!password_verify("$pwd", $result[0]["password"])) {
         $_SESSION['error']['pwd'] = "The password is incorrect";
         header("Location: /pages/signIn.php?error=IncorrectPassword");
         exit();

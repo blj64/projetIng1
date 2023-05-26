@@ -34,7 +34,7 @@
                     <input type="password" name="password" id="password" placeholder="mot de passe" value="<?php if($retrive) echo $_SESSION['old']['password'];?>">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['pwd'])) {echo $_SESSION['error']['pwd']; unset($_SESSION['error']);}  ?></span>
                     
-                    <input type="submit" value="S'inscrire">
+                    <input type="submit" value="Se connecter">
 
                 <p class="message">Pas encore inscrit? <a href="/pages/signUp.php">Créer votre compte</a></p>
                 </form>

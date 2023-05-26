@@ -753,14 +753,15 @@ function getManagersDataChallenges() {
  */
 function existUserByEmail($email) {
     $request = "SELECT * FROM `User` WHERE email = '$email'";
-
+    $result = false;
+    
     try {
         $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error existUserByEmail : " . $e->getMessage());
     }
 
-    return ($result != array());
+    return ($result);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -787,7 +788,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
     if (existUserByEmail($email)) {
         throw new Exception("Error createUser : email already used.");
     }
-    $hashpwd = password_hash($password, PASSWORD_BCRYPT);
+    $hashpwd = password_hash($password, PASSWORD_DEFAULT);
     if (!$hashpwd) {
         throw new Exception("Error createUser : password hash failed.");
     }
