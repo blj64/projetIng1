@@ -380,7 +380,7 @@ function alterGroup_db($idGroup, $newName = null, $newIdLeader = null) : bool {
 /**
  * brief send a request to alter the `Quiz` table
  * @param $idQuiz       : the id of the quiz to which data is updated
- * @param $newIdDataC   : the new id of the data challenge  for the quiz
+ * @param $newIdDataC   : the new id of the data challenge for the quiz
  * @param $newName      : the new name of the quiz
  * @param $newStartDate : the new start date of the quiz
  * @param $newEndDate   : the new end date of the quiz
@@ -408,6 +408,55 @@ function alterQuiz_db($idQuiz, $newIdDataC = null, $newName = null, $newStartDat
             $column = $list_columns[$i]['Field'];
             $request =
             "UPDATE `Quiz` SET '$column' = '$listArgs[$i]' WHERE `idQuiz` = '$idQuiz'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception($error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterResource_db($idResource, $newIdDataC, $newName, $newPath)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Fri 26 May 2023 - 13:18:45
+ * */
+/**
+ * brief send a request to alter the `Resource` table
+ * @param $idResource  : the id of the resource to which data is updated
+ * @param $newIdDataC  : the new id of the data challenge for the resource
+ * @param $newName     : the new name of the resource
+ * @param $newPath     : the new path to the resource
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterResource_db($idResource, $newIdDataC = null, $newName = null, $newPath = null) {
+    $error = "Error alterQuiz_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Resource`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception($error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Resource` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Resource` SET '$column' = '$listArgs[$i]' WHERE `idResource` = '$idResource'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
