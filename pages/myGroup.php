@@ -206,8 +206,8 @@
                                     <input type="file" name="myFile" class="drop-zone__input">
                                 </div>
                                 <div class="box__uploading">Uploading…</div>
-                                <div class="box__success">Done!</div>
-                                <div class="box__error">Error! <span></span>.</div>
+                                <div class="box__success">Upload success!</div>
+                                <div class="box__error">Upload error! <span id="add_error"></span>.</div>
                             </form>
                         </div>
                         <div class="stats-box">

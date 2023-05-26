@@ -111,17 +111,18 @@ function updateThumbnail(dropZoneElement, file) {
         dropZoneElement.appendChild(thumbnailElement);
     }
 
-    thumbnailElement.dataset.label = file.name;
+    thumbnailElement.dataset.label = file.name; 
+    thumbnailElement.style.backgroundImage = null;
 
-    // Show thumbnail for image files
-    if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-        };
+    const box_success   = document.getElementsByClassName("box__success")[0];
+    const box_error     = document.getElementsByClassName("box__error")[0];
+    if(file.name.endsWith(".py"))
+    {
+        box_error.style.display = "none";
+        box_success.style.display = "block";
     } else {
-        thumbnailElement.style.backgroundImage = null;
+        box_error.style.display = "block"
+        box_success.style.display = "none";
+        box_error.children[0].innerHTML = "Must upload a .py file"
     }
 }
