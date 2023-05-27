@@ -83,7 +83,7 @@ if (!password_verify("$pwd", $result[0]["password"])) {
     exit();
 }
 
-
+unset($_SESSION['user']);
 $_SESSION['user']["id"] = $result[0]["id"];
 $_SESSION['user']["login"] = $result[0]["email"];
 
@@ -103,6 +103,5 @@ if (roleUser($result[0]['id'], STUDENT))  {
 
 unset($_SESSION['old']);
 unset($_SESSION['error']);
-var_dump($_SESSION);
 
 header("Location: /pages/index.php");

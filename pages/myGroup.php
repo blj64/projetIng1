@@ -1,3 +1,13 @@
+<?php
+    if( session_status() != PHP_SESSION_ACTIVE ) session_start();
+    if ($_SESSION['user']['group'] == NULL) {
+        header("Location: /pages/noGroup.php");
+        exit();
+    }
+
+    var_dump($_SESSION['user']['group'])
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
