@@ -638,3 +638,42 @@ body{
     background-color: lightpink;
 }
 
+
+
+/* css for 'no Group' sub-page */
+
+.all-box {
+    z-index: 100;
+    width: 100%;
+    height: fill-available;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+}
+
+.all-box h1 {
+    margin: 0 auto;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.all-box h2 {
+    margin: 0 auto;
+    font-size: large;
+    font-weight: normal;
+}
+
+.all-box a {
+    font-size: x-large;
+    font-size: 30px;
+    /* background-image: linear-gradient(100deg, #13bd92 0%, #3386ca 100%) !important; */
+    background-image: linear-gradient(160deg, #fe9192 0%, #8efae2 100%) !important;
+    margin: 2%;
+    padding: 2%;
+    border: 1px solid darkgrey    ;
+    border-radius: 25px;
+    color: black;
+}

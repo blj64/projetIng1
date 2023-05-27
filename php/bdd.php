@@ -724,7 +724,7 @@ function getGroupsDataC($idDataC) : array {
  */
 function getStudentsGroup($idGroup) : array  {
     $request =
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
     WHERE S.`idGroup` = '$idGroup'";
@@ -737,7 +737,7 @@ function getStudentsGroup($idGroup) : array  {
     $request = 
     "SELECT `idLeader` 
     FROM `Group` 
-    WHERE `idGroup` = '$idGroup'";
+    WHERE `id` = '$idGroup'";
 
     try {
         $result2 = request_db(DB_RETRIEVE, $request); 
@@ -748,7 +748,7 @@ function getStudentsGroup($idGroup) : array  {
     $student = array();
     foreach ($result as $row) {
         /* Add a 'leader' column to the previous result containing a bool which defines if the student is the leader or not */
-        $row['leader'] = ($row['id'] == $result2['idLeader']);
+        $row['leader'] = ($row['id'] == $result2[0]['idLeader']) ? true : false;
         $student[] = $row;
     }
 
@@ -1224,4 +1224,28 @@ function getAllMessageFromUser($idUser) : array {
  
 /* -------------------------------------------------------------------------- */
 
+
+/*
+ *  fn function getGroupById($idGroup)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Sat 27 May 2023 - 16:08:47
+*/
+/**
+ *  brief get a group by its id from the database
+ *  @param $idGroup : the id of the group
+ *  @return the group
+ *  @remarks throw an exception if the request is not valid
+ */
+function getGroupById($idGroup) {
+    $request = "SELECT * FROM `Group` WHERE `id` = '$idGroup'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getGroupById : " . $e->getMessage());
+    }
+
+    return($result);
+}
 ?>

@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 ?>
@@ -7,7 +8,7 @@ session_start();
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<link rel="stylesheet" href="../css/accueilAdmin.css">
+		<link rel="stylesheet" href="../css/accueil.css">
 		<link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/underHeader.css">
         <link rel="stylesheet" href="../css/stripmid.css">
@@ -17,33 +18,51 @@ session_start();
 		<title>Accueil</title>
 	</head>
 	<body>
-		<div id="part1Admin">
+		<div id="part1">
 			<?php include('../php/header.php'); ?>
 		</div>
-        <div id="part2Admin">
+        <div id="part2">
             <?php include('../php/underHeader.php'); ?>
 		</div>
-        <div id="part3Admin">
-            <div id ="cardAdmin">
-                <div id="card1Admin" class="spaceBetweenCards">
-                    <a href="">carte 1</a>
-                </div>
-                <div id="card2Admin" class="spaceBetweenCards">
-                    <a href="">carte 2</a> 
-                </div>
-                <div id="card3Admin">
-                    <a href="">carte 3</a>
-                </div>
+        <div id="part3">
+            <div id ="card" class="card-box">
+
+                <a href="/pages/myGroup.php" id="Team" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mon équipe</h1>
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="/pages/dataC.php" id="DataC" class="card">
+                    <div class="filter">
+                            <div class="card-img">
+                            <h1>Les challenges</h1>
+                        </div>
+                    </div>
+                </a>
+
+                
+                <a href="/pages/myGroup.php" id="profile" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mon profil</h1>
+                        </div>
+                    </div>
+                </a>
+
             </div>
 		</div>
 
-        <div id="part4Admin">
-            <?php include('../php/stripMid.php'); ?>
+        <div id="part4">
+            <?php require('../php/stripMid.php'); ?>
             </div>
         </div>  
 		
-		<div id="part5Admin">
-			<?php include('../php/footer.php'); ?>
+		<div id="part5">
+			<?php require('../php/footer.php'); ?>
 		</div>
 	
 	
