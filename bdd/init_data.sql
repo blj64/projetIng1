@@ -3,11 +3,11 @@
 
 USE IAPau;
 
-INSERT INTO `User` VALUES (null, "Nicolas", "Durand", "123456", "0606060606", "exemple@cy-tech.fr");
-INSERT INTO `User` VALUES (null, "Matt", "Coste", "123456", "0606060606", "exemple2@cy-tech.fr");
-INSERT INTO `User` VALUES (null, "admin", "admin", "123456", "0606060606", "admin@cy-tech.fr");
-INSERT INTO `User` VALUES (null, "Lilan", "gestionnaire", "123456", "0606060606", "gestion@cy-tech.fr");
-INSERT INTO `User` VALUES (null, "Lucas", "Fernandes", "123456", "0606060606", "exemple3@cy-tech.fr");
+INSERT INTO `User` VALUES (null, "Nicolas", "Durand", "$2y$10$zq6xyV8q0PWp9plNdQpewuZGIXCj8KJlyYYVk7wIu32ws0Lhjm1yK", "0606060606", "durandnico@cy-tech.fr"); /* Mot de passe : Azerty1! */
+INSERT INTO `User` VALUES (null, "Matt", "Coste", "$2y$10$Zjr2Wpmr6NkiXSIEIanYguGTgcFmmImDfRqvii/lCNEX914xiGhWK", "0606060606", "Costematt@cy-tech.fr"); /* Mot de passe : 123456 */
+INSERT INTO `User` VALUES (null, "admin", "admin", "$2y$10$1dC12ArtdzG2VHwqjvgSHuECfMDJTDR1.74KwfrlteIIGukzRCMxy", "0606060606", "admin@cy-tech.fr"); /* Mot de passe : admin */
+INSERT INTO `User` VALUES (null, "Lilan", "manager", "$2y$10$QJAKD69.horLpTlHGU64Oemt6NeG8L2qODpZtkRL63kkKbB1H65Ge", "0606060606", "manager@cy-tech.fr"); /* Mot de passe : manager */
+INSERT INTO `User` VALUES (null, "Lucas", "Fernandes", "$2y$10$Zjr2Wpmr6NkiXSIEIanYguGTgcFmmImDfRqvii/lCNEX914xiGhWK", "0606060606", "fernandes@cy-tech.fr"); /* Mot de passe : 123456 */
 
 INSERT INTO `Admin` VALUES (3);
 
