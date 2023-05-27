@@ -99,11 +99,10 @@
                     </div>';        
         } else {    
             /* if connected */
-            echo $_SESSION['user']['login'];
+            echo '<p>'.$_SESSION["user"]["login"].'</p>';
             echo '<a href="/pages/profile.php" class="pp"><img src="/asset/icon/profile.ico" alt="Profile P"></a>';
+            echo '<a href="/php/logoff.php" class="pp" style="margin-right: 5%;"><img src="/asset/icon/logoff.jpg" alt="logoff"></a>';
         }
-
-
         ?>
     </div>
 </header>
