@@ -83,29 +83,26 @@ if (!password_verify("$pwd", $result[0]["password"])) {
     exit();
 }
 
-var_dump($result);
 
 $_SESSION['user']["id"] = $result[0]["id"];
 $_SESSION['user']["login"] = $result[0]["email"];
-var_dump(roleUser($result[0]['id'], STUDENT));
 
 /* check if the user is a student and has a group */
 /* check if the user has a group */
 if (roleUser($result[0]['id'], STUDENT))  {
     /* get the student intels */
-    $request = "SELECT * FROM `Student` WHERE `user_id` = " . $result[0]["id"];
+    $request = "SELECT * FROM `Student` WHERE `idUser` = " . $result[0]["id"];
     try {
         $student = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         header("Location: /pages/signIn.php?error=request_db line 86 : " . $e->getMessage());
         exit();
     }
-    $_SESSION['user']["role"] = STUDENT;
-    $_SESSION['user']["group"] = $student[0]["group_id"];
+    $_SESSION['user']["group"] = $student[0]["idGroup"];
 }
 
-exit();
-
-
+unset($_SESSION['old']);
+unset($_SESSION['error']);
+var_dump($_SESSION);
 
 header("Location: /pages/index.php");
