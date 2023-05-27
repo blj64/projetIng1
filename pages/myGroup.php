@@ -1,12 +1,18 @@
 <?php
     if( session_status() != PHP_SESSION_ACTIVE ) session_start();
-    if ($_SESSION['user']['group'] == NULL) {
+    if (!isset($_SESSION['user']) || $_SESSION['user']['group'] == NULL) {
         header("Location: /pages/noGroup.php");
         exit();
     }
 
-    var_dump($_SESSION['user']['group'])
-?>
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/php/bdd.php';
+    if( !is_connected_db())
+        connect_db();
+    
+    $group = getGroupById($_SESSION['user']['group'])[0];
+    $groupUser = getStudentsGroup($_SESSION['user']['group']);
+    
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +37,7 @@
             <nav class="menu">
                 <a href="#Main" class="list active" onclick="changeMenu(this)">Mon équipe</a>
                 <a href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
-                <a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a>
+                <?php if ($_SESSION['user']['id'] == $group['idLeader']) echo '<a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a> '; ?>
                 <a href="#Rendu" class="list" onclick="changeMenu(this)">Rendu</a>
             </nav>
             <div class="rest">
@@ -40,21 +46,27 @@
                 <div class="content-box" id="Main">
                     <div class="left-box">
                         <div class="banner-group-name">
-                            <h1>Nom du groupe</h1>
+                            <h1><?php echo $group['name'] ?></h1>
                         </div>
                         <div class="list-group-name">
                             <fieldset>
                                 <legend>My team</legend>
-
-                                <div class="student">
-                                    <img class="leader" src="/asset/icon/crown.ico" alt="chef">
-                                    <p class="me">Nicolas Durand</p>
-                                </div>
-
-                                <div class="student">
-                                    <p> Lucas Fernandes </p>
-                                    <!--<img class="mini-menu" src="/asset/icon/menu.ico" alt="menu"> -->
-                                </div>
+                                
+                                <?php 
+                                    foreach( $groupUser as $user ) {
+                                        echo '<div class="student">';
+                                        
+                                        if( $user['id'] == $group['idLeader'] )
+                                            echo '<img class="leader" src="/asset/icon/crown.ico" alt="chef">';
+                                        
+                                            $me = '';
+                                        if( $user['id'] == $_SESSION['user']['id'] )
+                                            $me = ' class="me"';
+                                        
+                                        echo '<p'. $me .'>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
+                                        echo '</div>';
+                                    }
+                                ?>
 
                             </fieldset>
                         </div>
