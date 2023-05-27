@@ -1,100 +1,108 @@
 <header>
     <link rel="stylesheet" href="/css/header.css">
     <div class="left-part">
+    </div>
+
+    <div class="center-part">
+
+        <div class="logo">
+            <a href="/pages/">
+                <img src="/asset/img/iapau_round.png" alt="logo">
+            </a>
         </div>
-        
-        <div class="center-part">
-            <div class="logo">
-                <a href="/pages/">
-                    <img src="/asset/img/iapau_round.png" alt="logo">
-                </a>
-            </div>
 
-            <div class="main-menu">
-                <?php
-                    const PAGES = [
-                        'Accueil' => '/pages/accueilAdmin.php',
-                        'Data Challenges' => '/pages/dataChallenges.php',
-                        'CUSTOME' => [
-                            'USER' => [
-                                'Mon équipe' => '/pages/myGroup.php',
-                            ],
-                            'MANAGER' => [
-                                'Mon équipe' => '/pages/myGroup.php',
-                                'Mes challenges' => '/pages/myChallenges.php',
-                            ],
-                            'ADMIN' => [
-                                'Mes challenges' => '/pages/myChallenges.php',
-                                'Gestion des utilisateurs' => '/pages/manageUsers.php',
-                            ],
-                        ],
-                        'Contact' => '/pages/contact.php',
-                        'Profile' => '/pages/about.php'
-                    ];
-                    
-                    require_once($_SERVER['DOCUMENT_ROOT'].'/php/bdd.php');
-                    if( !is_connected_db())
-                        connect_db();
+        <div class="main-menu">
+            <?php
+            /* auto generate the menu */
+            /* adapt the menu to the user */
 
-                    $role = 'USER';
-                    if(isset($_SESSION['user']))
-                    {
-                        $role = (roleUser($_SESSION['user']['id'], MANAGER)) ? "MANAGER": "$role";
-                        $role = (roleUser($_SESSION['user']['id'], ADMIN)) ? "ADMIN": "$role";
-                    }
-                    /* get the url of the page */
-                    $window_url = explode('/',  $_SERVER['REQUEST_URI']);
-                    $current_page = end($window_url);
-                    foreach(PAGES as $name => $url){
-                        $added = '';
-                        if ($name == 'CUSTOME')
-                        {
-                            if($role != null)
-                            {
-                                foreach(PAGES[$name][$role] as $name => $url)
-                                {
-                                    if ($current_page == end(explode('/',$url)))
-                                        $added = 'class="here"';
-    
-                                    echo "<a href='$url' $added>$name</a>";
-                                }
-                            }
-                        
-                        }
-                        else
-                        {
-                            if ($current_page == end(explode('/',$url)))
+            const PAGES = [  // pages accessible by all
+                'Accueil' => '/pages/accueilAdmin.php',
+                'Data Challenges' => '/pages/dataChallenges.php',
+
+                'CUSTOME' => [ //custom menu for each role
+
+                    'USER' => [ // menu for all logged user
+                        'Mon équipe' => '/pages/myGroup.php',
+                    ],
+
+                    'MANAGER' => [ // menu for manager
+                        'Mon équipe' => '/pages/myGroup.php',
+                        'Mes challenges' => '/pages/myChallenges.php',
+                    ],
+
+                    'ADMIN' => [ // menu for admin
+                        'Mes challenges' => '/pages/myChallenges.php',
+                        'Gestion des utilisateurs' => '/pages/manageUsers.php',
+                    ],
+                ],
+
+                // back to pages accessible by all
+                'Contact' => '/pages/contact.php',
+                'Profile' => '/pages/about.php'
+            ];
+
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
+            if (!is_connected_db())
+                connect_db();
+
+            $role = null;
+            /* check if the user is connected then get it's role*/
+            if (isset($_SESSION['user'])) {
+                $role = 'USER';
+                $role = (roleUser($_SESSION['user']['id'], MANAGER)) ? "MANAGER" : "$role";
+                $role = (roleUser($_SESSION['user']['id'], ADMIN)) ? "ADMIN" : "$role";
+            }
+
+            /* get the url of the page */
+            $window_url = explode('/',  $_SERVER['REQUEST_URI']);
+            $current_page = end($window_url);
+
+            foreach (PAGES as $name => $url) {
+                /* un utilisateur non connecté ne peut pas accéder à la page d'accueil*/
+                if ($role == NULL && $name == "Accueil")
+                    continue;
+
+                $added = '';
+                if ($name == 'CUSTOME') {
+                    if ($role != null) {
+                        foreach (PAGES[$name][$role] as $name => $url) {
+                            if ($current_page == end(explode('/', $url)))
                                 $added = 'class="here"';
-                            
+
                             echo "<a href='$url' $added>$name</a>";
                         }
                     }
-                ?>
-            </div>
+                } else {
+                    if ($current_page == end(explode('/', $url)))
+                        $added = 'class="here"';
 
-            <div center-right-side>
+                    echo "<a href='$url' $added>$name</a>";
+                }
+            }
+            ?>
 
-            </div>
+        </div>
     </div>
 
     <div class="right-part">
         <?php
-
-            if(!isset($_SESSION['user']))
-            {
-                echo '<div class="dropdown">
+        /* check if the user is connected then display the login or the profile picture */
+        if (!isset($_SESSION['user'])) { 
+            /* if not connected */
+            echo '<div class="dropdown">
                         <img id="menu" src="../asset/icon/menu.png" alt="3barres">
                         <div class="dropdown-content">
                             <a href="/pages/signUp.php">Inscription</a>
                             <a href="/pages/signIn.php">Connexion</a>
                         </div>
-                    </div>';
-            }
-            else {
-                echo $_SESSION['user']['login'];
-                echo '<a href="/pages/profile.php" class="pp"><img src="/asset/icon/profile.ico" alt="Profile P"></a>';
-            }
-        
+                    </div>';        
+        } else {    
+            /* if connected */
+            echo $_SESSION['user']['login'];
+            echo '<a href="/pages/profile.php" class="pp"><img src="/asset/icon/profile.ico" alt="Profile P"></a>';
+        }
+
 
         ?>
     </div>
