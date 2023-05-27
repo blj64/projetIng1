@@ -29,10 +29,10 @@
                 <form action="/php/login.php" method="POST">
                     
                     <input type="text" name="login" id="login" placeholder="email" value="<?php if($retrive) echo $_SESSION['old']['login']; unset($_SESSION['old']);?>">
-                    <span class="error-msg"><?php  if (isset($_SESSION['error']['login']))  echo $_SESSION['error']['login'];   ?></span>
+                    <span class="error-msg"><?php  if ($retrive && isset($_SESSION['error']['login']))  echo $_SESSION['error']['login'];   ?></span>
                     
                     <input type="password" name="password" id="password" placeholder="mot de passe" value="<?php if($retrive) echo $_SESSION['old']['password'];?>">
-                    <span class="error-msg"><?php  if (isset($_SESSION['error']['pwd'])) {echo $_SESSION['error']['pwd']; unset($_SESSION['error']);}  ?></span>
+                    <span class="error-msg"><?php  if ($retrive && isset($_SESSION['error']['pwd'])) {echo $_SESSION['error']['pwd']; unset($_SESSION['error']);}  ?></span>
                     
                     <input type="submit" value="Se connecter">
 
