@@ -1,6 +1,6 @@
 <?php
     if( session_status() != PHP_SESSION_ACTIVE ) session_start();
-    if (!isset($_SESSION['user']) || $_SESSION['user']['group'] == NULL) {
+    if (!isset($_SESSION['user']) || !isset($_SESSION['user']['group']) || $_SESSION['user']['group'] == NULL) {
         header("Location: /pages/noGroup.php");
         exit();
     }
