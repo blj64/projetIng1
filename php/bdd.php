@@ -998,7 +998,7 @@ function deleteUser($idUser) : bool {
     try {
         request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error deleteUser : the user is the leader of a group");
+        throw new Exception("Error deleteUser : cannot delete the leader of a group");
     } 
 
     $request =
