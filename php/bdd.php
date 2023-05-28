@@ -1116,7 +1116,7 @@ function getAllDataCEnded() : array {
  */
 function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
 
-    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', null, 0)";
+    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', NOW(), 0)";
     
     try {
         request_db(DB_ALTER, $request);

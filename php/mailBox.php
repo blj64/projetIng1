@@ -38,7 +38,7 @@ require_once("bdd.php");
             <div id="msg-new-div">
                 <form id="msg-new-form">
                     <input name="msg" placeholder="message" type="text">
-                    <input type="hidden" name="datetime" value="<?php echo date("h:i:sa"); ?>">
+                    <!-- REMPLACER LA VALUE PAR L ID DE LA PERSONNE A QUI ON PARLE -->
                     <input type="hidden" name="sender" value="2">
                     <input type="hidden" name="receiver" value="<?php echo $idReceiver?>">
 
@@ -91,10 +91,11 @@ require_once("bdd.php");
             event.preventDefault();
         });
 
-        
 
 
     </script>
+   
+
 </body>
 </html>
 
