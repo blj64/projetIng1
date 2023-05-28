@@ -615,7 +615,6 @@ function getAllManagers() {
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllManagers : " . $e->getMessage());
     }
@@ -639,13 +638,12 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "Select `id`, `idGroup`, `firstName`, `lastName`, `password`, `number`, `email`, `lvStudy`, `school`, `city`
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
     JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getAllStudents : " . $e->getMessage());
     }
