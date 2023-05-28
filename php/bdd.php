@@ -1070,7 +1070,8 @@ function getAllDataCStarted() : array {
     $request = "
     SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
     FROM `DataChallenge`
-    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
+    WHERE '$currentDate' < `endDate`
+    ORDER BY `startDate`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
