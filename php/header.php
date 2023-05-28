@@ -78,6 +78,7 @@
                 if ($name == 'CUSTOME') {
                     if ($role != null) {
                         foreach (PAGES[$name][$role] as $name => $url) {
+                            $added = '';
                             $split_url = explode('/', (string)$url);    
                             if ($current_page === end($split_url))
                                 $added = 'class="here"';
