@@ -14,7 +14,8 @@ INSERT INTO `Admin` VALUES (3);
 
 INSERT INTO `Manager` VALUES (4, "Cy-Tech", "2020-04-28", "2020-05-28");
 
-INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2020-05-28", "image1");
+INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2023-07-28", "2023-08-28", "/asset/img/bigbrains.jpg");
+INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2024-05-28", "/asset/img/ilheou.jpg");
 
 INSERT INTO `Group` VALUES (null, "Group1", 1, 1);
 
