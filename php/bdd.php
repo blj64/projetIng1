@@ -140,7 +140,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -151,14 +151,14 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
             if ($i == 3) {
                 $newHashpwd = password_hash($newPassword, PASSWORD_DEFAULT);
                 if (!$newHashpwd) {
-                    throw new Exception($error . "password hash failed.");
+                    throw new Exception("" . $error . "password hash failed.");
                 }
                 $request =
                 "UPDATE `User` SET `password` = '$newHashpwd' WHERE `id` = '$idUser'";
                 try {
                     request_db(DB_ALTER, $request);
                 } catch (Exception $e) {
-                    throw new Exception($error . $e->getMessage()); 
+                    throw new Exception("" . $error . $e->getMessage()); 
                 } 
             } else {
                 /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `User` table */
@@ -168,7 +168,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
                 try {
                     request_db(DB_ALTER, $request);
                 } catch (Exception $e) {
-                    throw new Exception($error . $e->getMessage());
+                    throw new Exception("" . $error . $e->getMessage());
                 }
             }
         }
@@ -204,7 +204,7 @@ function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndD
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -219,7 +219,7 @@ function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndD
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -253,7 +253,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -268,7 +268,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -303,7 +303,7 @@ function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $ne
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -318,7 +318,7 @@ function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $ne
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -361,7 +361,7 @@ function alterGroup_db($idGroup, $newName = null, $newIdLeader = null) : bool {
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -396,7 +396,7 @@ function alterQuiz_db($idQuiz, $newIdDataC = null, $newName = null, $newStartDat
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -411,7 +411,7 @@ function alterQuiz_db($idQuiz, $newIdDataC = null, $newName = null, $newStartDat
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -445,7 +445,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
     try {
         $list_columns = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception($error . $e->getMessage());
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     $numArgs = func_num_args();
@@ -460,7 +460,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
-                throw new Exception($error . $e->getMessage());
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
