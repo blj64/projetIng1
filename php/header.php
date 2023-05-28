@@ -18,7 +18,7 @@
 
             const PAGES = [  // pages accessible by all
                 'Accueil' => '/pages/accueilAdmin.php',
-                'Data Challenges' => '/pages/dataChallenges.php',
+                'Data Challenges' => '/pages/challenges.php',
 
                 'CUSTOME' => [ //custom menu for each role
 
@@ -33,7 +33,7 @@
 
                     'ADMIN' => [ // menu for admin
                         'Mes challenges' => '/pages/myChallenges.php',
-                        'Gestion des utilisateurs' => '/pages/manageUsers.php',
+                        'Gestion des utilisateurs' => '/pages/gestionUser.php',
                     ],
                 ],
 
@@ -45,6 +45,9 @@
             require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
             if (!is_connected_db())
                 connect_db();
+
+            if (session_status() == PHP_SESSION_NONE)
+                session_start();
 
             $role = null;
             /* check if the user is connected then get it's role*/
@@ -67,14 +70,16 @@
                 if ($name == 'CUSTOME') {
                     if ($role != null) {
                         foreach (PAGES[$name][$role] as $name => $url) {
-                            if ($current_page == end(explode('/', $url)))
+                            $split_url = explode('/', (string)$url);    
+                            if ($current_page === end($split_url))
                                 $added = 'class="here"';
 
                             echo "<a href='$url' $added>$name</a>";
                         }
                     }
                 } else {
-                    if ($current_page == end(explode('/', $url)))
+                    $split_url = explode('/', (string)$url);
+                    if ($current_page === end($split_url))
                         $added = 'class="here"';
 
                     echo "<a href='$url' $added>$name</a>";

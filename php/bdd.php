@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "blj");
-define("DB_PASS", "root");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -1092,7 +1092,8 @@ function getAllDataCStarted() : array {
     $request = "
     SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
     FROM `DataChallenge`
-    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
+    WHERE '$currentDate' < `endDate`
+    ORDER BY `startDate`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
