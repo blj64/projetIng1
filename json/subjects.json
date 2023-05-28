@@ -1,0 +1,38 @@
+{
+    "dataC": [
+        {
+            "idDataC": 1,
+            "description": "Ceci est un data challenge",
+            "nbSubjects": 3,
+            "subjects": [
+                {
+                    "idS": 1,
+                    "name": "Sujet1",
+                    "description": "Ceci est le sujet 1"
+                },
+                {
+                    "idS": 2,
+                    "name": "Sujet2",
+                    "description": "Ceci est le sujet 2"
+                },
+                {
+                    "idS": 3,
+                    "nom": "Sujet3",
+                    "description": "Ceci est le sujet 3"
+                }
+            ]
+        },
+        {
+            "idDataC": 2,
+            "description": "Ceci est un deuxième data challenge",
+            "nbSubjects": 1,
+            "subjects": [
+                {
+                    "idS": 1,
+                    "name": "Sujet1",
+                    "description": "Ceci est le sujet 1"
+                }
+            ]
+        }
+    ]
+}
