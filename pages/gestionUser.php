@@ -74,6 +74,12 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
 
                     <?php
                     $manager = getAllManagers();
+                    
+                    $event = getManagersDataChallenges();
+                    $idEvent = array();
+                    foreach ($event as $id => $value) {
+                        $idEvent[$value['id']] = $value['idDataC'];
+                    }
 
                     foreach ($manager as $id => $value) {
                         echo '
@@ -84,6 +90,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                                 <input id=company type=hidden value="' . $value['company'] . '">
                                 <input id=startDate type=hidden value="' . $value['startDate'] . '">
                                 <input id=endDate type=hidden value="' . $value['endDate'] . '">
+                                <input id=idEvent type=hidden value="' . $idEvent[$value['id']] . '">
                                 <div class="profile-picture">
                                     <img id=img src="/asset/icon/profile.ico" alt="profile-picture">
                                 </div>
@@ -93,6 +100,8 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                             </div>';
                     }
                     unset($manager);
+                    unset($event);
+                    unset($idEvent);
                     ?>
                 </div>
             </div>
@@ -203,6 +212,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                         echo '<input type="text" id=prev-company placeholder="Entreprise" value="IA Pau">';
                         echo '<input type="date" id=prev-dateD  value="2002-03-04">';
                         echo '<input type="date" id=prev-dateF  value="2004-03-04">';
+                        echo '<input type="text" id=prev-respo  value="id_data">';
                     }
                     else if(roleUser($user['id'], STUDENT))
                     {

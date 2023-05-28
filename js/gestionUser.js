@@ -105,6 +105,7 @@ function gather_data(that) {
         data.set("company", that.children[3].value);
         data.set("startDate", that.children[4].value);
         data.set("endDate", that.children[5].value);
+        data.set("idEvent", that.children[6].value);
     }
 
     return (data);
@@ -193,6 +194,7 @@ function show(that) {
         createInput("text", "prev-company", "Entreprise", data.get("company"), true, custom);
         createInput("date", "prev-startDate", "Date de début", data.get("startDate"), true, custom);
         createInput("date", "prev-endDate", "Date de fin", data.get("endDate"), true, custom);
+        createInput("text", "prev-respo", "Respo data event id :", data.get("idEvent"), true, custom);
     }
     else if(data.get("role") == "USER")
     {
@@ -277,6 +279,7 @@ function gather_data_preview() {
         data.set("company", document.getElementById("prev-company").value);
         data.set("startDate", document.getElementById("prev-startDate").value);
         data.set("endDate", document.getElementById("prev-endDate").value);
+        data.set("idEvent", document.getElementById("prev-respo").value);
     }
 
     return (data);
@@ -343,7 +346,7 @@ async function MakeManager() {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "id=" + data.get("id") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate")
+        body: "id=" + data.get("id") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate") + "&idDataC=" + data.get("idEvent")
     })
     .then(response => response.text())
     .then( function (res) {
