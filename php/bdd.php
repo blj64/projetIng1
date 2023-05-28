@@ -906,7 +906,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
  *  @return true if the manager has been inserted successfully
  *  @remarks check if a user with the id $userId exists
  */
-function createManager($idUser, $company, $startDate, $endDate) : bool {
+function createManager($idUser, $company, $startDate = null, $endDate = null) : bool {
     /* Check if the user exists */
     $request = 
     "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
@@ -923,12 +923,34 @@ function createManager($idUser, $company, $startDate, $endDate) : bool {
 
     /* Insert the new manager in the database */
     $request = 
-    "INSERT INTO `Manager` VALUES ('$idUser', '$company', '$startDate', '$endDate')";
+    "INSERT INTO `Manager` VALUES ('$idUser', '$company', null, null)";
 
     try {
         $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("Error createManager : " . $e->getMessage());
+    }
+
+    if ($startDate != null) {
+        $request = 
+        "UPDATE `Manager` SET `startDate` = '$startDate' WHERE `idUser` = '$idUser'";
+
+        try {
+            $result = request_db(DB_ALTER, $request);
+        } catch (Exception $e) {
+            throw new Exception("Error createManager : " . $e->getMessage());
+        }
+    }
+
+    if ($endDate != null) {
+        $request = 
+        "UPDATE `Manager` SET `endDate` = '$endDate' WHERE `idUser` = '$idUser'";
+
+        try {
+            $result = request_db(DB_ALTER, $request);
+        } catch (Exception $e) {
+            throw new Exception("Error createManager : " . $e->getMessage());
+        }
     }
 
     return(true);
