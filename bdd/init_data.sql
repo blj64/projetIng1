@@ -13,6 +13,8 @@ INSERT INTO `User` VALUES (null, "Celian", "Pallard", "$2y$10$fSRaNhdoFEkEx3MLvP
 INSERT INTO `Admin` VALUES (3);
 
 INSERT INTO `Manager` VALUES (4, "Cy-Tech", "2020-04-28", "2020-05-28");
+INSERT INTO `Manager` VALUES (6, "Cy-Tech", "2020-04-28", "2020-05-28");
+
 
 INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2023-07-28", "2023-08-28", "/asset/img/bigbrains.jpg");
 INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2024-05-28", "/asset/img/ilheou.jpg");
@@ -24,6 +26,7 @@ INSERT INTO `Student` VALUES (2, 1, "L2", "CY Tech", "Cergy");
 INSERT INTO `Student` VALUES (5, 1, "L3", "EISTI", "Pau");
 
 INSERT INTO `Handle` VALUES (4, 1);
+INSERT INTO `Handle` VALUES (6, 2);
 
 INSERT INTO `Message` (`idSender`, `idReceiver`, `messageContent`) VALUES (3, 4, "Hello World!");
 
