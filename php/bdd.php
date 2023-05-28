@@ -1116,7 +1116,7 @@ function getAllDataCEnded() : array {
  */
 function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
 
-    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', null)";
+    $request = "INSERT INTO Message VALUES (null, '$idSender', '$idReceiver', '$message', null, 0)";
     
     try {
         request_db(DB_ALTER, $request);
@@ -1199,7 +1199,7 @@ function roleUser($idUser, $role) : bool {
 
 * @remarks throw an exception if the request is not valid
 */
-function getAllMessageFromUser($idUser) : array {
+function getAllMessageFromUser($idReceiver, $idSender) : array{
     if (!is_connected_db()) {
         try {
             connect_db();
@@ -1208,7 +1208,7 @@ function getAllMessageFromUser($idUser) : array {
             exit();
         }
     }
-    $query = "SELECT * FROM `Message` where `idSender` = '$idUser' or `idReceiver` = '$idUser'";
+    $query = "SELECT * FROM `Message` where (`idSender` = '$idReceiver' and `idReceiver` = '$idSender') or (`idReceiver` = '$idReceiver' and `idSender` = '$idSender')";
     
     try {
         // Call the request_db function and pass the query
@@ -1217,7 +1217,7 @@ function getAllMessageFromUser($idUser) : array {
         throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
     }
 
-    return($result);
+    return ($result);
 }
  
 /* -------------------------------------------------------------------------- */
@@ -1246,4 +1246,45 @@ function getGroupById($idGroup) {
 
     return($result);
 }
+/* -------------------------------------------------------------------------- */
+
+/*
+*  *fn function getAllUserContacted($idReceiver)
+*  *author Lioger--Bun Jérémi <liogerbunj@cy-tech.fr>
+*  *version 0.1
+*  *date Sat 20 May 2023 - 17:11:25
+*/
+/**
+* brief send a request to alter the `Message` table
+
+* @remarks throw an exception if the request is not valid
+*/
+function getAllUserContacted($idReceiver) : array {
+    if (!is_connected_db()) {
+        try {
+            connect_db();
+        } catch (Exception $e){
+            echo $e->getMessage();
+            exit();
+        }
+    }
+    $query = "SELECT DISTINCT u.firstName, u.id /**Distinct is use to get each person one time */
+    FROM User u 
+    JOIN Message m ON u.id = m.idSender 
+    WHERE m.idReceiver = '$idReceiver' or idSender = '$idReceiver'
+    ";
+    
+    try {
+        // Call the request_db function and pass the query
+        $result = request_db(DB_RETRIEVE, $query);
+    } catch (Exception $e) {
+        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
+    }
+
+    return($result);
+}
+ 
+/* -------------------------------------------------------------------------- */
+
+
 ?>

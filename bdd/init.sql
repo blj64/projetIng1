@@ -73,10 +73,12 @@ CREATE TABLE `Message` (
     `idReceiver` INT UNSIGNED NOT NULL,
     `messageContent` TEXT NOT NULL,
     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `seen` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`idMessage`),
     FOREIGN KEY (`idSender`) REFERENCES `User`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`idReceiver`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
+
 
 CREATE TABLE `Quiz` (
     `idQuiz` INT UNSIGNED NOT NULL AUTO_INCREMENT,

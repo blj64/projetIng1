@@ -1,5 +1,6 @@
 <?php
 require_once("bdd.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -12,31 +13,34 @@ require_once("bdd.php");
 </head>
 <body>
     <div id="boxmail-div">
+        <?php 
+        //Change $idReceiver to the id of the current user
+            $idReceiver = 1; 
+        ?>
         <section id="user-conv">
             <button class="" id="new-chat">+</button>
-            <button id="peio-chat">peio</button>
+            <?php
+                $senders = getAllUserContacted($idReceiver);
+                foreach($senders as $user) {
+                    echo "<button onclick='changeConversation(".$user["id"].")'>";
+                    echo $user["firstName"];
+                    echo "</button><br>";
+                }
+            ?>
         </section>
         <section id="boxmail">
             <div id="msg-person-div">
                 <h2>Personne</h2>
             </div>
             <div id="msg-container-div">
-                <?php
-                $messages = getAllMessageFromUser(2);
-                foreach ($messages as $message) {
-                    foreach ($message as $column => $value) {
-                        echo "<span>" . $column . ": " . $value . "</span>";
-                    }
-                    echo "<br>";
-                }
-                ?>
+                
             </div>
             <div id="msg-new-div">
                 <form id="msg-new-form">
                     <input name="msg" placeholder="message" type="text">
                     <input type="hidden" name="datetime" value="<?php echo date("h:i:sa"); ?>">
-                    <input type="hidden" name="sender" value="1">
-                    <input type="hidden" name="receiver" value="2">
+                    <input type="hidden" name="sender" value="">
+                    <input type="hidden" name="receiver" value="<?php echo $idReceiver?>">
 
                     <button type="button" onclick="loadSendMsg()">Click here</button>
                 </form>
@@ -45,29 +49,53 @@ require_once("bdd.php");
     </div>
 
     <script>
+        
         function loadSendMsg() {
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.onload = function() {
-            const response = this.responseText;
-            const msgContainer = document.getElementById("msg-container-div");
-            const newMsg = document.createElement("span");
-            newMsg.innerHTML = response;
-            msgContainer.appendChild(newMsg);
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                const response = this.responseText;
+                const msgContainer = document.getElementById("msg-container-div");
+                const newMsg = document.createElement("span");
+                newMsg.innerHTML = response;
+                msgContainer.appendChild(newMsg);
+            }
+
+            // Get the form data
+            const form = document.getElementById("msg-new-form");
+            const formData = new FormData(form);
+
+            xmlhttp.open("POST", "sendMsg.php");
+            xmlhttp.send(formData);
         }
 
-        // Get the form data
-        const form = document.getElementById("msg-new-form");
-        const formData = new FormData(form);
+        function changeConversation(id) {
+            const idSender = 1; // Replace with the actual sender ID
+            const idReceiver = id;
 
-        xmlhttp.open("POST", "sendMsg.php");
-        xmlhttp.send(formData);
-    }
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    document.getElementById("msg-container-div").innerHTML = response;
+                }
+            };
+            console.log("loadMessage.php?idReceiver=" + idReceiver + "&idSender=" + idSender);
+            xhr.open("GET", "loadMessage.php?idReceiver=" + idReceiver + "&idSender=" + idSender, true);
+            xhr.send();
+        
+        }
 
         // Prevent default form submission behavior
         const form = document.getElementById("msg-new-form");
         form.addEventListener("submit", function(event) {
             event.preventDefault();
         });
+
+        
+
+
     </script>
 </body>
 </html>
+
+
