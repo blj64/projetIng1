@@ -44,10 +44,6 @@ if (!is_connected_db())
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
-var_dump(isset($_POST['startDate']));
-echo "<br>";
-var_dump($_POST['startDate']);
-
 try {
     createManager($_POST['id'], $_POST['company'], $_POST['startDate'] != "undefined" ? $_POST['startDate'] : null, $_POST['endDate'] != "undefined" ? $_POST['endDate'] : null);
 } catch (Exception $e) {
