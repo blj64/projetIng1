@@ -772,12 +772,11 @@ function getManagersDataChallenges() {
     "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
-    JOIN `Handle` AS H ON H.`idUser` = H.`idUser` 
+    JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
     JOIN DataChallenge AS DC ON DC.`idDataC` = H.`idDataC`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
-        $result = isUnique($result);
     } catch (Exception $e) {
         throw new Exception("Error getManagersDataChallenges : " . $e->getMessage());
     }
