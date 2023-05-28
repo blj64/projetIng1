@@ -26,7 +26,7 @@ static $jsonFilePath = "../json/subjects.json";
  *  *date Sun 28 May 2023 - 14:22:00
  * */
 /**
- * brief send a request to alter the `User` table
+ * brief update the description of a data challenge
  * @param $idDataC : the id of the data challenge to which the description is updated
  * @param $newDesc : the new description of the data challenge
  * @return true if the description was altered successfully
@@ -62,6 +62,11 @@ function alterDescDataC($idDataC, $newDesc) {
         $i++;
     }
 
+    /* Case of an invalid id for the data challenge */
+    if (!$check) {
+        throw new Exception("" . $s . "the id of the data challenge is not valid");
+    }
+
     $obj = json_encode($dataC);
 
     if (!$obj) {
@@ -77,6 +82,8 @@ function alterDescDataC($idDataC, $newDesc) {
     return(true);
 }
 
+/* **************************************************************************** */
+
 /*
  *  *fn function alterDescSubject($idDataC, $idSubject, $newDesc)
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
@@ -84,7 +91,7 @@ function alterDescDataC($idDataC, $newDesc) {
  *  *date Sun 28 May 2023 - 15:46:50
  * */
 /**
- * brief send a request to alter the `User` table
+ * brief update the description of a subject of a data challenge
  * @param $idDataC   : the id of the data challenge linked to the given subject
  * @param $idSubject : the id of the subject to which the description is updated
  * @param $newDesc   : the new description of the data challenge
@@ -114,17 +121,25 @@ function alterDescSubject($idDataC, $idSubject, $newDesc) {
     }
 
     while ($i < $nb_dataC && !$check) {
+        /* Check idDataC to update the correct data challenge */
         if ($dataC[$i]['idDataC'] == $idDataC) {
-            /* Check if the id of the subject entered as a parameter is a valid one */
             $nb_subjects = $dataC[$i]['nbSubjects'];
-            if ($idSubject <= $nb_subjects && 0 < $idSubject) {
-                throw new Exception("" . $s . "the id of the subject is not valid");
-            }
             $subjects = $dataC[$i]['subjects'];
-            $subjects[$idSubject - 1]['description'] = $newDesc;
+            /* Check idS of all subjects (up to 3) to update the correct one */
+            for ($j = 0; $j < $nb_subjects; $j++) {
+                if ($subjects[$j]['idS'] == $idSubject) {
+                    $subjects[$j]['description'] = $newDesc;
+                    $checkUpdate = true;
+                }
+            }
             $check = !$check;
         }
         $i++;
+    }
+
+    /* Case of an invalid id for the subject */
+    if (isset($checkUpdate)) {
+        throw new Exception("" . $s . "the id of the subject is not valid");
     }
 
     $obj = json_encode($dataC);
@@ -142,3 +157,117 @@ function alterDescSubject($idDataC, $idSubject, $newDesc) {
     return(true);
 }
 
+/* **************************************************************************** */
+
+/*
+ *  *fn function getDescDataC($idDataC)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sun 28 May 2023 - 16:51:45
+ * */
+/**
+ * brief get the description of a data challenge
+ * @param $idDataC : the id of the data challenge
+ * @return string w/ the description of the given data challenge
+ * @remarks throw an exception if the encoding / decoding of the json file fails or if unable to read / write a file
+ */
+function getDescDataC($idDataC) : string {
+    $s = "Error getDescDataC : ";
+    $json = file_get_contents($jsonFilePath);
+
+    if (!$json) {
+        throw new Exception("" . $s . "unable to read data");
+    }
+    $obj = json_decode($json, true);
+
+    if ($obj == null) {
+        throw new Exception("" . $s . "unable to decode json");
+    }
+    $dataC = $obj['dataC'];
+    $check = false;
+    $i = 0;
+
+    try {
+        $nb_dataC = count($dataC);
+    } catch (Exception $e) {
+        throw new Exception("" . $s . $e->getMessage());
+    }
+
+    while ($i < $nb_dataC && !$check) {
+        if ($dataC[$i]['idDataC'] == $idDataC) {
+            $desc = $dataC[$i]['description'];
+            $check = !$check;
+        }
+        $i++;
+    }
+
+    /* Case of an invalid id for the data challenge */
+    if (!isset($desc)) {
+        throw new Exception("" . $s . "the id of the data challenge is not valid");
+    }
+
+    return ($desc);
+}
+
+/* **************************************************************************** */
+
+/*
+ *  *fn function getDescSubject($idDataC, $idSubject)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sun 28 May 2023 - 17:02:10
+ * */
+/**
+ * brief get the description of a subject of a data challenge
+ * @param $idDataC   : the id of the data challenge
+ * @param $idSubject : the id of the subject
+ * @return string w/ the description of the given data challenge
+ * @remarks throw an exception if the encoding / decoding of the json file fails or if unable to read / write a file
+ */
+function getDescSubject($idDataC, $idSubject) {
+    $s = "Error getDescSubject : ";
+    $json = file_get_contents($jsonFilePath);
+
+    if (!$json) {
+        throw new Exception("" . $s . "unable to read data");
+    }
+    $obj = json_decode($json, true);
+
+    if ($obj == null) {
+        throw new Exception("" . $s . "unable to decode json");
+    }
+    $dataC = $obj['dataC'];
+    $check = false;
+    $i = 0;
+
+    try {
+        $nb_dataC = count($dataC);
+    } catch (Exception $e) {
+        throw new Exception("" . $s . $e->getMessage());
+    }
+
+    while ($i < $nb_dataC && !$check) {
+        /* Check idDataC to update the correct data challenge */
+        if ($dataC[$i]['idDataC'] == $idDataC) {
+            $nb_subjects = $dataC[$i]['nbSubjects'];
+            $subjects = $dataC[$i]['subjects'];
+            /* Check idS of all subjects (up to 3) to update the correct one */
+            for ($j = 0; $j < $nb_subjects; $j++) {
+                if ($subjects[$j]['idS'] == $idSubject) {
+                    $desc = $subjects[$j]['description'];
+                }
+            }
+            $check = !$check;
+        }
+        $i++;
+    }
+
+    /* Case of an invalid id for the subject */
+    if (isset($desc)) {
+        throw new Exception("" . $s . "the id of the subject is not valid");
+    }
+
+    return ($desc);
+}
+
+?>
