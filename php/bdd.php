@@ -164,7 +164,7 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
                 /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `User` table */
                 $column = $list_columns[$i]['Field'];
                 $request =
-                "UPDATE `User` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idUser'";
+                "UPDATE `User` SET $column = '$listArgs[$i]' WHERE `id` = '$idUser'";
                 try {
                     request_db(DB_ALTER, $request);
                 } catch (Exception $e) {
@@ -215,7 +215,7 @@ function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndD
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `DataChallenge` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `DataChallenge` SET '$column' = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            "UPDATE `DataChallenge` SET $column = '$listArgs[$i]' WHERE `id` = '$idDataC'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -264,7 +264,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Manager` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Manager` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idManager'";
+            "UPDATE `Manager` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idManager'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -314,7 +314,7 @@ function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $ne
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Student` SET '$column' = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
+            "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -407,7 +407,7 @@ function alterQuiz_db($idQuiz, $newIdDataC = null, $newName = null, $newStartDat
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Quiz` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Quiz` SET '$column' = '$listArgs[$i]' WHERE `idQuiz` = '$idQuiz'";
+            "UPDATE `Quiz` SET $column = '$listArgs[$i]' WHERE `idQuiz` = '$idQuiz'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -456,7 +456,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Resource` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `Resource` SET '$column' = '$listArgs[$i]' WHERE `idResource` = '$idResource'";
+            "UPDATE `Resource` SET $column = '$listArgs[$i]' WHERE `idResource` = '$idResource'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -991,6 +991,16 @@ function createAdmin($idUser) : bool {
  *  @return true if the user has been successfully deleted
  */
 function deleteUser($idUser) : bool {
+
+    $request =
+    "SELECT EXISTS(SELECT * FROM `Group` WHERE `idLeader` = '$idUser') AS RES";
+
+    try {
+        request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error deleteUser : the user is the leader of a group");
+    } 
+
     $request =
     "DELETE FROM `User` 
     WHERE `id` = '$idUser'";
@@ -999,10 +1009,9 @@ function deleteUser($idUser) : bool {
         request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("Error deleteUser : " . $e->getMessage());
-    }
-
+    } 
+    
     return(true);
-
 }
 
 /* -------------------------------------------------------------------------- */
