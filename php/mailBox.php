@@ -39,7 +39,7 @@ require_once("bdd.php");
                 <form id="msg-new-form">
                     <input name="msg" placeholder="message" type="text">
                     <input type="hidden" name="datetime" value="<?php echo date("h:i:sa"); ?>">
-                    <input type="hidden" name="sender" value="">
+                    <input type="hidden" name="sender" value="2">
                     <input type="hidden" name="receiver" value="<?php echo $idReceiver?>">
 
                     <button type="button" onclick="loadSendMsg()">Click here</button>
