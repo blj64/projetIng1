@@ -15,7 +15,7 @@ require_once("bdd.php");
     <div id="boxmail-div">
         <?php 
         //Change $idReceiver to the id of the current user
-            $idReceiver = 1; 
+            $idReceiver = $_SESSION["user"]["id"]; 
         ?>
         <section id="user-conv">
             <button class="" id="new-chat">+</button>
@@ -69,8 +69,8 @@ require_once("bdd.php");
         }
 
         function changeConversation(id) {
-            const idSender = 1; // Replace with the actual sender ID
-            const idReceiver = id;
+            const idSender = id; // Replace with the actual sender ID
+            const idReceiver = <?php echo $idReceiver ?>;
 
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -91,7 +91,7 @@ require_once("bdd.php");
             event.preventDefault();
         });
 
-
+        setInterval(changeConversation, 2000, <?php echo $idReceiver?>);
 
     </script>
    
