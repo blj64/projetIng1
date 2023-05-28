@@ -50,14 +50,14 @@ try {
     exit(1);
 }
 
-if(roleUser($_SESSION['user']['id'], STUDENT))
+if(roleUser($_POST['id'], STUDENT))
     try {
         alterStudent_db($_POST['id'], null, $_POST['lvStudy'], $_POST['school'] , $_POST['city']);
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
         exit(1);
     }
-else if(roleUser($_SESSION['user']['id'], MANAGER))
+else if(roleUser($_POST['id'], MANAGER))
 {
     try {
         alterManager_db($_POST['id'], $_POST['company'], $_POST['startDate'], $_POST['endDate']);
