@@ -14,54 +14,44 @@
         <div class="center">
             <div class="feed">
 
-                <div class="event">
-                    <div class="event-img">
-                        <img src="/asset/img/bigbrains.jpg" alt="image-event">
-                    </div>
-                    <div class="event-intel">
-                        <h1>NOM EVENT</h1>
-                        <p>
-                        Tyrannosaurus, communément appelé tyrannosaure, est un genre éteint de dinosaures théropodes appartenant à la famille des Tyrannosauridae et ayant vécu durant la partie supérieure du Maastrichtien, dernier étage du système Crétacé, il y a environ 68 à 66 millions d'années, dans ce qui est actuellement l'Amérique du Nord
-                        </p>
-                    </div>
-                    <div class="bottom-event">
-                        <button>En savoir plus</button>
-                    </div>
-                </div>
+                <?php
 
+                if(session_status() == PHP_SESSION_NONE)
+                    session_start();
 
-                <div class="event">
-                    <div class="event-img">
-                        <img src="/asset/img/IMG20210808093633-scaled.jpg" alt="image-event">
-                    </div>
-                    <div class="event-intel">
-                        <h1>NOM EVENT</h1>
-                        <p>
-                            Titouan le meilleur grand leader supreme il est trop pipou UwU
-                        </p>
-                    </div>
-                    <div class="bottom-event">
-                        <button>En savoir plus</button>
-                    </div>
-                </div>
+                require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
+                if (!is_connected_db())
+                    connect_db();
 
-
-
-                <div class="event">
-                    <div class="event-img">
-                        <img src="/asset/img/profile.jpg" alt="image-event">
-                    </div>
-                    <div class="event-intel">
-                        <h1>NOM EVENT</h1>
-                        <p>
-                        Tyrannosaurus, communément appelé tyrannosaure, est un genre éteint de dinosaures théropodes appartenant à la famille des Tyrannosauridae et ayant vécu durant la partie supérieure du Maastrichtien, dernier étage du système Crétacé, il y a environ 68 à 66 millions d'années, dans ce qui est actuellement l'Amérique du Nord
-                        </p>
-                    </div>
-                    <div class="bottom-event">
-                        <button>En savoir plus</button>
-                    </div>
-                </div>
+                $dataC = getAllDataCStarted();
                 
+                foreach ($dataC as $key => $value) 
+                {
+                    $desc = "Titouan il est bo et il est trop pipou UwU";
+                    echo
+                    '<div class="event" id='.$value['id'].'>
+                        <div class="event-img">
+                            <img src="'.$value['image'].'" alt="image-event">
+                        </div>
+                        <div class="event-intel">
+                            <h1>'.$value['name'].'</h1>
+                            <p>
+                            '. $desc .'
+                            </p>
+                        </div>
+                        <div class="bottom-event">
+                            <div class="delais">
+                                <input type="date" id=deb value="'.$value["startDate"].'" disabled="true">
+                                <span>:</span>
+                                <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
+                            </div>
+                            <button>En savoir plus</button>
+                        </div>
+                    </div>';
+                }
+                
+                ?>
+         
 
             </div>
         </div>
