@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_USER", "blj");
+define("DB_PASS", "root");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -271,6 +271,80 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
                 throw new Exception("" . $error . $e->getMessage());
             }
         }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterHandle_db($idManager, $oldIdDataC, $newIdDataC)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sun 28 May 2023 - 19:45:48
+ * */
+/**
+ * brief send a request to alter the `Handle` table
+ * @param $idManager  : the id of the manager
+ * @param $oldIdDataC : the id of a data challenge no longer handle by a given manager 
+ * @param $newIdDataC : the id of the data challenge to be handled by a given manager
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterHandle_db($idManager, $oldIdDataC, $newIdDataC) {
+    $request =
+    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC'";
+
+    try {
+        request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error alterHandle_db : " . $e->getMessage());
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function insertHandle_db($idManager, $idDataC)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Sun 28 May 2023 - 19:45:48
+ * */
+/**
+ * brief send a request to alter the `Handle` table
+ * @param $idManager : the id of the manager
+ * @param $idDataC   : the id of the data challenge to be handled by a given manager
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function insertHandle_db($idManager, $idDataC) {
+    $error = "Error insertHandle_db : ";
+
+    /* Check if the user exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idManager') AS Res";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("" . $error . $e->getMessage());
+    }
+
+    if ($result[0]['Res'] == 0) {
+        throw new Exception("" . $error . "the corresponding user does not exist");
+    }
+
+    /* Inserting the values */
+    $request =
+    "INSERT INTO `Handle` VALUES ('$idManager', '$idDataC')";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("" . $error . $e->getMessage());
     }
 
     return(true);
@@ -865,7 +939,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
  */
 function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
     $request = 
-    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser') AS Res";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -873,7 +947,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
         throw new Exception("Error createStudent : " . $e->getMessage());
     }
 
-    if (!$result[0]) {
+    if ($result[0]['Res'] == 0) {
         throw new Exception("Error createStudent : the corresponding user does not exist");
     }
 
@@ -908,7 +982,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
 function createManager($idUser, $company, $startDate = null, $endDate = null) : bool {
     /* Check if the user exists */
     $request = 
-    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser') AS Res";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -916,7 +990,7 @@ function createManager($idUser, $company, $startDate = null, $endDate = null) : 
         throw new Exception("Error createManager : " . $e->getMessage());
     }
 
-    if (!$result[0]) {
+    if ($result[0]['Res'] == 0) {
         throw new Exception("Error createManager : the corresponding user does not exist");
     }
 
@@ -973,7 +1047,7 @@ function createManager($idUser, $company, $startDate = null, $endDate = null) : 
 function createAdmin($idUser) : bool {
     /* Check if the user exists */
     $request = 
-    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser')";
+    "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser') AS Res";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -981,7 +1055,7 @@ function createAdmin($idUser) : bool {
         throw new Exception("Error createAdmin : " . $e->getMessage());
     }
 
-    if (!$result[0]) {
+    if ($result[0]['Res'] == 0) {
         throw new Exception("Error createAdmin : the corresponding user does not exist");
     }
 
@@ -1091,8 +1165,7 @@ function getAllDataCStarted() : array {
     $request = "
     SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
     FROM `DataChallenge`
-    WHERE '$currentDate' < `endDate`
-    ORDER BY `startDate`";
+    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
