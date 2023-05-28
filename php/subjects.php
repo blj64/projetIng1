@@ -13,9 +13,11 @@
 
 /* **************************************************************************** */
 /*                          GLOBAL VARIABLES                                    */
-// maybe static $json;
+
+static $jsonFilePath = "../json/subjects.json";
 
 /* **************************************************************************** */
+/*                          FUNCTIONS                                           */
 
 /*
  *  *fn function alterDescDataC($idDataC, $newDesc)
@@ -32,7 +34,7 @@
  */
 function alterDescDataC($idDataC, $newDesc) {
     $s = "Error alterDescDataC : ";
-    $json = file_get_contents("../json/subjects.json");
+    $json = file_get_contents($jsonFilePath);
 
     if (!$json) {
         throw new Exception("" . $s . "unable to read data.");
@@ -66,7 +68,7 @@ function alterDescDataC($idDataC, $newDesc) {
         throw new Exception("" . $s . "unable to encode json");
     }
 
-    $json = file_put_contents("../json/subjects.json", $obj);
+    $json = file_put_contents($jsonFilePath, $obj);
 
     if (!$json) {
         throw new Exception("" . $s . "unable to write in file");
@@ -91,7 +93,7 @@ function alterDescDataC($idDataC, $newDesc) {
  */
 function alterDescSubject($idDataC, $idSubject, $newDesc) {
     $s = "Error alterDescSubject : ";
-    $json = file_get_contents("../json/subjects.json");
+    $json = file_get_contents($jsonFilePath);
 
     if (!$json) {
         throw new Exception("" . $s . "unable to read data");
@@ -131,7 +133,7 @@ function alterDescSubject($idDataC, $idSubject, $newDesc) {
         throw new Exception("" . $s . "unable to encode json");
     }
 
-    $json = file_put_contents("../json/subjects.json", $obj);
+    $json = file_put_contents($jsonFilePath, $obj);
 
     if (!$json) {
         throw new Exception("" . $s . "unable to write in file");
