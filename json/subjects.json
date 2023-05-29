@@ -2,6 +2,7 @@
     "dataC": [
         {
             "idDataC": 1,
+            "name": "Data challenge1",
             "description": "Ceci est un data challenge",
             "nbSubjects": 3,
             "subjects": [
@@ -17,13 +18,14 @@
                 },
                 {
                     "idS": 3,
-                    "nom": "Sujet3",
+                    "name": "Sujet3",
                     "description": "Ceci est le sujet 3"
                 }
             ]
         },
         {
             "idDataC": 2,
+            "name": "Data challenge2",
             "description": "Ceci est un deuxième data challenge",
             "nbSubjects": 1,
             "subjects": [
