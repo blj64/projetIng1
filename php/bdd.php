@@ -180,22 +180,23 @@ function alterUser_db($idUser, $newFirstName = null, $newLastName = null, $newPa
 /* -------------------------------------------------------------------------- */
 
 /*
- *  *fn function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage)
+ *  *fn function alterDataC_db($idDataC, $newName, $newStartDate, $newEndDate, $newImage, $newDescription)
  *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  *version 0.1
  *  *date Thu 25 May 2023 - 11:04:06
  * */
 /**
  * brief send a request to alter the `DataChallenge` table
- * @param $idDataC      : the id of the data challenge to which data is updated
- * @param $newName      : the new name of the data challenge
- * @param $newStartDate : the new start date of the data challenge
- * @param $newEndDate   : the new end date of the data challenge
- * @param $newImage     : the new image of the data challenge
+ * @param $idDataC        : the id of the data challenge to which data is updated
+ * @param $newName        : the new name of the data challenge
+ * @param $newStartDate   : the new start date of the data challenge
+ * @param $newEndDate     : the new end date of the data challenge
+ * @param $newImage       : the new image of the data challenge
+ * @param $newDescription : the new description of the data challenge
  * @return true if the database was altered successfully
  * @remarks throw an exception if a request is not valid
  */
-function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndDate = null, $newImage = null) : bool {
+function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndDate = null, $newImage = null, $newDescription = null) : bool {
     $error = "Error alterDataC_db : ";
 
     $request = 
@@ -216,6 +217,72 @@ function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndD
             $column = $list_columns[$i]['Field'];
             $request =
             "UPDATE `DataChallenge` SET $column = '$listArgs[$i]' WHERE `idDataC` = '$idDataC'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception("" . $error . $e->getMessage());
+            }
+        }
+    }
+
+    return(true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  *fn function alterSubject_db($idSubject, $newIdDataC, $newName, $newDescription)
+ *  *author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  *version 0.1
+ *  *date Mon 29 May 2023 - 17:46:30
+ * */
+/**
+ * brief send a request to alter the `Subject` table
+ * @param $idSubject      : the id of the subject
+ * @param $newIdDataC     : the new id of the data challenge to which the subject is linked
+ * @param $newName        : the new name of the subject
+ * @param $newDescription : the new description of the subject
+ * @return true if the database was altered successfully
+ * @remarks throw an exception if a request is not valid
+ */
+function alterSubject_db($idSubject, $newIdDataC = null, $newName = null, $newDescription = null) {
+    $error = "Error alterSubject_db : ";
+
+    $request = 
+    "SHOW COLUMNS FROM `Subject`";
+
+    try {
+        $list_columns = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("" . $error . $e->getMessage());
+    }
+
+    $numArgs = func_num_args();
+    $listArgs = func_get_args();
+
+    if ($listArgs[1] != null) {
+        /* Check if the data challenge exists */
+
+        $request = 
+        "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$idDataC') AS Res";
+
+        try {
+            $result = request_db(DB_RETRIEVE, $request);
+        } catch (Exception $e) {
+            throw new Exception("" . $error . $e->getMessage());
+        }
+
+        if ($result[0]['Res'] == 0) {
+            throw new Exception("" . $error . "the corresponding data challenge does not exist");
+        }
+    }
+
+    for ($i = 1; $i < $numArgs; $i++) {
+        if ($listArgs[$i] != null) {
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Subject` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `DataChallenge` SET $column = '$listArgs[$i]' WHERE `idSubject` = '$idSubject'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
@@ -844,7 +911,7 @@ function getStudentsGroup($idGroup) : array  {
 function getManagersDataChallenges() {
     $request = 
     "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
-    DC.`startDate`, DC.`endDate`, DC.`image` FROM `User` AS U 
+    DC.`startDate`, DC.`endDate`, DC.`image`, DC.`description` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
     JOIN DataChallenge AS DC ON DC.`idDataC` = H.`idDataC`";
@@ -938,6 +1005,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
  *  @remarks check if a user with the id $userId exists
  */
 function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
+    /* Check if the user exists */
     $request = 
     "SELECT EXISTS(SELECT * FROM `User` WHERE `id` = '$idUser') AS Res";
 
@@ -951,6 +1019,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
         throw new Exception("Error createStudent : the corresponding user does not exist");
     }
 
+    /* Insert the new student in the database */
     $request =
     "INSERT INTO `Student` VALUES ('$idUser', '$idGroup', '$lvStudy', '$school', '$city')";
 
@@ -1066,11 +1135,87 @@ function createAdmin($idUser) : bool {
     try {
         $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
-        throw new Exception("Error createManager : " . $e->getMessage());
+        throw new Exception("Error createAdmin : " . $e->getMessage());
     }
 
     return(true);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createDataC($name, $startDate, $endDate, $image, $description)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Mon 29 May 2023 - 17:59:50
+*/
+/**
+ *  brief insert a new data challenge in the database
+ *  @param $name : the name of the data challenge
+ *  @param $startDate : the start date of the data challenge
+ *  @param $endDate : the end date of the data challenge
+ *  @param $image : the image of the data challenge
+ *  @param $description : the description of the data challenge
+ *  @return true if the data challenge has been inserted successfully
+ */
+function createDataC($name, $startDate, $endDate, $image, $description) : bool {
+    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description)";
+
+    try {
+        request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createDataC : " . $e->getMessage());
+    }
+
+    return (true);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createSubject($idDataC, $name, $description)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Mon 29 May 2023 - 18:02:45
+*/
+/**
+ *  brief insert a new subject in the database
+ *  @param $idDataC : the id of the data challenge to which the subject is linked
+ *  @param $name : the name of the subject
+ *  @param $description : the description of the subject
+ *  @return true if the subject has been inserted successfully
+ *  @remarks check if a data challenge with the id $idDataC exists
+ */
+function createSubject($idDataC, $name, $description) {
+    $error = "Error createSubject : ";
+
+    /* Check if the data challenge exists */
+    $request = 
+    "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$idDataC') AS Res";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("" . $error . $e->getMessage());
+    }
+
+    if ($result[0]['Res'] == 0) {
+        throw new Exception("" . $error . "the corresponding data challenge does not exist");
+    }
+
+    /* Insert the new subject in the database */
+    
+    $request = "INSERT INTO `Subject` VALUES (null, '$idDataC', '$name', '$description')";
+
+    try {
+        request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("" . $error  . $e->getMessage());
+    }
+
+    return (true);
+}
+
 
 /* -------------------------------------------------------------------------- */
 
@@ -1162,8 +1307,8 @@ function checkManagerDates($idUser, $idDataC) : bool {
  */
 function getAllDataCStarted() : array {
     $currentDate = date('Y-m-d');
-    $request = "
-    SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
+    $request = 
+    "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`, `description`
     FROM `DataChallenge`
     WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
 
@@ -1192,7 +1337,7 @@ function getAllDataCStarted() : array {
 function getAllDataCEnded() : array {
     $currentDate = date('Y-m-d');
     $request = 
-    "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`
+    "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`, `description`
     FROM `DataChallenge`
     WHERE '$currentDate' > `endDate`";
 
