@@ -215,7 +215,7 @@ function alterDataC_db($idDataC, $newName = null, $newStartDate = null, $newEndD
             /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `DataChallenge` table */
             $column = $list_columns[$i]['Field'];
             $request =
-            "UPDATE `DataChallenge` SET $column = '$listArgs[$i]' WHERE `id` = '$idDataC'";
+            "UPDATE `DataChallenge` SET $column = '$listArgs[$i]' WHERE `idDataC` = '$idDataC'";
             try {
                 request_db(DB_ALTER, $request);
             } catch (Exception $e) {
