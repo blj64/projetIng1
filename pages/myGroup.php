@@ -132,7 +132,7 @@
                                         <input id="user-contacted" type="hidden" name="sender" value="2">
                                         <input type="hidden" name="receiver" value="<?php echo $_SESSION['user']['id']?>">
 
-                                        <button onclick="loadSendMsg()">Envoyer</button>
+                                        <button type="button" onclick="loadSendMsg()">Envoyer</button>
 
                                     </form>
                                 </div>

@@ -28,7 +28,7 @@
 
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_PASS", "blj");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -1387,11 +1387,7 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
     
     return (true);
 }
-
-/* -------------------------------------------------------------------------- */
-
-/*
- *  fn function roleUser($idUser, $role)
+your-php-file.php$role)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
  *  date Tue 23 May 2023 - 15:42:59
@@ -1529,12 +1525,11 @@ function getAllUserContacted($idReceiver) : array {
             exit();
         }
     }
-    $query = "SELECT DISTINCT u.firstName, u.id /**Distinct is use to get each person one time */
+    $query = "SELECT DISTINCT u.firstName, u.lastName, u.id /**Distinct is use to get each person one time */
     FROM User u 
     JOIN Message m ON u.id = m.idSender 
     WHERE m.idReceiver = '$idReceiver'
     ";
-    noGroup
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);

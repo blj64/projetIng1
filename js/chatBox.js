@@ -17,18 +17,22 @@ function changeConversation(idReceiver, idSender) {
 
 function loadSendMsg() {
     const xmlhttp = new XMLHttpRequest();
-    xmlhttp.onload = function() {
-        const response = this.responseText;
-        const msgContainer = document.getElementById("messagerie-container");
-        msgContainer.innerHTML = response;
-    }
+            xmlhttp.onload = function() {
+                const response = this.responseText;
+                const msgContainer = document.getElementById("messagerie-container");
+                const newMsg = document.createElement("div");
+                newMsg.setAttribute("class", "msg right");
+                newMsg.innerHTML = response;
+                msgContainer.appendChild(newMsg);
+                document.getElementById('msg-new-form').reset();
+            }
 
-    // Get the form data
-    const form = document.getElementById("msg-new-form");
-    const formData = new FormData(form);
+            // Get the form data
+            const form = document.getElementById("msg-new-form");
+            const formData = new FormData(form);
 
-    xmlhttp.open("POST", "/php/sendMsg.php");
-    xmlhttp.send(formData);
+            xmlhttp.open("POST", "/php/sendMsg.php");
+            xmlhttp.send(formData);
 }
 
 
