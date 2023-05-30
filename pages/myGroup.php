@@ -109,15 +109,15 @@
                             <?php
                                 $contacts = getAllUsers($_SESSION['user']['id']);
                                 foreach ($contacts as $contact) {
-                                    echo "<div class='contact'>";
-                                        echo "<div class='contact-img>";
+                                    echo "<button class='contact' onclick='changeConversation(".$_SESSION['user']['id'].", ".$contact["id"]."); changeIdSender(".$contact["id"].")'>";
+                                        echo "<div class='contact-img'>";
                                             echo "<img src='/asset/icon/crown.ico' alt='PP'>";
                                         echo "</div>";
                                         echo "<div class='contact-text'>";
                                             echo "<p>".$contact["firstName"]." ".$contact["lastName"]."</p>";                                
                                             echo "<span id='online'>online</span>";
                                         echo "</div>";
-                                    echo "</div>";
+                                    echo "</button>";
                                 }
                                 
                             ?>
@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="messagerie">
-                        <div class="history">
+                        <div class="history" id="messagerie-container">
                             <div class="msg left">
                                 <div class="sub-msg">
                                     <p>Bonjour mec !</p>
@@ -162,8 +162,19 @@
                         </div>
                         <div class="entry">
                             <div class="entry-bar">
-                                <input type="text" name="message" id="message" placeholder="Message">
-                                <input type="button" value="Envoyer">
+                                
+
+                                <div id="message">
+                                    <form id="msg-new-form">
+                                        <input name="msg" placeholder="message" type="text">
+                                        <!-- REMPLACER LA VALUE PAR L ID DE LA PERSONNE A QUI ON PARLE -->
+                                        <input id="user-contacted" type="hidden" name="sender" value="2">
+                                        <input type="hidden" name="receiver" value="<?php echo $_SESSION['user']['id']?>">
+
+                                        <button onclick="loadSendMsg()">Envoyer</button>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,6 +226,9 @@
     ?>
 </body>
 <script src="/js/myGroup.js"></script>
+<script src="/js/chatBox.js"></script>
+<script>setInterval(changeConversation, 2000, <?php echo $idReceiver?>);</script>
+
 
 </html>
 

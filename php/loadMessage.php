@@ -27,7 +27,19 @@
         echo "Aucun message";
     }else{
         foreach($result as $row) {
-            echo $row["idSender"]." : ".$row["messageContent"]." at ".$row["timestamp"]."<br>";
+            if ($row["idSender"] == $idSender) {
+                echo "<div class='msg right'>";
+                    echo "<div class='sub-msg'>";
+                        echo "<p>".$row["messageContent"]."</p>";
+                    echo "</div>";
+                echo "</div>";
+            }else{
+                echo "<div class='msg left'>";
+                    echo "<div class='sub-msg'>";
+                        echo "<p>".$row["messageContent"]."</p>";
+                    echo "</div>";
+                echo "</div>";
+            };
         }
     }
    

@@ -1,5 +1,5 @@
 <?php 
-require_once("bdd.php");
+require_once("/php/bdd.php");
 
 if ( !is_connected_db() )
     try {
@@ -16,5 +16,23 @@ $receiver = isset($_POST["receiver"]) ? $_POST["receiver"] : "5";
 
 $msgSend = alterMessage_db($sender, $receiver, $msg);
 
-echo $msgSend === true ? $msg : "marche po";
+
+echo $msgSend === true ? $msg : "Message non envoyé";
+if ($msgSend === true) {
+    if ($msgSend["idSender"] === $sender) {
+        echo "<div class='msg right'>";
+            echo "<div class='sub-msg'>";
+                echo "<p>".$msgSend["messageContent"]."</p>";
+            echo "</div>";
+        echo "</div>";
+    }else{
+        echo "<div class='msg left'>";
+            echo "<div class='sub-msg'>";
+                echo "<p>".$msgSend["messageContent"]."</p>";
+            echo "</div>";
+        echo "</div>";
+    }
+} else {
+    echo "Message non envoyé";
+}
 ?>
