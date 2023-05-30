@@ -36,7 +36,7 @@
                         <div class="event-intel">
                             <h1>'.$value['name'].'</h1>
                             <p>
-                            '. $desc .'
+                            '. $value['description'] .'
                             </p>
                         </div>
                         <div class="bottom-event">
