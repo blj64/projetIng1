@@ -25,7 +25,8 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    border-radius: 5px;
+    border-radius: 15px;
+    box-shadow: 3px 3px #052c21;
 }
 
 #MLJoin {
@@ -41,13 +42,31 @@
 
 #form {
     text-align: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 15px 15px 15px 15px;
+    box-shadow: 1px 1px grey;
 }
 
+#form input, select, textarea, button{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px 15px 15px 15px;
+    border: none;
+    box-shadow: 1px 1px 1px 1px grey;
+}
+
+
+
 #MLJoin button {
-    float: right;
+    position: relative;;
+    right: 100px;
 }
 
 #MLJoin img {
+    position: relative;
+    max-width: 200px;
     margin:5%;
 }
 

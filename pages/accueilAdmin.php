@@ -11,13 +11,16 @@ session_start();
 		<link rel="stylesheet" href="../css/accueil.css">
 		<link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/underHeader.css">
-        <link rel="stylesheet" href="../css/stripmid.css">
         <link rel="stylesheet" href="../css/footer.css">
         
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Accueil</title>
 	</head>
 	<body>
+        <?php 
+            include('../php/bdd.php');
+            
+        ?>
 		<div id="part1">
 			<?php include('../php/header.php'); ?>
 		</div>
@@ -27,7 +30,9 @@ session_start();
         <div id="part3">
             <div id ="card" class="card-box">
 
-                <a href="/pages/myGroup.php" id="Team" class="card">
+                <?php
+                if(roleUser($_SESSION['user']['id'], STUDENT)==1){
+                echo('<a href="/pages/myGroup.php" id="Team" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Mon équipe</h1>
@@ -51,15 +56,63 @@ session_start();
                             <h1>Mon profil</h1>
                         </div>
                     </div>
+                </a>');
+                }else if(roleUser($_SESSION['user']['id'], ADMIN)==1){
+                    echo('<a href="/pages/myGroup.php" id="Team" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Gestion des gestionnaires</h1>
+                        </div>
+                    </div>
                 </a>
 
+
+                <a href="/pages/dataC.php" id="DataC" class="card">
+                    <div class="filter">
+                            <div class="card-img">
+                            <h1>Gestion des challenges</h1>
+                        </div>
+                    </div>
+                </a>
+
+                
+                <a href="/pages/myGroup.php" id="profile" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mon profil</h1>
+                        </div>
+                    </div>
+                </a>');
+                }else if(roleUser($_SESSION['user']['id'], MANAGER)==1){
+                    echo('<a href="/pages/myGroup.php" id="Team" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Gérer les challenges</h1>
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="/pages/dataC.php" id="DataC" class="card">
+                    <div class="filter">
+                            <div class="card-img">
+                            <h1>Gérer les équipes</h1>
+                        </div>
+                    </div>
+                </a>
+
+                
+                <a href="/pages/myGroup.php" id="profile" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mon profil</h1>
+                        </div>
+                    </div>
+                </a>');
+                }
+                ?>
             </div>
 		</div>
-
-        <div id="part4">
-            <?php require('../php/stripMid.php'); ?>
-            </div>
-        </div>  
 		
 		<div id="part5">
 			<?php require('../php/footer.php'); ?>
