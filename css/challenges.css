@@ -130,21 +130,23 @@ header {
     width: 100%;
 }
 
-.bottom-event button {
+.bottom-event a {
     position: absolute;
     padding: 2%;
     bottom: 0;
     right: 0;
-    margin-right: 4%;
-    margin-bottom: 4%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    border: 1px solid;
     border-radius: 25px;
     border-color: rgb(140,140,140,1);
     background-color: rgba(169,169,169,0.8 );
     transition: all 0.2s;
     color: white;
+    text-decoration: none;
 }
 
-.bottom-event button:hover {
+.bottom-event a:hover {
     background-color: rgba(169,169,169, 1);
     cursor: pointer;
 }

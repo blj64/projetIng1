@@ -24,10 +24,12 @@
                     connect_db();
 
                 $dataC = getAllDataCStarted();
-                
+
                 foreach ($dataC as $key => $value) 
                 {
-                    $desc = "Titouan il est bo et il est trop pipou UwU";
+                    $desc = substr($value['description'], 0, 255);
+                    $desc .= '....';
+                    
                     echo
                     '<div class="event" id='.$value['id'].'>
                         <div class="event-img">
@@ -36,7 +38,7 @@
                         <div class="event-intel">
                             <h1>'.$value['name'].'</h1>
                             <p>
-                            '. $value['description'] .'
+                            '. $desc .'
                             </p>
                         </div>
                         <div class="bottom-event">
@@ -45,7 +47,7 @@
                                 <span>:</span>
                                 <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
                             </div>
-                            <button>En savoir plus</button>
+                            <a href="/pages/">En savoir plus</a>
                         </div>
                     </div>';
                 }
