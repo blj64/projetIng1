@@ -21,7 +21,7 @@ CREATE TABLE `Subject` (
     `description` TEXT NOT NULL,
     PRIMARY KEY (`idSubject`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge` (`idDataC`) ON DELETE CASCADE
-)
+);
 
 CREATE TABLE `User` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
