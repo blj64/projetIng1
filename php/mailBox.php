@@ -14,7 +14,6 @@ require_once("bdd.php");
 <body>
     <div id="boxmail-div">
         <?php 
-        //Change $idReceiver to the id of the current user
             $idReceiver = $_SESSION["user"]["id"]; 
         ?>
         <section id="user-conv">

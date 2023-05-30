@@ -95,7 +95,7 @@
                         </div>
                         <div class="list-contact">
 
-                            <div class="contact active">
+                                <div class="contact active">
                                 <div class="contact-img">
                                     <img src="/asset/icon/crown.ico" alt="PP">
                                 </div>
@@ -106,65 +106,22 @@
                                 </div>
                             </div>
 
-
-                            <div class="contact">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="offline">offline</span>
-                                </div>
-                            </div>
-
-
-                            <div class="contact">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="ghost">online</span>
-                                </div>
-                            </div>
-
-
-                            <div class="contact">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="ghost">online</span>
-                                </div>
-                            </div>
-
-
-                            <div class="contact">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="ghost">online</span>
-                                </div>
-                            </div>
-
-
-                            <div class="contact">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="ghost">online</span>
-                                </div>
-                            </div>
+                            <?php
+                                $contacts = getAllUsers($_SESSION['user']['id']);
+                                foreach ($contacts as $contact) {
+                                    echo "<div class='contact'>";
+                                        echo "<div class='contact-img>";
+                                            echo "<img src='/asset/icon/crown.ico' alt='PP'>";
+                                        echo "</div>";
+                                        echo "<div class='contact-text'>";
+                                            echo "<p>".$contact["firstName"]." ".$contact["lastName"]."</p>";                                
+                                            echo "<span id='online'>online</span>";
+                                        echo "</div>";
+                                    echo "</div>";
+                                }
+                                
+                            ?>
+                            
 
 
                         </div>
