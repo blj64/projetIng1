@@ -910,7 +910,7 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `email`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image`, DC.`description` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
