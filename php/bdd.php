@@ -28,7 +28,7 @@
 
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
-define("DB_PASS", "blj");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -361,7 +361,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
  */
 function alterHandle_db($idManager, $oldIdDataC, $newIdDataC) {
     $request =
-    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC'";
+    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC' AND `idUser` = '$idManager'";
 
     try {
         request_db(DB_ALTER, $request);
@@ -403,13 +403,12 @@ function insertHandle_db($idManager, $idDataC) {
     if ($result[0]['Res'] == 0) {
         throw new Exception("" . $error . "the corresponding user does not exist");
     }
-
     /* Inserting the values */
     $request =
-    "INSERT INTO `Handle` VALUES ('$idManager', '$idDataC')";
+    "INSERT INTO `Handle` VALUES ($idManager, $idDataC)";
 
     try {
-        $result = request_db(DB_RETRIEVE, $request);
+        $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("" . $error . $e->getMessage());
     }
@@ -1546,5 +1545,56 @@ function getAllUserContacted($idReceiver) : array {
  
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function getHandlerByIdManager($idManager)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:51:45
+*/
+/**
+ *  brief get all the handler of a manager
+ *  @param $idManager : the id of the manager
+ *  @return all the handler of the manager
+ *  @remarks --
+ */
+function getHandlerByIdManager($idManager) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idManager'";
 
-?>
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdManager : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getHandlerByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:52:36
+*/
+/**
+ *  brief get all the handler of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the handler of the challenge
+ *  @remarks --
+ */
+function getHandlerByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idChallenge'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+

@@ -65,6 +65,29 @@ else if(roleUser($_POST['id'], MANAGER))
         echo "Error: " . $e->getMessage();
         exit(1);
     }
+
+    
+    $hand = getHandlerByIdManager($_POST['id']);
+
+    if ($hand != null)
+    {
+        try {
+            alterHandle_db($hand[0]['idUser'], $hand[0]['idDataC'], $_POST['idDataC']);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            exit(1);
+        }
+    }
+    else
+    {
+        echo "Error: no handler found";
+        try {
+            insertHandle_db($_POST['id'], $_POST['idDataC']);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            exit(1);
+        }
+    }
 }
 
 echo "Success: user updated";

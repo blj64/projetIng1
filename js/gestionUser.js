@@ -383,7 +383,7 @@ async function updateUser() {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "id=" + data.get("id") + "&lastName=" + data.get("lastName") + "&firstName=" + data.get("firstName") + "&email=" + data.get("email") + "&number=" + data.get("number") + "&city=" + data.get("city") + "&school=" + data.get("school") + "&lvStudy=" + data.get("lvStudy") + "&idGroup=" + data.get("idGroup") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate") + "&role=" + data.get("role")
+        body: "id=" + data.get("id") + "&lastName=" + data.get("lastName") + "&firstName=" + data.get("firstName") + "&email=" + data.get("email") + "&number=" + data.get("number") + "&city=" + data.get("city") + "&school=" + data.get("school") + "&lvStudy=" + data.get("lvStudy") + "&idGroup=" + data.get("idGroup") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate") + "&role=" + data.get("role") + "&idDataC=" + data.get("idEvent")
     })
     .then(response => response.text())
     .then( function (res) {
