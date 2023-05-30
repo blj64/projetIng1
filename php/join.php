@@ -5,13 +5,13 @@
             <div id="Z2Join">
                 <div id="MLJoin">
                     <div> <p2>Des questions ? Des remarques ? Des propositions ? Contactez-nous !</p2></div>
-                    <div> <img src="" alt="photo"></div>
+                    <div> <img src="/asset/img/Online-presentation_Two-Color.png" alt="photo"></div>
                 </div>
                 <div id="MRJoin">
                     <form action="">
                         <div id="form">
-                            <input type="text" name="Nom">
-                            <input type="text" name="Adresse e-mail">
+                            <input type="text" name="Nom" value="nom">
+                            <input type="text" name="Adresse e-mail" value="adresse e-mail">
                                 <select name="" id="">
                                     <option>C'est a quel sujet ? </option>
                                     <option>Contact</option>

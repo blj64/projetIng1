@@ -1,14 +1,15 @@
 <div id="UnderHeader">
+    <div id="underHeaderContent">
     <?php 
     
     if(isset($_SESSION['id'])){
-        if(roleUser($_SESSION('id'), ADMIN)){
+        if(roleUser($_SESSION['id'], ADMIN)){
             echo('<h2>Bienvenue sur votre espace Administrateur</h2>');
         }
-        if(roleUser($_SESSION('id'), STUDENT)){
+        if(roleUser($_SESSION['id'], STUDENT)){
             echo('<h2>Bienvenue sur votre espace Utilisateur</h2>');
         }
-        if(roleUser($_SESSION('id'), MANAGER)){
+        if(roleUser($_SESSION['id'], MANAGER)){
             echo('<h2>Bienvenue sur votre espace Manager</h2>');
         }
     }else{ 
@@ -19,6 +20,10 @@
         </div>');
     }
     ?>
+    </div>
+    <div id="cssUnderHeaderForm1">
+        
+    </div>
     
 </div>
 
