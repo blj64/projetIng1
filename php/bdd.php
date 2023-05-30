@@ -264,7 +264,7 @@ function alterSubject_db($idSubject, $newIdDataC = null, $newName = null, $newDe
         /* Check if the data challenge exists */
 
         $request = 
-        "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$idDataC') AS Res";
+        "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$newIdDataC') AS Res";
 
         try {
             $result = request_db(DB_RETRIEVE, $request);
