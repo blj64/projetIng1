@@ -24,16 +24,15 @@
                     connect_db();
 
                 $dataC = getAllDataCStarted();
-
+                
                 foreach ($dataC as $key => $value) 
                 {
-
                     $desc = substr($value['description'], 0, 255);
                     if (strlen($value['description']) > 255)
                         $desc .= '....';
                     
                     echo
-                    '<div class="event" id='.$value['id'].'>
+                    '<div class="event">
                         <div class="event-img">
                             <img src="'.$value['image'].'" alt="image-event">
                         </div>
@@ -49,7 +48,7 @@
                                 <span>:</span>
                                 <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
                             </div>
-                            <a href="/pages/">En savoir plus</a>
+                            <a href="resumeChall.php?id='. $value['idDataC'] .'">En savoir plus</a>
                         </div>
                     </div>';
                 }
