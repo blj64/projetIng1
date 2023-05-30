@@ -45,4 +45,4 @@ require '../bdd.php';
 // fonction pour upload l'image dans le dossier asset
 move_uploaded_file($_FILES['image']['tmp_name'], DIR . $count . $_FILES['image']['name']);
 
-echo "Success :/asset/uploaded". $count . $_FILES['image']['name'];
+echo "Success :/asset/uploaded/". $count . $_FILES['image']['name'];
