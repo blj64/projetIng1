@@ -1158,7 +1158,7 @@ function createAdmin($idUser) : bool {
  *  @param $description : the description of the data challenge
  *  @return true if the data challenge has been inserted successfully
  */
-function createDataC($name, $startDate, $endDate, $image, $description) : bool {
+function createDataC($name, $startDate, $endDate, $image, $description) : int {
     $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description)";
 
     try {
@@ -1167,7 +1167,15 @@ function createDataC($name, $startDate, $endDate, $image, $description) : bool {
         throw new Exception("Error createDataC : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS id";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createDataC : " . $e->getMessage());
+    }
+
+    return ($result[0]['id']);
 }
 
 /* -------------------------------------------------------------------------- */
