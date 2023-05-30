@@ -10,7 +10,20 @@
 </head>
 
 <body>
-    <?php require '../php/header.php'; ?>
+    <?php 
+        if (session_status() == PHP_SESSION_NONE)
+            session_start();
+        
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
+
+        if (!is_connected_db())
+            connect_db();
+
+        if (!isset($_SESSION['user']['id']) || !roleUser($_SESSION['user']['id'],ADMIN))
+            header("Location: /pages/index.php?error=Vous n'avez pas les droits pour accéder à cette page");
+
+        require '../php/header.php'; 
+    ?>
 
     <div class="main">
         <h1>Creation de Data Event</h1>

@@ -46,7 +46,7 @@ if (session_status() == PHP_SESSION_NONE)
 try {
     deleteUser($_POST['id']);
 } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+    echo $e->getMessage();
     exit(1);
 }
 

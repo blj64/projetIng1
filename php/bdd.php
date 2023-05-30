@@ -1236,10 +1236,14 @@ function deleteUser($idUser) : bool {
     "SELECT EXISTS(SELECT * FROM `Group` WHERE `idLeader` = '$idUser') AS RES";
 
     try {
-        request_db(DB_RETRIEVE, $request);
+        $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error deleteUser : cannot delete the leader of a group");
     } 
+
+    if ($find[0]['RES']) {
+        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+    }
 
     $request =
     "DELETE FROM `User` 
