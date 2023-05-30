@@ -6,9 +6,17 @@
     <div class="center-part">
 
         <div class="logo">
-            <a href="/pages/">
+            <?php
+            if(isset($_SESSION['user']['id'])){
+                echo('<a href="/pages/accueilAdmin.php">
                 <img src="/asset/img/iapau_round.png" alt="logo">
-            </a>
+            </a>');
+            }else{
+            echo('<a href="/pages/">
+                <img src="/asset/img/iapau_round.png" alt="logo">
+            </a>');
+            }
+            ?>
         </div>
 
         <div class="main-menu">
@@ -105,7 +113,7 @@
         } else {    
             /* if connected */
             echo '<p>'.$_SESSION["user"]["login"].'</p>';
-            echo '<a href="/pages/profile.php" class="pp"><img src="/asset/icon/profile.ico" alt="Profile P"></a>';
+            echo '<a href="/pages/profil.php" class="pp"><img src="/asset/icon/profile.ico" alt="Profile P"></a>';
             echo '<a href="/php/logoff.php" class="pp" style="margin-right: 5%;"><img src="/asset/icon/logoff.jpg" alt="logoff"></a>';
         }
         ?>

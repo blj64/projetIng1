@@ -13,10 +13,35 @@
     background-color: #0e8769;
 }
 
+#cssForme1 {
+    width: 100%;
+    height: 40px;
+    background-color: #0e8769;
+    clip-path: polygon(0% 0%, 10% 90%, 90% 90%, 100% 0%, 100% 100%, 0% 100%);
+}
+#cssForme2 {
+    width: 100%;
+    height: 40px;
+    background-color: #0e8769;
+    clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 50% 50%, 30% 100%, 0% 0%);
+}
+#cssForme3 {
+    width: 100%;
+    height: 40px;
+    background-color: #0e8769;
+    clip-path: polygon(0% 100%, 10% 0%, 90% 0%, 100% 100%, 100% 100%, 0% 100%);
+}
+
 #Z2SM2 {
     padding: 10%;
     height: auto;
     background-image: url("../asset/img/marketing-bg6.png");
+}
+
+.contentDataCAcc{
+    text-align: justify;
+    margin-right: 30%;
+    margin-left: 30%;
 }
 
 #Z3SM2 {
