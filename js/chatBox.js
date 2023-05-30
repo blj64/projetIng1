@@ -20,9 +20,7 @@ function loadSendMsg() {
     xmlhttp.onload = function() {
         const response = this.responseText;
         const msgContainer = document.getElementById("messagerie-container");
-        const newMsg = document.createElement("span");
-        newMsg.innerHTML = response;
-        msgContainer.appendChild(newMsg);
+        msgContainer.innerHTML = response;
     }
 
     // Get the form data
@@ -43,4 +41,8 @@ function changeIdSender(idSender) {
         inputElement.value = idSender;
         console.log(idSender);  
     }
+
+    var activeElements = document.querySelectorAll(".active");
+
+    
 }

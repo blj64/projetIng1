@@ -1520,9 +1520,9 @@ function getAllUserContacted($idReceiver) : array {
     $query = "SELECT DISTINCT u.firstName, u.id /**Distinct is use to get each person one time */
     FROM User u 
     JOIN Message m ON u.id = m.idSender 
-    WHERE m.idReceiver = '$idReceiver' or idSender = '$idReceiver'
+    WHERE m.idReceiver = '$idReceiver'
     ";
-    
+    noGroup
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);

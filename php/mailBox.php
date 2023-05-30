@@ -14,7 +14,7 @@ require_once("bdd.php");
 <body>
     <div id="boxmail-div">
         <?php 
-            $idReceiver = $_SESSION["user"]["id"]; 
+            $idReceiver = 2; 
         ?>
         <section id="user-conv">
             <button class="" id="new-chat">+</button>

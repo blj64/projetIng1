@@ -95,21 +95,11 @@
                         </div>
                         <div class="list-contact">
 
-                                <div class="contact active">
-                                <div class="contact-img">
-                                    <img src="/asset/icon/crown.ico" alt="PP">
-                                </div>
-
-                                <div class="contact-text">
-                                    <p>Nicolas Durand</p>
-                                    <span id="online">online</span>
-                                </div>
-                            </div>
 
                             <?php
-                                $contacts = getAllUsers($_SESSION['user']['id']);
+                                $contacts = getAllUserContacted($_SESSION['user']['id']);
                                 foreach ($contacts as $contact) {
-                                    echo "<button class='contact' onclick='changeConversation(".$_SESSION['user']['id'].", ".$contact["id"]."); changeIdSender(".$contact["id"].")'>";
+                                    echo "<button class='contact active' onclick='changeConversation(".$_SESSION['user']['id'].", ".$contact["id"]."); changeIdSender(".$contact["id"].")'>";
                                         echo "<div class='contact-img'>";
                                             echo "<img src='/asset/icon/crown.ico' alt='PP'>";
                                         echo "</div>";
@@ -129,36 +119,7 @@
 
                     <div class="messagerie">
                         <div class="history" id="messagerie-container">
-                            <div class="msg left">
-                                <div class="sub-msg">
-                                    <p>Bonjour mec !</p>
-                                </div>
-
-                                <div class="sub-msg">
-                                    <p>urgent triathlon il nous faut un nom et j'ai aucune idée mais de toutes façons : plus on est de fous, moins on a de riz ;p</p>
-                                </div>
-
-                                <div class="sub-msg">
-                                    <p>j'aime les pates</p>
-                                </div>
-                            </div>
-
-                            <div class="msg right">
-                                <div class="sub-msg">
-                                    <p>yo bro!</p>
-                                </div>
-                                <div class="sub-msg">
-                                    <p>dernier petit test ??????????</p>
-                                </div>
-                            </div>
-
-
-                            <div class="msg left">
-                                <div class="sub-msg">
-                                    <p>j'adore la raclette</p>
-                                </div>
-                            </div>
-
+                            
                         </div>
                         <div class="entry">
                             <div class="entry-bar">

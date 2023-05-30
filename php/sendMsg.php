@@ -20,17 +20,11 @@ $msgSend = alterMessage_db($sender, $receiver, $msg);
 echo $msgSend === true ? $msg : "Message non envoyé";
 if ($msgSend === true) {
     if ($msgSend["idSender"] === $sender) {
-        echo "<div class='msg right'>";
-            echo "<div class='sub-msg'>";
                 echo "<p>".$msgSend["messageContent"]."</p>";
-            echo "</div>";
-        echo "</div>";
+           
     }else{
-        echo "<div class='msg left'>";
-            echo "<div class='sub-msg'>";
-                echo "<p>".$msgSend["messageContent"]."</p>";
-            echo "</div>";
-        echo "</div>";
+        echo "<p>".$msgSend["messageContent"]."</p>";
+            
     }
 } else {
     echo "Message non envoyé";
