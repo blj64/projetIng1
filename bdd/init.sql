@@ -10,8 +10,18 @@ CREATE TABLE `DataChallenge` (
     `startDate` DATE NOT NULL,
     `endDate` DATE NOT NULL,
     `image` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
     PRIMARY KEY (`idDataC`)
 );
+
+CREATE TABLE `Subject` (
+    `idSubject` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idDataC` INT UNSIGNED NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    PRIMARY KEY (`idSubject`),
+    FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge` (`idDataC`) ON DELETE CASCADE
+)
 
 CREATE TABLE `User` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

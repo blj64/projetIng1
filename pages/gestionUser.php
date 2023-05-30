@@ -74,6 +74,12 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
 
                     <?php
                     $manager = getAllManagers();
+                    
+                    $event = getManagersDataChallenges();
+                    $idEvent = array();
+                    foreach ($event as $id => $value) {
+                        $idEvent[$value['id']] = $value['idDataC'];
+                    }
 
                     foreach ($manager as $id => $value) {
                         echo '
@@ -84,6 +90,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                                 <input id=company type=hidden value="' . $value['company'] . '">
                                 <input id=startDate type=hidden value="' . $value['startDate'] . '">
                                 <input id=endDate type=hidden value="' . $value['endDate'] . '">
+                                <input id=idEvent type=hidden value="' . $idEvent[$value['id']] . '">
                                 <div class="profile-picture">
                                     <img id=img src="/asset/icon/profile.ico" alt="profile-picture">
                                 </div>
@@ -93,6 +100,8 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                             </div>';
                     }
                     unset($manager);
+                    unset($event);
+                    unset($idEvent);
                     ?>
                 </div>
             </div>
@@ -176,20 +185,22 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
     </div>
 
     <div id=preview class="right-preview">
+        <input type="hidden" name="id" id=preview-id value="666">
+        <input type="hidden" name="role" id=preview-role value="NONE">
         <p class="quit-btn" id=quit-btn onclick="change_preview()">>></p>
         <div class="preview-top">
             <div class="preview-pp">
                 <img src="/asset/icon/profile.ico" alt="profile-picture">
             </div>
             <div class="preview-intel">
-                <input type="text" id=name placeholder="Last Name" value="DURAND">
-                <input type="text" id=FP placeholder="First Name" value="Nicolas">
+                <input type="text" id=prev-lastName placeholder="Last Name" value="DURAND">
+                <input type="text" id=prev-firstName placeholder="First Name" value="Nicolas">
             </div>
         </div>
         <div class="preview-mid">
             <div class="preview-mail">
-                <input type="text" id=mail placeholder="Mail" value="durandnico@cy-tech.fr">
-                <input type="text" id=num placeholder="Numéro" value="06 62 20 89 86">
+                <input type="text" id=prev-email placeholder="Mail" value="durandnico@cy-tech.fr">
+                <input type="text" id=prev-number placeholder="Numéro" value="06 62 20 89 86">
             </div>
         </div>
         <div class="preview-bot">
@@ -198,24 +209,25 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                 $user = getUserByEmail("admin@cy-tech.fr");
                     if(roleUser($user['id'], MANAGER))
                     {
-                        echo '<input type="text" id=company placeholder="Entreprise" value="IA Pau">';
-                        echo '<input type="date" id=dateD  value="2002-03-04">';
-                        echo '<input type="date" id=dateF  value="2004-03-04">';
+                        echo '<input type="text" id=prev-company placeholder="Entreprise" value="IA Pau">';
+                        echo '<input type="date" id=prev-dateD  value="2002-03-04">';
+                        echo '<input type="date" id=prev-dateF  value="2004-03-04">';
+                        echo '<input type="text" id=prev-respo  value="id_data">';
                     }
                     else if(roleUser($user['id'], STUDENT))
                     {
-                        echo '<input type="text" id=City placeholder="Ville" value="Pau">';
-                        echo '<input type="text" id=School placeholder="Ecole" value="EISTI">';
-                        echo '<input type="text" id=Lvl  value="L3">';
+                        echo '<input type="text" id=prev-City placeholder="Ville" value="Pau">';
+                        echo '<input type="text" id=prev-School placeholder="Ecole" value="EISTI">';
+                        echo '<input type="text" id=prev-Lvl  value="L3">';
                     }
                 ?>
             </div>
         </div>
 
         <div class=preview-validation-btn>
-            <button id=suppr>Supprimer utilisateur</button>
-            <button id=gestionner>Faire gestionnaire</button>
-            <button id=modif>Appliquer modification</button>
+            <button onclick="deleteUser()" id=suppr>Supprimer utilisateur</button>
+            <button onclick="MakeManager()" id=gestionner>Faire gestionnaire</button>
+            <button onclick="updateUser()" id=modif>Appliquer modification</button>
         </div>
     </div>
 
