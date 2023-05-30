@@ -312,12 +312,13 @@ async function deleteUser() {
     })
     .then(response => response.text())
     .then( function (res) {
-        console.log(res);
         if (res.startsWith("Success"))
         {
             dom_delete_user(data.get("id"));
             change_preview();
         }
+        else
+            alert(res);
     });
 
     return (0);

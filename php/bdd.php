@@ -1158,8 +1158,8 @@ function createAdmin($idUser) : bool {
  *  @param $description : the description of the data challenge
  *  @return true if the data challenge has been inserted successfully
  */
-function createDataC($name, $startDate, $endDate, $image, $description) : bool {
-    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description)";
+function createDataC($name, $startDate, $endDate, $image, $description) : int {
+    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description')";
 
     try {
         request_db(DB_ALTER, $request);
@@ -1167,7 +1167,15 @@ function createDataC($name, $startDate, $endDate, $image, $description) : bool {
         throw new Exception("Error createDataC : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS id";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createDataC : " . $e->getMessage());
+    }
+
+    return ($result[0]['id']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1236,10 +1244,14 @@ function deleteUser($idUser) : bool {
     "SELECT EXISTS(SELECT * FROM `Group` WHERE `idLeader` = '$idUser') AS RES";
 
     try {
-        request_db(DB_RETRIEVE, $request);
+        $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error deleteUser : cannot delete the leader of a group");
     } 
+
+    if ($find[0]['RES']) {
+        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+    }
 
     $request =
     "DELETE FROM `User` 
@@ -1310,7 +1322,7 @@ function getAllDataCStarted() : array {
     $request = 
     "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`, `description`
     FROM `DataChallenge`
-    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
+    WHERE '$currentDate' < `endDate`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
