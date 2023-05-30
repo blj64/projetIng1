@@ -1387,7 +1387,11 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
     
     return (true);
 }
-your-php-file.php$role)
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function roleUser($idUser, $role)
  *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
  *  version 0.1
  *  date Tue 23 May 2023 - 15:42:59
