@@ -986,7 +986,15 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS Res";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createUser : " . $e->getMessage());
+    }
+
+    return ($result[0]['Res']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1245,7 +1253,7 @@ function deleteUser($idUser) : bool {
     try {
         $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+        throw new Exception("Error deleteUser : error while checking if the user is a leader");
     } 
 
     if ($find[0]['RES']) {
