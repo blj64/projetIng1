@@ -27,8 +27,10 @@
 
                 foreach ($dataC as $key => $value) 
                 {
+
                     $desc = substr($value['description'], 0, 255);
-                    $desc .= '....';
+                    if (strlen($value['description']) > 255)
+                        $desc .= '....';
                     
                     echo
                     '<div class="event" id='.$value['id'].'>
