@@ -22,7 +22,6 @@
  *
  *
  */
-
  if ($_SERVER['REQUEST_METHOD'] != 'POST')
  {
      echo "Error: wrong request method";
@@ -30,25 +29,26 @@
  }
 
  
-if (session_start() == PHP_SESSION_NONE)
+if (session_start() != PHP_SESSION_ACTIVE)
     session_start();
 
 require '../bdd.php';
 
-var_dump($_POST);
-exit(0);
+// fonction pour upload l'image dans le dossier asset
+$data = json_decode($_POST['data'], true);
+
+if (!is_connected_db())
+    connect_db();
 
 if (!roleUSer($_SESSION['user']['id'], ADMIN))
     header('/pages/index.php?error=You are not admin');
 
-if (!is_connected_db())
-    connect_db();
 
 /* faire fonction move_uploaded_file pour l'image */
 
 /* add the dataC */
 try {
-    $idDataC = createDataC($_POST['name'], $_POST['startDate'],$_POST['endDate'], $_POST['image'], $_POST['description']);
+    $idDataC = createDataC($data['titre'], $data['startDate'],$data['endDate'], $data['image'], $data['description']);
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
     exit(1);
@@ -56,13 +56,13 @@ try {
 
 
 /* add all the subject */
-/*
-foreach ($_POST['subject'] as $subject) {
+foreach ($data['subjects'] as $subject) {
     try {
-        createSubject($idDataC, $subject);
+        createSubject($idDataC, $subject['name'], $subject['description']);
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
         exit(1);
     }
 }
-*/
+
+echo "Success: JE SUIS UN HOMME HEUREUX";

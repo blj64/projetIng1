@@ -139,8 +139,10 @@ async function valider() {
         "description": document.getElementById("main-desc").value,
         "startDate": document.getElementById("startDate").value,
         "endDate": document.getElementById("endDate").value,
-        "image": document.getElementById("main-image").value,
     };
+
+    let img = new FormData();
+    img.append("image", document.getElementById("main-image").files[0]);
 
     for(let index in data){
         if(data[index] == "")
@@ -150,7 +152,6 @@ async function valider() {
         }
     }
 
-    let subject_intel = new Map();
     let count = 1;
     data["subjects"] = {};
     for(let subject of document.getElementsByClassName("subject"))
@@ -178,19 +179,36 @@ async function valider() {
     }
 
     data["nbSubjects"] = count - 1;
-    console.log(JSON.stringify(data));
-    return (0);
-    
-    await fetch("/php/ajax_request/createEvent.php", {
+
+
+    const upload = await fetch("/php/ajax_request/uploadImage.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: "data=" + JSON.stringify(data),
+        body: img
     })
     .then(response => response.text())
-    .then(response => {
-        if(response.startsWith("Success"))
+    .then( function(res) {
+        console.log(res);
+        if(res.startsWith("Success"))
+        {
+            data["image"] = res.split(":")[1];
+        }
+        else
+        {
+            alert("Une erreur est survenue lors de l'upload de l'image !");
+        }
+    });
+    
+    const response = await fetch("/php/ajax_request/createChallenge.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "data=" + JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then( function(res) {
+        console.log(res);
+        if(res.startsWith("Success"))
         {
             alert("Votre évènement a bien été créé !");
             window.location.href = "/pages/";
@@ -199,9 +217,6 @@ async function valider() {
         {
             alert("Une erreur est survenue lors de la création de l'évènement !");
         }
-    })  
-    .catch(error => {
-        console.log(error);
     });
 
     return (0);

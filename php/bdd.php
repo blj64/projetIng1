@@ -1159,7 +1159,7 @@ function createAdmin($idUser) : bool {
  *  @return true if the data challenge has been inserted successfully
  */
 function createDataC($name, $startDate, $endDate, $image, $description) : int {
-    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description)";
+    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description')";
 
     try {
         request_db(DB_ALTER, $request);
