@@ -35,12 +35,12 @@
                     ],
 
                     'MANAGER' => [ // menu for manager
-                        'Mon équipe' => '/pages/myGroup.php',
+                        'Les équipes' => '/pages/allTeam.php',
                         'Mes challenges' => '/pages/myChallenges.php',
                     ],
 
                     'ADMIN' => [ // menu for admin
-                        'Mes challenges' => '/pages/myChallenges.php',
+                        'Creer challenges' => '/pages/createChallenge.php',
                         'Gestion des utilisateurs' => '/pages/gestionUser.php',
                     ],
                 ],
@@ -78,6 +78,7 @@
                 if ($name == 'CUSTOME') {
                     if ($role != null) {
                         foreach (PAGES[$name][$role] as $name => $url) {
+                            $added = '';
                             $split_url = explode('/', (string)$url);    
                             if ($current_page === end($split_url))
                                 $added = 'class="here"';
