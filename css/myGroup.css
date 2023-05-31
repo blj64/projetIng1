@@ -35,6 +35,8 @@ body{
 }
 
 .center {
+    padding-top: 100px;
+    padding-bottom: 100px;
     position: relative;
     width: 60%;
     height: 70vh;
