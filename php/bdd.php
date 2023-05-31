@@ -769,7 +769,8 @@ function getUserByEmail($email) : array {
  * @remarks throw an exception if the request is not valid
  */
 function getAllManagers() {
-    $request = "Select * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
+    $request = 
+    "SELECT * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -796,9 +797,10 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "Select `id`, `idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
+    "SELECT `id`, I.`idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
-    JOIN `Student` AS S ON U.`id` = S.`idUser`";
+    JOIN `Student` AS S ON U.`id` = S.`idUser`
+    JOIN `In` AS I ON I.`idUser` = S.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -824,7 +826,8 @@ function getAllStudents() {
  *  @remarks throw an exception if the request is not valid
  */
 function getAllAdmins() {
-    $request = "Select * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
+    $request = 
+    "SELECT * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -1047,7 +1050,18 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
 
     /* Insert the new student in the database */
     $request =
-    "INSERT INTO `Student` VALUES ('$idUser', '$idGroup', '$lvStudy', '$school', '$city')";
+    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createStudent: " . $e->getMessage());
+    }
+
+    /* Insert in the `In` table for the group */
+
+    $request =
+    "INSERT INTO `In` VALUES ('$idUser', '$idGroup')";
 
     try {
         $result = request_db(DB_ALTER, $request);
