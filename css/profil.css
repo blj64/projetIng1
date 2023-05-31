@@ -10,7 +10,9 @@ body {
 #part3Profil {
     margin: 0;
     padding: 5%;
-    background-image: url("../asset/img/marketing-bg6.png");
+    background-image: url("/asset/img/istockphoto-1224100497-612x612.jpg");
+    background-size: 100%;
+    
 }
 
 .sign-box {
@@ -32,12 +34,13 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
+    text-align: justify;
     align-items: center;
 }
 
 .sign-box form input {
     position: relative;
-    padding: 0 0 0 0;
+    padding-left: 15px;
     margin: 50px;
     background-position: 50%;
     background-size: cover;
@@ -54,3 +57,7 @@ body {
     border-color: #e0e0e0;
 }
 
+.sign-box form p{
+    text-align: justify;
+
+}
