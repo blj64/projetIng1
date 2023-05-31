@@ -1521,11 +1521,11 @@ function getAllUserContacted($idReceiver) : array {
             exit();
         }
     }
-    $query = "SELECT DISTINCT u.firstName, u.lastName, u.id /**Distinct is use to get each person one time */
-    FROM User u 
-    JOIN Message m ON u.id = m.idSender 
-    WHERE m.idReceiver = '$idReceiver'
-    ";
+    $query = "SELECT DISTINCT u.firstName, u.lastName, u.id
+    FROM User u
+    JOIN Message m ON (u.id = m.idSender AND m.idReceiver = '$idReceiver')
+        OR (u.id = m.idReceiver AND m.idSender = '$idReceiver')";
+
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);

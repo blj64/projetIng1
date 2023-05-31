@@ -1,11 +1,6 @@
 <div id="messagerie-container">
    
-    <form id="contact-new-user-form">
-        <input id="user-search-input" type="text" class="sub-msg" name="sender" placeholder="UserName" value=7>
-        <input type="text" class="sub-msg" name="msg" placeholder="Message">
-        <input type="hidden" name="receiver" value=6>
-        <button class="sub-msg" onclick="contactNewUser()">Contacter</button>
-    </form>
+        <input id="user-search-input" type="text" class="sub-msg" name="sender" placeholder="UserName" value="1" oninput="updateNewContact()">
 </div>
 
 
@@ -29,12 +24,14 @@ if (isset($_GET['searchTerm'])) {
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);
+        echo json_encode($result["firstName"]);
+
     } catch (Exception $e) {
+        echo "error";
         throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
     }
    
 
-    echo json_encode($suggestions["firstName"]);
 }
 
 ?>

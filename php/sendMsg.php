@@ -1,6 +1,6 @@
 <?php 
 
-require_once("/php/bdd.php");
+require_once("./bdd.php");
 if (!is_connected_db())
     try {
         connect_db();

@@ -15,7 +15,16 @@ function changeConversation(idReceiver, idSender) {
     
 }
 
+//Eviter que l'appuie de la touche entrer recharge la page en envoyant le form malgre le ajax
+document.getElementById("msg-new-form").addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) { // 13 represents the Enter key
+      event.preventDefault();
+      loadSendMsg();
+    }
+  });
+
 function loadSendMsg() {
+    
     const xmlhttp = new XMLHttpRequest();
             xmlhttp.onload = function() {
                 const response = this.responseText;
@@ -84,7 +93,11 @@ function generateFormNewUser() {
 }
 
 function contactNewUser() {
-    changeIdSender(6);
+    var inputElement = document.getElementById("user-search-input");
+    var value = inputElement.value;
+
+    changeIdSender(value);
+
     const xmlhttp = new XMLHttpRequest();
             xmlhttp.onload = function() {
                 const response = this.responseText;
@@ -106,6 +119,11 @@ function contactNewUser() {
 
         }
 
+function updateNewContact() {
+    var inputNewContact = document.getElementById("user-search-input");
+    var hiddenInput = document.getElementById("user-contacted");
 
+    hiddenInput.value = inputNewContact.value;
+}
 
     
