@@ -1,0 +1,26 @@
+{
+  "nb_lignes_com": 17,
+  "fonctions": {
+    "tailles_fonctions": [
+      {
+        "esperance": 2,
+        "f_inv2": 2,
+        "test2": 2,
+        "graphique": 4,
+        "f_inv": 2,
+        "S_n": 5,
+        "test": 2,
+        "variance": 1,
+        "__str__": 2,
+        "fRepartition": 7,
+        "__init__": 4
+      }
+    ],
+    "taille_min": 1,
+    "taille_max": 7,
+    "taille_moy": 3,
+    "nb_fonctions": 11
+  },
+  "nb_lignes_tot": 92,
+  "nb_lignes_code": 75
+}

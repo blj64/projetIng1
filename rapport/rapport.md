@@ -39,7 +39,7 @@ Ainsi, nous avons réalisé un modèle conceptuel de données (MCD) pour réalis
 
 ## &nbsp;&nbsp;&nbsp; 1. Le Modèle conceptuel de données
 
-![MCD](images/CDM_db.jpeg){height=40%}
+![MCD](images/MCD_db.jpeg){height=40%}
 
 &nbsp;&nbsp;&nbsp; Un utilisateur peut être soit un administrateur, un gestionnaire ou un étudiant (un participant).
 Un ensemble d'utilisateurs quelconques peut recevoir un message donné et un utilisateur peut aussi envoyer un message. On peut considérer qu'un étudiant puisse envoyer un message à un administrateur sous des conditions particulières (requête pour résoudre un bug, etc) qui peuvent être gérées lors du développement de l'application.
@@ -52,6 +52,7 @@ Enfin, on considère qu'un gestionnaire gère le data challenge complet (on aura
 ## &nbsp;&nbsp;&nbsp; 2. La base de données
 
 &nbsp;&nbsp;&nbsp; Nous avons choisi d'utiliser la base de données mySQL pour stocker les informations nécessaires.
+
 
 
 Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group puique le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
@@ -78,7 +79,7 @@ Ces fonctions dans bdd.php sont identifiables par un "get" au début du nom de l
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c. Modification des données de la base de données
 
 &nbsp;&nbsp;&nbsp;&nbsp; De même, de multiples fonctions ont été codées pour modifier les informations stockées dans la base de données toujours dans le but de simplifier l'aspect front de l'application.
-Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de la foncion. Il existe par exemple une fonction pour modifier les informations d'un user ou data challenge.
+Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de la fonction. Il existe par exemple une fonction pour modifier les informations d'un user ou data challenge.
 
 # III. Les fonctionnalités implémentées
 
@@ -115,14 +116,162 @@ bbb
 ## &nbsp;&nbsp;&nbsp; 5. Gestion des groupes
 555
 
-## &nbsp;&nbsp;&nbsp; 6. Analyse de code source
-666
+## &nbsp;&nbsp;&nbsp; 6. L'API en Java
 
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Analyseur de code
-aaa
+&nbsp;&nbsp;&nbsp; Dans cette partie, il nous était demandé de réaliser un analyseur de code source Python en Java, pour ensuite créer un web service REST sous forme d'API en Java.
+Ainsi, nous allons expliquer comment nous nous sommes débrouillés pour répondre à cette demande en détaillant les étapes.
 
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Visualisation des résultats
-bbb
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. La classe *CodeAnalyse*
+
+&nbsp;&nbsp;&nbsp; Nous avons tout d'abord créé une classe ***CodeAnalyse*** qui avait comme seuls attributs :
+
+
+- *path* de type **String** correspondant au chemin vers le fichier Python
+- *file* de type **File** correspondant au fichier Python
+- *br* de type **BufferedReader** permettant de lire le fichier à partir d'un flux de symboles
+- *nb_lignes* de type **int** correspondant au nombre de lignes du fichier
+- *text[][]* de type **String**, un tableau de tableaux de **String** qui permet d'accéder au texte complet ligne par ligne et mot par mot au sein de chaque ligne
+
+
+&nbsp;&nbsp;&nbsp; Puis, nous avons créé deux constructeurs de classe, l'un à partir d'un fichier Python de type **File** et l'autre à partir d'un chemin vers un fichier Python de type **String**.
+Voilà un des constructeurs :
+
+```java
+    public CodeAnalyse(File fileInsert) throws IOException {
+        file = fileInsert;
+        path = fileInsert.getPath();
+        br = new BufferedReader(new FileReader(file));
+        taille_texte();
+        text = new String[nb_lignes][];
+        splitTab();
+    }
+```
+&nbsp;&nbsp;&nbsp; *splitTab()* permet d'initialiser l'attribut *text[][]* en séparant le texte du flux de l'attribut *br*. *taille_texte()* permet d'initialiser l'attribut *nb_lignes* au nombre de lignes du texte à partir de l'attribut *br*.
+
+
+&nbsp;&nbsp;&nbsp; Il n'y a aucune vérification de l'extension du fichier au sein de la classe parce que la vérification est gérée du côté web lorsque l'utilisateur s'occupera d'upload son fichier.
+Nous n'avons qu'un seul getter qui est *getNb_lignes()* puisqu'il est le seul utile pour un utilisateur.
+
+
+&nbsp;&nbsp;&nbsp; Suite à cela, nous avons créé plusieurs méthodes au sein de notre classe, certaines privées qui ne sont pas utiles pour l'utilisateur et d'autres publiques car essentielles pour ce dernier.
+Voici notre diagramme de classes que l'on avait à ce moment-là :
+
+![Diagramme de classes temporaire](images/java_uml_1.png){height=50%}
+
+&nbsp;&nbsp;&nbsp; Nous avons essayé de rendre le nom des méthodes le plus clair possible cependant, si vous souhaitez avoir plus d'informations sur chacune d'elles,
+elles sont toutes commentées et vous pouvez vous rendre sur la [***Javadoc***](./java/CodeAnalyseJavaDoc/allclasses.html) (le lien fonctionne si vous lisez le rapport depuis le repertoire du projet, sinon il faudra s'y rendre manuellement).
+
+
+
+&nbsp;&nbsp;&nbsp; Voilà un exemple de fonctionnement de notre classe (cette partie provient du **main** qui est une partie commentée pour laisser place à la gestion du serveur) :
+
+
+```java 
+    /* Création de l'instance de ma classe à partir du fichier 
+    nommé "test.py" */
+    CodeAnalyse code = new CodeAnalyse("src/test.py"); 
+            
+            
+    /* Première fonction permettant de générer le JSON avec 
+    toutes les data nécessaires */
+    code.create_JSON_data();
+    
+    
+    /* Deuxième fonction permettant de prendre un mot et d'obtenir 
+    le nombre d'itérations de celui-ci */
+    int iteration_mot_def = code.iteration_mot("def");
+    
+    
+    
+    /* Démonstration de toutes les fonctions de la classe et les 
+    différents affichages */
+    
+    /* Affichage des noms de fonctions */
+    System.out.print("Tableau des noms de fonctions : ");
+    code.afficher_iteration_fonction(true);
+    
+    /* Affichage des tailles de fonctions */
+    System.out.print("Tableau des tailles de fonctions : ");
+    code.afficher_iteration_fonction(false);
+    
+    /* Affichage de la taille maximale */
+    System.out.println("Taille maximale : " + code.max_ligne_fonction());
+    
+    /* Affichage de la taille minimale */
+    System.out.println("Taille minimale : " + code.min_ligne_fonction());
+    
+    /* Affichage de la moyenne */
+    System.out.println("Taille moyenne : " + code.moyenne_ligne_fonction());
+    
+    /* Affichage du nombre de commentaires */
+    System.out.println("Nombre de commentaires : " + code.nombre_ligne_commentaires());
+    
+    /* Affichage du nombre de lignes totales */
+    System.out.println("Nombre de lignes totales : " + code.getNb_lignes());
+    
+    /* Affichage du nombre de lignes de code */
+    int taille_code = code.getNb_lignes() - code.nombre_ligne_commentaires();
+    System.out.println("Nombre de lignes de code : " + taille_code);
+```
+
+
+Voilà l'affichage correspondant :
+
+```shell
+    Tableau des noms de fonctions : [fRepartition ; test ; test ; graphique ; __str__ ; 
+    variance ; esperance ; __init__ ; test ; f_inv2 ; f_inv ; S_n]
+    Tableau des tailles de fonctions : [7 ; 2 ; 2 ; 4 ; 2 ; 1 ; 2 ; 4 ; 24 ; 2 ; 2 ; 5]
+    Taille maximale : 24
+    Taille minimale : 1
+    Taille moyenne : 4
+    Nombre de commentaires : 17
+    Nombre de lignes totales : 116
+    Nombre de lignes de code : 99
+```
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Partie serveur de la classe Java
+
+
+
+&nbsp;&nbsp;&nbsp; Après s'être occupé de la classe *CodeAnalyse* avec toutes les fonctionnalités de base pour analyser le code, nous nous sommes occupés de
+l'implémentation de la partie serveur.
+Ainsi, nous avons ajouté les attributs suivants :
+
+
+- *SERVEUR* de type **String** qui représente l'url de base du service
+- *PORT* de type **int** qui représente le port du serveur
+- *URL* de type **String** qui représente l'url de base du service
+- *LOGGER* de type **Logger** qui permet de gérer les messages émis durant l'exécution du serveur
+
+
+&nbsp;&nbsp;&nbsp; Le *main*, qui servait à faire la démonstration de la classe et de son fonctionnement, sert désormais de boucle principale permettant au serveur de démarrer et de fonctionner jusqu'à l'arrêt du fonctionnement de la classe.
+Nous avons dû nous occuper également des différentes méthodes permettant de gérer les requêtes (POST, GET qui proviennent du serveur web), de les traiter et d'envoyer une réponse.
+Pour la méthode POST, nous récupérons un fichier Python provenant d'un form HTML et nous lui appliquons la méthode permettant de générer une chaîne de caractères en format JSON et nous envoyons à la page web cette dernière.
+Pour la méthode GET, nous ne la gérons pas puisque nous ne faisons aucune requête GET au sein de notre site web.
+
+Voici donc le diagramme de classes final que nous avons :
+
+![Diagramme de classes final](images/java_uml_2.png){height=50%}
+
+
+&nbsp;&nbsp;&nbsp; Pour finir, il y a un *README* dans le dossier *java* contenant les instructions à réaliser pour lancer le serveur Java.
+Vous pouvez retrouver ces mêmes instructions dans le README global avec les instructions pour lancer le serveur PHP.
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c. Visualisation des résultats
+
+&nbsp;&nbsp;&nbsp; Pour visualiser les résultats sur notre site, nous utilisons une librairie nommée ChartJS ce qui nous permet de créer des graphiques
+visuellement beaux et dynamiques à partir d'un JSON.
+Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le fichier *test.py* présent dans le dossier *java*) :
+
+![Visualisation des résultats 1](images/graph_result_1.png){height=80%}
+
+![Visualisation des résultats 2](images/graph_result_2.png){height=80%}
+
+![Visualisation des résultats 3](images/graph_result_3.png){height=80%}
+
+
+
 
 
 # IV. Les fonctionnalités qui restent à implémenter

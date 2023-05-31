@@ -16,15 +16,19 @@ INSERT INTO `Manager` VALUES (4, "Cy-Tech", "2020-04-28", "2020-05-28");
 
 INSERT INTO `DataChallenge` VALUES (null, "DataChallenge1", "2020-04-28", "2024-05-28", "/asset/img/ilheou.jpg", "Data challenge description");
 INSERT INTO `DataChallenge` VALUES (null, "DataChallenge2", "2023-04-28", "2023-07-28", "/asset/img/bigbrains.jpg", "JE HURLE");
-
+INSERT INTO `Student` VALUES (1, "L1", "CY Tech", "Pau");
+INSERT INTO `Student` VALUES (2, "L2", "CY Tech", "Cergy");
+INSERT INTO `Student` VALUES (5, "L3", "EISTI", "Pau");
 
 INSERT INTO `Subject` VALUES (null, 1, "Subject 1", "Subject description");
 
 INSERT INTO `Group` VALUES (null, "Group1", 1, 1);
 
-INSERT INTO `Student` VALUES (1, 1, "L1", "CY Tech", "Pau");
-INSERT INTO `Student` VALUES (2, 1, "L2", "CY Tech", "Cergy");
-INSERT INTO `Student` VALUES (5, 1, "L3", "EISTI", "Pau");
+INSERT INTO `In` VALUES (1, 1);
+
+INSERT INTO `In` VALUES (2, 1);
+
+INSERT INTO `In` VALUES (5, 1);
 
 INSERT INTO `Handle` VALUES (4, 1);
 
