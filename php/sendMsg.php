@@ -1,7 +1,7 @@
 <?php 
-require_once("bdd.php");
 
-if ( !is_connected_db() )
+require_once("./bdd.php");
+if (!is_connected_db())
     try {
         connect_db();
     } catch (Exception $e){
@@ -16,5 +16,16 @@ $receiver = isset($_POST["receiver"]) ? $_POST["receiver"] : "5";
 
 $msgSend = alterMessage_db($sender, $receiver, $msg);
 
-echo $msgSend === true ? $msg : "marche po";
+
+if ($msgSend === true) {
+        echo "<div class='sub-msg'>";
+            echo "<p>".$msg."</p>";
+        echo "</div>";
+       
+
+} else {
+        echo "<div class='sub-msg'>";
+            echo "<p>Message non envoyé</p>";
+        echo "</div>";
+}
 ?>

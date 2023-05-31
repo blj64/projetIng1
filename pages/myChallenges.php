@@ -23,9 +23,26 @@
                 if (!is_connected_db())
                     connect_db();
 
-                $dataC = getAllDataCStarted();
-                
-                foreach ($dataC as $key => $value) 
+                if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id']))
+                {
+                    header('Location: /pages/connexion.php');
+                    exit(1);
+                }
+
+                if (!roleUser($_SESSION['user']['id'], MANAGER))
+                {
+                    header('Location: /pages/acceuil.php?error=Vous n\'avez pas les droits pour accéder à cette page');
+                    exit(1);
+                }    
+                    
+                $dataC = getManagersDataChallenges();
+                $events = array();
+                foreach ($dataC as $key => $value) {
+                    if($value['id'] == $_SESSION['user']['id'])
+                        $events[] = $value;
+                }
+
+                foreach ($events as $key => $value) 
                 {
                     $desc = substr($value['description'], 0, 255);
                     if (strlen($value['description']) > 255)
@@ -61,6 +78,6 @@
 
     </div>
 
-    <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
+    <?php //require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
 </body>
 </html>

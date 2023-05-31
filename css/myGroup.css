@@ -408,6 +408,10 @@ body{
     border: 1px solid grey;
     border-radius: 25px;
     margin: 2%;
+    overflow:scroll;
+    overflow-x:hidden;
+    scrollbar-color: rgb(0,0,0,0.4) rgb(0,0,0,0);
+    scroll-padding-top: auto;
 }
 
 .msg {

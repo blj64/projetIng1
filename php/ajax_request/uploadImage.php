@@ -7,27 +7,23 @@
 /*                                                    +:+         +:+ +:+       */
 /*   By: Durandnico <durandnico@cy-tech.fr>          +#+          +#++:         */
 /*                                                 +#+           +#+            */
-/*   Created: 28/05/2023 17:15:23 by Durandnico   #+#    #+#    #+#             */
+/*   Created: 30/05/2023 15:39:17 by Durandnico   #+#    #+#    #+#             */
 /*                                                ########     ###              */
 /*                                                                              */
 /* **************************************************************************** */
 
 /** 
- *  @file deleteUser.php
+ *  @file uploadImage.php
  *  @author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  @version 0.1
- *  @date Sun 28 May 2023 - 17:15:23
+ *  @date Tue 30 May 2023 - 15:39:17
  *
  *  @brief 
  *
  *
  */
 
-if (!isset($_POST['id']))
-{
-    echo "Error: missing parameters";
-    exit(1);
-}
+define('DIR', '../../asset/uploaded/');
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST')
 {
@@ -35,19 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST')
     exit(1);
 }
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
-
-if (!is_connected_db())
-    connect_db();
-
-if (session_status() == PHP_SESSION_NONE)
-    session_start();
-
-try {
-    deleteUser($_POST['id']);
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit(1);
+$count = 0;
+foreach (new DirectoryIterator(DIR) as $file) {
+    if($file->isDot()) continue;
+    $count++;
 }
 
-echo "Success: user deleted";
+if (session_start() != PHP_SESSION_ACTIVE)
+    session_start();
+
+require '../bdd.php';
+
+// fonction pour upload l'image dans le dossier asset
+move_uploaded_file($_FILES['image']['tmp_name'], DIR . $count . $_FILES['image']['name']);
+
+echo "Success :/asset/uploaded/". $count . $_FILES['image']['name'];

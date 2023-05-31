@@ -264,7 +264,7 @@ function alterSubject_db($idSubject, $newIdDataC = null, $newName = null, $newDe
         /* Check if the data challenge exists */
 
         $request = 
-        "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$idDataC') AS Res";
+        "SELECT EXISTS(SELECT * FROM `DataChallenge` WHERE `idDataC` = '$newIdDataC') AS Res";
 
         try {
             $result = request_db(DB_RETRIEVE, $request);
@@ -361,7 +361,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
  */
 function alterHandle_db($idManager, $oldIdDataC, $newIdDataC) {
     $request =
-    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC'";
+    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC' AND `idUser` = '$idManager'";
 
     try {
         request_db(DB_ALTER, $request);
@@ -403,13 +403,12 @@ function insertHandle_db($idManager, $idDataC) {
     if ($result[0]['Res'] == 0) {
         throw new Exception("" . $error . "the corresponding user does not exist");
     }
-
     /* Inserting the values */
     $request =
-    "INSERT INTO `Handle` VALUES ('$idManager', '$idDataC')";
+    "INSERT INTO `Handle` VALUES ($idManager, $idDataC)";
 
     try {
-        $result = request_db(DB_RETRIEVE, $request);
+        $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("" . $error . $e->getMessage());
     }
@@ -910,7 +909,7 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `email`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image`, DC.`description` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
@@ -987,7 +986,15 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS Res";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createUser : " . $e->getMessage());
+    }
+
+    return ($result[0]['Res']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1158,8 +1165,8 @@ function createAdmin($idUser) : bool {
  *  @param $description : the description of the data challenge
  *  @return true if the data challenge has been inserted successfully
  */
-function createDataC($name, $startDate, $endDate, $image, $description) : bool {
-    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description)";
+function createDataC($name, $startDate, $endDate, $image, $description) : int {
+    $request = "INSERT INTO `DataChallenge` VALUES (null, '$name', '$startDate', '$endDate', '$image', '$description')";
 
     try {
         request_db(DB_ALTER, $request);
@@ -1167,7 +1174,15 @@ function createDataC($name, $startDate, $endDate, $image, $description) : bool {
         throw new Exception("Error createDataC : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS id";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createDataC : " . $e->getMessage());
+    }
+
+    return ($result[0]['id']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1236,10 +1251,14 @@ function deleteUser($idUser) : bool {
     "SELECT EXISTS(SELECT * FROM `Group` WHERE `idLeader` = '$idUser') AS RES";
 
     try {
-        request_db(DB_RETRIEVE, $request);
+        $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+        throw new Exception("Error deleteUser : error while checking if the user is a leader");
     } 
+
+    if ($find[0]['RES']) {
+        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+    }
 
     $request =
     "DELETE FROM `User` 
@@ -1310,7 +1329,7 @@ function getAllDataCStarted() : array {
     $request = 
     "SELECT `idDataC`, `name`, `startDate`, `endDate`, `image`, `description`
     FROM `DataChallenge`
-    WHERE `startDate` < '$currentDate' AND '$currentDate' < `endDate`";
+    WHERE '$currentDate' < `endDate`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -1517,12 +1536,11 @@ function getAllUserContacted($idReceiver) : array {
             exit();
         }
     }
-    $query = "SELECT DISTINCT u.firstName, u.id /**Distinct is use to get each person one time */
+    $query = "SELECT DISTINCT u.firstName, u.lastName, u.id /**Distinct is use to get each person one time */
     FROM User u 
     JOIN Message m ON u.id = m.idSender 
-    WHERE m.idReceiver = '$idReceiver' or idSender = '$idReceiver'
+    WHERE m.idReceiver = '$idReceiver'
     ";
-    
     try {
         // Call the request_db function and pass the query
         $result = request_db(DB_RETRIEVE, $query);
@@ -1535,5 +1553,56 @@ function getAllUserContacted($idReceiver) : array {
  
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function getHandlerByIdManager($idManager)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:51:45
+*/
+/**
+ *  brief get all the handler of a manager
+ *  @param $idManager : the id of the manager
+ *  @return all the handler of the manager
+ *  @remarks --
+ */
+function getHandlerByIdManager($idManager) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idManager'";
 
-?>
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdManager : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getHandlerByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:52:36
+*/
+/**
+ *  brief get all the handler of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the handler of the challenge
+ *  @remarks --
+ */
+function getHandlerByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idChallenge'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+
