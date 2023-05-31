@@ -643,7 +643,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
  *  @return array w/ null if altering the database else is the result of the request when retrieving data
  *  @remarks throw an exception if the request is not valid
  */
-function request_db($dbRequestType, $request = null) : array | null {
+function request_db($dbRequestType, $request = null) {
     global $bdd;
 
     if (!is_connected_db()) {
@@ -1638,4 +1638,52 @@ function getHandlerByIdChallenge($idChallenge) {
 
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function getDataChallengeById($idDataC)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 31 May 2023 - 10:52:34
+*/
+/**
+ *  brief get a data challenge by its id
+ *  @param $idDataC : the id of the data challenge
+ *  @return the data challenge
+ *  @remarks throw an exception if the request is not valid
+ */
+function getDataChallengeById($idDataC) {
+    $request = "SELECT * FROM `DataChallenge` WHERE `idDataC` = $idDataC";
 
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getDataChallengeById : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getSubjectsByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 31 May 2023 - 11:02:52
+*/
+/**
+ *  brief get all the subjects of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the subjects of the challenge
+ *  @remarks throw an exception if the request is not valid
+ */
+function getSubjectsByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Subject` WHERE `idDataC` = $idChallenge";
+    
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getSubjectsByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
