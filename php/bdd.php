@@ -797,10 +797,9 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "SELECT `id`, I.`idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
-    JOIN `Student` AS S ON U.`id` = S.`idUser`
-    JOIN `In` AS I ON I.`idUser` = S.`idUser`";
+    JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -1683,6 +1682,37 @@ function getSubjectsByIdChallenge($idChallenge) {
         $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("Error getSubjectsByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getGroupByStudentId($idStudent)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 31 May 2023 - 21:05:05
+*/
+/**
+ *  brief get the group of a student
+ *  @param $idStudent : the id of the student
+ *  @return the group of the student
+ *  @remarks throw an exception if the request is not valid
+ */
+function getGroupByStudentId($idStudent) {
+    $request = "SELECT G.*
+    FROM `User` AS U 
+    JOIN `Student` AS S ON U.`id` = S.`idUser`
+    JOIN `In` AS I ON S.`idUser` = I.`idUser`
+    JOIN `Group` AS G ON I.`idGroup` = G.`id`
+    WHERE U.`id` = '$idStudent'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getGroupByStudentId : " . $e->getMessage());
     }
 
     return($result);
