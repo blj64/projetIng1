@@ -17,7 +17,7 @@ session_start();
 	</head>
 	<body>
 		<div id="part1">
-			<?php include('../php/header.php'); ?>
+			<?php require('../php/header.php'); ?>
         </div>
         <div id ="part2">
             <div id="dataPage">
@@ -39,20 +39,21 @@ session_start();
                             <a href="...">Archives  Data Challenges</a>
                         </div>
                         <div id="date">
-                            <p> date <p> 
+                            <input type="date">
+                            <input type="date"> 
                         </div>   
                     </div>    
                 </div>
-                <div id="Z2DP">
+                <div class="main-desc">
                     <p>ctn<p>
                 </div>
             </div>
         </div>
 		<div id = "part6">
-		<?php include('../php/join.php'); ?>
+		<?php require('../php/join.php'); ?>
 		</div>
 		<div id="part7">
-			<?php include('../php/footer.php'); ?>
+			<?php require('../php/footer.php'); ?>
 		</div>	
 	</body>
 </html
