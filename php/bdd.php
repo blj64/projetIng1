@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
+define("DB_USER", "fernandesl");
+define("DB_PASS", "zoiHohyu3eiw");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -625,7 +625,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
  *  @return array w/ null if altering the database else is the result of the request when retrieving data
  *  @remarks throw an exception if the request is not valid
  */
-function request_db($dbRequestType, $request = null) : array | null {
+function request_db($dbRequestType, $request = null) : array {
     global $bdd;
 
     if (!is_connected_db()) {

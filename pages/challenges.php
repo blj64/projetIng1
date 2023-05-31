@@ -61,6 +61,6 @@
 
     </div>
 
-    <?php //require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
+    <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
 </body>
 </html>

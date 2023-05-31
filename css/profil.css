@@ -38,6 +38,7 @@ body {
 .sign-box form input {
     position: relative;
     padding: 0 0 0 0;
+    margin: 50px;
     background-position: 50%;
     background-size: cover;
     color: #666;
@@ -52,3 +53,4 @@ body {
     color: black;
     border-color: #e0e0e0;
 }
+

@@ -50,7 +50,7 @@ session_start();
                 </a>
 
                 
-                <a href="/pages/myGroup.php" id="profile" class="card">
+                <a href="/pages/profil.php" id="profile" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Mon profil</h1>
@@ -76,7 +76,7 @@ session_start();
                 </a>
 
                 
-                <a href="/pages/myGroup.php" id="profile" class="card">
+                <a href="/pages/profil.php" id="profile" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Mon profil</h1>
@@ -102,7 +102,7 @@ session_start();
                 </a>
 
                 
-                <a href="/pages/myGroup.php" id="profile" class="card">
+                <a href="/pages/profil.php" id="profile" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Mon profil</h1>
