@@ -1,8 +1,7 @@
 <div id="footer">
     <div id="contenairF">
-        <p class="mid"> Nous contacter <p>
-        <p class="mid"> Prochain évènements <p>
-        <p class="mid"> Nos Data Challenge <p>
-        <p> L'Association <p>
+        <a href="/pages/contact.php" class="mid"> Nous contacter </a>
+        <a href="/pages/challenges.php" class="mid"> Nos Data Challenge </a>
+        <a href="https://iapau.org/" > L'Association </a>
     </div>
 </div>

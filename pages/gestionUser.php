@@ -35,6 +35,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
     <div class="main">
         <div class="left-part-main">
             <div class="banner">
+                <button onclick="show_vierge()">Créer un utilisateur</button>
                 <h1>Gestion des utilisateurs</h1>
             </div>
 
@@ -228,6 +229,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
             <button onclick="deleteUser()" id=suppr>Supprimer utilisateur</button>
             <button onclick="MakeManager()" id=gestionner>Faire gestionnaire</button>
             <button onclick="updateUser()" id=modif>Appliquer modification</button>
+            <button onclick="createUser()" id=creation>Créer utilisateur</button>
         </div>
     </div>
 

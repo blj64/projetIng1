@@ -1,0 +1,178 @@
+.center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    padding-bottom: 2%;
+    gap: 50px;
+}
+
+.main {
+    border-top-right-radius: 180px;
+    border-top-left-radius: 180px;
+}
+
+.dataC {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.event-img {
+    position: relative;
+    max-height: 35vh;
+    background-image: url('/asset/img/bigbrains.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    filter: brightness(0.6);
+    transition: all 0.5s ease-in-out;
+}
+
+.event-img:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+    scale: 1.05;
+    filter: brightness(1);
+}
+
+
+.date {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 5%;
+}
+
+.date * {
+    padding : 1%;
+}
+.send_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    height: auto;
+    padding: 2%;
+    background-color: darkgray;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    border-radius: 25px;
+}
+
+.send_form p {
+    font-size: large;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 1%;
+}
+
+.send_form div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+
+.send_form input {
+    width: 75%;
+    border-radius: 15px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.send_form button {
+    width: 12%;
+    padding: 1%;
+    border-radius: 15px;
+}
+
+.event-img {
+    position: relative;
+    height: 100%;
+    width: 42vw;
+    min-height: 30vh;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.team {
+    position: relative;
+    background-color: dimgray;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+    width: 70%;
+    max-height: 20vh;
+    min-height: 10vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: auto;
+    padding: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    overflow: hidden;   
+    border-radius: 29px;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+}
+
+.team a {
+    text-decoration: underline;
+    color: white;
+}
+
+.team a:hover {
+    cursor: pointer;
+}
+
+.team a:visited {
+    color: white;
+}
+
+
+#bold {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.team div {
+    position: relative;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.member img {
+    position: relative;
+    height: 25px;
+}
+
+.team a {
+    position: relative;
+    min-height: 50%;
+    margin: 0 auto;
+}

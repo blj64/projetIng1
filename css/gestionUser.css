@@ -36,13 +36,43 @@ body {
 
 .banner {
     position: relative;
+    display: flex;
+    flex-direction: row;
     text-align: center;
+    justify-content: space-evenly;
     height: auto;
     width: 100%;
     margin: 0 auto;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: xx-large;
+}
+
+.banner h1 {
+    margin: 0 auto;
+}
+
+.banner button {
+    position: relative;
+    padding: 2%;
+    background-color: rgb(144, 238, 144);
+    font-size: x-large;
+    font-weight: bold;
+    margin-left: 2%;
+    border-radius: 75px;  
+    color: white;
+    transition: 0.2s ease-in-out;  
+    filter: brightness(0.8);
+}
+
+.banner button:hover {
+    color: black;
+    filter: brightness(1);
+    transition: 0.05s;
+}
+
+.banner button:active {
+    transform: scale(0.95);
 }
 
 .desc-banner {
@@ -288,4 +318,8 @@ body {
 #suppr:active {
     background-color: rgba(255,0,0,1);
     color: white;
+}
+
+#creation {
+    width: 100%;
 }

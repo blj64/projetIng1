@@ -181,6 +181,14 @@ function show(that) {
     
     btn_preview.children[1].style.display = "none";
     
+    /* hide all btn */
+    for( let btn of btn_preview.children)
+        btn.style.display = "none";
+
+    /* show only the btn for update / remove */
+    btn_preview.children[0].style.display = "block";
+    btn_preview.children[2].style.display = "block";
+
     /* create the custom preview */
     if(data.get("role") == "STUDENT")
     {
@@ -280,6 +288,9 @@ function gather_data_preview() {
         data.set("startDate", document.getElementById("prev-startDate").value);
         data.set("endDate", document.getElementById("prev-endDate").value);
         data.set("idEvent", document.getElementById("prev-respo").value);
+    } else if(data.get("role") == "CREATE")
+    {
+        data.set("password", document.getElementById("prev-password").value);
     }
 
     return (data);
@@ -383,7 +394,7 @@ async function updateUser() {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "id=" + data.get("id") + "&lastName=" + data.get("lastName") + "&firstName=" + data.get("firstName") + "&email=" + data.get("email") + "&number=" + data.get("number") + "&city=" + data.get("city") + "&school=" + data.get("school") + "&lvStudy=" + data.get("lvStudy") + "&idGroup=" + data.get("idGroup") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate") + "&role=" + data.get("role")
+        body: "id=" + data.get("id") + "&lastName=" + data.get("lastName") + "&firstName=" + data.get("firstName") + "&email=" + data.get("email") + "&number=" + data.get("number") + "&city=" + data.get("city") + "&school=" + data.get("school") + "&lvStudy=" + data.get("lvStudy") + "&idGroup=" + data.get("idGroup") + "&company=" + data.get("company") + "&startDate=" + data.get("startDate") + "&endDate=" + data.get("endDate") + "&role=" + data.get("role") + "&idDataC=" + data.get("idEvent")
     })
     .then(response => response.text())
     .then( function (res) {
@@ -399,3 +410,147 @@ async function updateUser() {
 }
 
 /* ---------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function show_vierge()
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 00:33:19
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+function show_vierge() {
+    
+    if (IS_HIDE_PREVIEW)
+        change_preview();
+    
+    document.getElementById("preview-role").value = "CREATE";
+    document.getElementById("preview-id").value = "";
+    document.getElementById("prev-lastName").value = "";
+    document.getElementById("prev-firstName").value = "";
+    document.getElementById("prev-email").value = "";
+    document.getElementById("prev-number").value = "";
+
+    const custom = document.getElementsByClassName("preview-custom")[0];
+    const btn_preview = document.getElementsByClassName("preview-validation-btn")[0];
+   
+    while (custom.firstChild) 
+        custom.removeChild(custom.firstChild);
+
+    createInput("password", "prev-password", "Password", "" , true,  custom);
+        
+    for (let btn of btn_preview.children)
+    {
+        btn.style.display = "none";
+    }
+    btn_preview.children[3].style.display = "block";
+    return (true);
+}
+
+/* ---------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function dom_add_user(id, lastName, firstName, email, number, role)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 01:13:21
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+function dom_add_user(id, lastName, firstName, email, number, role) {
+    
+    const user_list = document.getElementsByClassName("user-list")[3];
+    
+    /* create the main div */
+    let user = document.createElement("div");
+    user.id = id;
+    user.className = "user";
+    user.onclick = function () { show(this); };
+
+    /* create the hidden input */
+    createInput("hidden", "email", "", email, false, user);
+    createInput("hidden", "number", "", number, false, user);
+    createInput("hidden", "role", "", role, false, user);
+
+    /* create the profile picture div */
+    let pp = document.createElement("div");
+    pp.className = "profile-picture";
+
+    /* create the image */
+    let pp_img = document.createElement("img");
+    pp_img.src = "/asset/icon/profile.ico";
+    pp_img.alt = "profile picture";
+    pp_img.id = "img";
+
+    /* add the image to the correct div */
+    pp.appendChild(pp_img);
+
+    /* create the name div */
+    let name = document.createElement("div");
+    name.className = "text-intel";
+
+    /* create the name paragraph */
+    let p = document.createElement("p");
+    p.id = "name";
+    p.innerHTML = lastName + " " + firstName;
+
+    /* add the paragraph to the correct div */
+    name.appendChild(p);
+
+    /* add all the div in the correct order in the main one */
+    user.appendChild(pp);
+    user.appendChild(name);
+
+    /* add the main div to the user list */
+    user_list.appendChild(user);
+
+    return (true);
+}
+
+/* ---------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function createUser()
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 00:58:42
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function createUser() {
+    
+    let data = gather_data_preview();
+
+    if(data.get("password") == "" || data.get("number") == "" || data.get("email") == "" || data.get("firstName") == "" || data.get("lastName") == "")
+    {
+        alert("Aucun champs ne peut être vide !");
+        return (false);
+    }
+
+    const response = await fetch("/php/ajax_request/createUser.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "lastName=" + data.get("lastName") + "&firstName=" + data.get("firstName") + "&email=" + data.get("email") + "&number=" + data.get("number") + "&password=" + data.get("password")
+    })
+    .then(response => response.text())
+    .then( function (res) {
+        console.log(res);
+        if (res.startsWith("Success"))
+        {
+            dom_add_user(res.split(":")[2], data.get("lastName"), data.get("firstName"), data.get("email"), data.get("number"), "USER");
+            change_preview();
+        }
+        else
+            alert(res);
+    });
+
+    return (0);
+}

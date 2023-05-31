@@ -28,10 +28,6 @@ session_start();
 		<div id="part3">
 			<?php include('../php/iaPauAcc.php'); ?>
 		</div>
-		<div id="part4">
-			<?php include('../php/stripMid.php'); ?>
-			</div>
-		</div>
 		<div id="part5">
 			<?php include('../php/dataCAcc.php'); ?>
 		</div>
