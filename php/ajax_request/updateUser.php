@@ -52,7 +52,7 @@ try {
 
 if(roleUser($_POST['id'], STUDENT))
     try {
-        alterStudent_db($_POST['id'], null, $_POST['lvStudy'], $_POST['school'] , $_POST['city']);
+        alterStudent_db($_POST['id'], null, null, $_POST['lvStudy'], $_POST['school'] , $_POST['city']);
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
         exit(1);
