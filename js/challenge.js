@@ -79,10 +79,9 @@ var nbSubject = 0;
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Sun 28 May 2023 - 23:37:59
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+ *  \brief add a subject in dom
+ *  \return --
+ *  \remarks cannot add more than 3 subjects
  */
 function AddSubject() {
     if( nbSubject > 2)
@@ -109,10 +108,10 @@ function AddSubject() {
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Sun 28 May 2023 - 23:40:59
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+ *  \brief delete an element
+ *  \param that     : the element to delete
+ *  \return --
+ *  \remarks --
  */
 function suppr(that) {
     that.parentElement.remove();
@@ -127,10 +126,9 @@ function suppr(that) {
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Mon 29 May 2023 - 00:23:25
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+ *  \brief create a challenge
+ *  \return --
+ *  \remarks --
  */
 async function valider() {
     
@@ -238,10 +236,10 @@ async function valider() {
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Wed 31 May 2023 - 15:55:49
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+ *  \brief delete a challenge
+ *  \param idDataC     : the id of the challenge to delete
+ *  \return --
+ *  \remarks ask for confirmation
  */
 async function deleteDataC(idDataC) {
     if( !confirm("Voulez-vous vraiment supprimer cet évènement ?"))
@@ -277,10 +275,10 @@ async function deleteDataC(idDataC) {
  *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
  *  \version 0.1
  *  \date Wed 31 May 2023 - 17:39:31
- *  \brief 
- *  \param 
- *  \return 
- *  \remarks 
+ *  \brief update the challenge
+ *  \param idDataC     : the id of the challenge to update
+ *  \return --
+ *  \remarks ask for confirmation
  */
 async function Sauvegarder(idDataC) {
     if( !confirm("Voulez-vous sauvegarder les modifications de cet évènement ?"))
@@ -327,5 +325,73 @@ async function Sauvegarder(idDataC) {
         }
     });
 
+    return (true);
+}
+
+
+/* ------------------------------------------------------------------------------------------ */
+
+/*!
+ *  \fn function inscrire(idDataC)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 23:43:01
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function inscrire(idDataC) {
+
+    let data = new Map();
+
+    const response = await fetch("/php/ajax_request/currentUser.php")
+    .then(response => response.text())
+    .then( function(res) {
+        console.log(res);
+        if(res.startsWith("Success"))
+        {
+            data.set("idDataC", idDataC);
+            data.set("idUser", res.split(":")[1]);
+            data.set("role", res.split(":")[2]);
+            
+            if(data.get("role") != "USER" && data.get("role") != "STUDENT")
+            {
+                alert("Vous devez être un étudiant pour vous inscrire à un évènement !");
+                return (false);
+            }
+        }
+        else
+        {
+            alert("Vous devez être connecté pour vous inscrire à un évènement !");
+            header("Location: /pages/login.php");
+            return (false);
+        }
+    });
+
+    console.log(data.get("idUser"));
+    const response2 = await fetch("/php/ajax_request/currentUserTeam.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "idUser=" + data.get("idUser")
+    })
+    .then(response => response.text())
+    .then( function(res) {
+        console.log(res);
+        if(!res.startsWith("Success"))
+        {
+            alert("error : " + res);
+            return (false);
+        }
+        else if(res.split(":")[1] != "null")
+        {
+            alert("Vous êtes déjà inscrit à un évènement !");
+            return (false);
+        }
+    });
+
+    window.location.href = "/pages/teamInscription.php?idDataC=" + idDataC;
     return (true);
 }
