@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body>
+<body id=body>
     <?php //require_once $_SERVER["DOCUMENT_ROOT"] . '/php/header.php'; 
     ?>
     <div style="height: 10vh; background-color:blueviolet;">
@@ -49,15 +49,15 @@
 
         <div class="center">
             <nav class="menu">
-                <a href="#Main" class="list active" onclick="changeMenu(this)">Mon équipe</a>
-                <a href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
-                <?php if ($_SESSION['user']['id'] == $group['idLeader']) echo '<a href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a> '; ?>
-                <a href="#Rendu" class="list" onclick="changeMenu(this)">Rendu</a>
+                <a id=menu-Main href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
+                <a id=menu-Messagerie href="#Messagerie" class="list" onclick="changeMenu(this)">Messagerie</a>
+                <?php if ($_SESSION['user']['id'] == $group['idLeader']) echo '<a id=menu-Setting href="#Setting" class="list" onclick="changeMenu(this)">Paramètre</a> '; ?>
+                <a id=menu-Rendu href="#Rendu" class="list" onclick="changeMenu(this)">Rendu</a>
             </nav>
             <div class="rest">
 
                 <!-- Mon équipe -->
-                <div class="content-box" id="Main">
+                <div class="content-box" id="Main" style="display: none;">
                     <div class="left-box">
                         <div class="banner-group-name">
                             <h1><?php echo $group['name'] ?></h1>
