@@ -80,7 +80,6 @@ else if(roleUser($_POST['id'], MANAGER))
     }
     else
     {
-        echo "Error: no handler found";
         try {
             insertHandle_db($_POST['id'], $_POST['idDataC']);
         } catch (Exception $e) {

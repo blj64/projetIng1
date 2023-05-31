@@ -141,6 +141,10 @@ async function valider() {
         "endDate": document.getElementById("endDate").value,
     };
 
+    /* add '\' before ' */
+    data["titre"] = data["titre"].replace(/'/g, "\\'");
+    data["description"] = data["description"].replace(/'/g, "\\'");
+
     let img = new FormData();
     img.append("image", document.getElementById("main-image").files[0]);
 
@@ -156,7 +160,7 @@ async function valider() {
     data["subjects"] = {};
     for(let subject of document.getElementsByClassName("subject"))
     {
-        const datas2 = {
+        let datas2 = {
             "name":subject.children[1].value, 
             "description": subject.children[2].value
         };
@@ -168,6 +172,11 @@ async function valider() {
                 return;
             }
         }
+        
+        /* add '\' before ' */
+        datas2["name"] = datas2["name"].replace(/'/g, "\\'");
+        datas2["description"] = datas2["description"].replace(/'/g, "\\'");
+
         data["subjects"][count - 1] = {"idS": count, "name": datas2['name'], "description": datas2["description"]};
         count++;
     }
