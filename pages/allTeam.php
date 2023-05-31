@@ -81,7 +81,7 @@
             
             
             foreach ($teams as $key => $value) {
-                $resquest = "SELECT COUNT(*) FROM `Student` WHERE idGroup = ".$value['id'];
+                $resquest = "SELECT COUNT(*) FROM `In` WHERE idGroup = ".$value['id'];
                 try {
                     $nb = request_db(DB_RETRIEVE, $resquest);
                 } catch (Exception $e) {
