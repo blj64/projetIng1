@@ -2,7 +2,7 @@
     <div id="underHeaderContent">
     <?php 
     
-    if(isset($_SESSION['id'])){
+    if(isset($_SESSION['user']['id'])){
         if(roleUser($_SESSION['user']['id'], ADMIN)){
             echo('<h2>Bienvenue sur votre espace Administrateur</h2>');
         }

@@ -32,37 +32,41 @@
                 
                 <h1> Vous êtes sur votre profil </h1> <br>
                 <?php 
-                    $donnees = getUserByEmail($_SESSION['user']['login']);
+                    
                 ?>
                 
                 <form action="/php/modifProfil.php" method="POST">
 
-                    
-                    <input type="text" name="firstname" id="firstName" placeholder="prenom" value="<?php echo($donnees["firstName"]); ?>">
+                <?php if(isset($_SESSION['user']['id'])){
+                    $donnees = getUserByEmail($_SESSION['user']['login']);
+                    echo('<input type="text" name="firstname" id="firstName" placeholder="prenom" value="'.$donnees["firstName"].'">    
                     
                 
-                    <input type="text" name="lastname" id="lastName" placeholder="nom" value="<?php echo($donnees["lastName"]);?>">
+                    <input type="text" name="lastname" id="lastName" placeholder="nom" value="'.$donnees["lastName"].'">
 
                     
-                    <input type="text" name="number" id="number" placeholder="numéro" value="<?php echo($donnees["number"]);?>">
+                    <input type="text" name="number" id="number" placeholder="numéro" value="'.$donnees["number"].'">
                 
                     
-                    <input type="text" name="email" id="email" placeholder="email" value="<?php echo($donnees["email"]);?>">
+                    <input type="text" name="email" id="email" placeholder="email" value="'.$donnees["email"].'">');
                     
-                    <?php 
+                    
                     if(roleUser($_SESSION['user']['id'], STUDENT)){
-                        echo(`<input type="text" name="school" id="school" placeholder="school" value="<?php echo(`.$donnees["school"].`);?>">
+                        echo('<input type="text" name="school" id="school" placeholder="école" value="'.$donnees["school"].'">
                     
 
-                        <input type="text" name="city" id="city" placeholder="city" value="<?php echo(`.$donnees["city"].`);?>">`);
+                        <input type="text" name="city" id="city" placeholder="ville" value="'.$donnees["city"].'">');
                     }
                     if(roleUser($_SESSION['user']['id'], MANAGER)){
-                        echo(`<input type="text" name="company" id="company" placeholder="entreprise" value="<?php echo(`.$donnees["company"].`);?>">`);
+                        echo(`<input type="text" name="company" id="company" placeholder="entreprise" value="`.$donnees["company"].`">`);
                     } 
-                    ?>  
                     
-                    <input type="submit" value="modifier">
-
+                    
+                    echo('<input type="submit" value="modifier">');
+                }else {
+                    header("Location: /pages/signIn.php");
+                }
+                ?>  
                     
                 </form>
                 

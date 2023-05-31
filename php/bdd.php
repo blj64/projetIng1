@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "fernandesl");
-define("DB_PASS", "zoiHohyu3eiw");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);

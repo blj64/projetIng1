@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/challenges.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <title>Data battles</title>
 </head>
 <body>
@@ -48,7 +49,7 @@
                                 <span>:</span>
                                 <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
                             </div>
-                            <a href="resumeChall.php?id='. $value['idDataC'] .'">En savoir plus</a>
+                            <a href="challengesPage.php?id='. $value['idDataC'] .'">En savoir plus</a>
                         </div>
                     </div>';
                 }

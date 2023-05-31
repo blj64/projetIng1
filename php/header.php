@@ -6,17 +6,12 @@
     <div class="center-part">
 
         <div class="logo">
-            <?php
-            if(isset($_SESSION['user']['id'])){
-                echo('<a href="/pages/accueilAdmin.php">
+            
+            <a href="/pages/">
                 <img src="/asset/img/iapau_round.png" alt="logo">
-            </a>');
-            }else{
-            echo('<a href="/pages/">
-                <img src="/asset/img/iapau_round.png" alt="logo">
-            </a>');
-            }
-            ?>
+            </a>'
+            
+            
         </div>
 
         <div class="main-menu">
@@ -47,7 +42,7 @@
 
                 // back to pages accessible by all
                 'Contact' => '/pages/contact.php',
-                'Profile' => '/pages/about.php'
+                'Profil' => '/pages/profil.php'
             ];
 
             require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
