@@ -361,7 +361,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
  */
 function alterHandle_db($idManager, $oldIdDataC, $newIdDataC) {
     $request =
-    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC' AND `idUser` = '$idManager'";
+    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC'";
 
     try {
         request_db(DB_ALTER, $request);
@@ -403,12 +403,13 @@ function insertHandle_db($idManager, $idDataC) {
     if ($result[0]['Res'] == 0) {
         throw new Exception("" . $error . "the corresponding user does not exist");
     }
+
     /* Inserting the values */
     $request =
-    "INSERT INTO `Handle` VALUES ($idManager, $idDataC)";
+    "INSERT INTO `Handle` VALUES ('$idManager', '$idDataC')";
 
     try {
-        $result = request_db(DB_ALTER, $request);
+        $result = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
         throw new Exception("" . $error . $e->getMessage());
     }
@@ -427,7 +428,6 @@ function insertHandle_db($idManager, $idDataC) {
 /**
  * brief send a request to alter the `Student` table
  * @param $idStudent    : the id of the student to which data is updated
- * @param $oldIdGroup   : the old id of the group for the student
  * @param $newIdGroup   : the id of the new group for the student
  * @param $newLvStudy   : the new study level of the student
  * @param $newSchool    : the new school of the student
@@ -435,7 +435,7 @@ function insertHandle_db($idManager, $idDataC) {
  * @return true if the database was altered successfully
  * @remarks throw an exception if a request is not valid
  */
-function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $newLvStudy = null, $newSchool = null, $newCity = null) : bool {
+function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $newSchool = null, $newCity = null) : bool {
     $error = "Error alterStudent_db : ";
 
     $request = 
@@ -449,34 +449,17 @@ function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $ne
 
     $numArgs = func_num_args();
     $listArgs = func_get_args();
-    $i = 1;
 
-    while ($i < $numArgs) {
+    for ($i = 1; $i < $numArgs; $i++) {
         if ($listArgs[$i] != null) {
-            if ($i == 1) {
-                if ($listArgs[$i + 1] != null) {
-                    $request = 
-                    "UPDATE `In` SET `idGroup` = '$newIdGroup' WHERE `idUser` = '$idStudent' AND `idGroup` = '$oldIdGroup'";
-
-                    try {
-                        request_db(DB_ALTER, $request);
-                    } catch (Exception $e) {
-                        throw new Exception("" . $error . $e->getMessage());
-                    }
-                }
-                /* Saut pour changer le niveau d'étude au prochain tour de bouvle */
-                $i = 3;
-            } else {
-                /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
-                $column = $list_columns[$i]['Field'];
-                $request =
-                "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
-                try {
-                    request_db(DB_ALTER, $request);
-                } catch (Exception $e) {
-                    throw new Exception("" . $error . $e->getMessage());
-                }
-                $i++;
+            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
+            $column = $list_columns[$i]['Field'];
+            $request =
+            "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
+            try {
+                request_db(DB_ALTER, $request);
+            } catch (Exception $e) {
+                throw new Exception("" . $error . $e->getMessage());
             }
         }
     }
@@ -769,8 +752,7 @@ function getUserByEmail($email) : array {
  * @remarks throw an exception if the request is not valid
  */
 function getAllManagers() {
-    $request = 
-    "SELECT * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
+    $request = "Select * FROM `User` AS U JOIN `Manager` AS M ON U.`id` = M.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -797,10 +779,9 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "SELECT `id`, I.`idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
+    "Select `id`, `idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
-    JOIN `Student` AS S ON U.`id` = S.`idUser`
-    JOIN `In` AS I ON I.`idUser` = S.`idUser`";
+    JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -826,8 +807,7 @@ function getAllStudents() {
  *  @remarks throw an exception if the request is not valid
  */
 function getAllAdmins() {
-    $request = 
-    "SELECT * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
+    $request = "Select * FROM `User` WHERE `id` IN (SELECT `idUser` FROM `Admin`)";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
@@ -886,8 +866,7 @@ function getStudentsGroup($idGroup) : array  {
     "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
-    JOIN `In` AS I ON I.`idUser` = S.`idUser`
-    WHERE I.`idGroup` = '$idGroup'";
+    WHERE S.`idGroup` = '$idGroup'";
 
     try {
         $result = request_db(DB_RETRIEVE, $request); 
@@ -931,7 +910,7 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "SELECT `id`, `firstName`, `lastName`, `email`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image`, DC.`description` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
@@ -1008,15 +987,7 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    $request = "SELECT LAST_INSERT_ID() AS Res";
-
-    try {
-        $result = request_db(DB_RETRIEVE, $request);
-    } catch (Exception $e) {
-        throw new Exception("Error createUser : " . $e->getMessage());
-    }
-
-    return ($result[0]['Res']);
+    return (true);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1050,18 +1021,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
 
     /* Insert the new student in the database */
     $request =
-    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city')";
-
-    try {
-        $result = request_db(DB_ALTER, $request);
-    } catch (Exception $e) {
-        throw new Exception("Error createStudent: " . $e->getMessage());
-    }
-
-    /* Insert in the `In` table for the group */
-
-    $request =
-    "INSERT INTO `In` VALUES ('$idUser', '$idGroup')";
+    "INSERT INTO `Student` VALUES ('$idUser', '$idGroup', '$lvStudy', '$school', '$city')";
 
     try {
         $result = request_db(DB_ALTER, $request);
@@ -1286,7 +1246,7 @@ function deleteUser($idUser) : bool {
     try {
         $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error deleteUser : error while checking if the user is a leader");
+        throw new Exception("Error deleteUser : cannot delete the leader of a group");
     } 
 
     if ($find[0]['RES']) {
@@ -1428,14 +1388,6 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
     return (true);
 }
 
-/* -------------------------------------------------------------------------- */
-
-/*
- *  fn function roleUser($idUser, $role)
- *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
- *  version 0.1
- *  date Tue 23 May 2023 - 15:42:59
-*/
 /**
  *  brief check if a user has a certain role
  *  @param $idUser : the id of the user
@@ -1586,56 +1538,5 @@ function getAllUserContacted($idReceiver) : array {
  
 /* -------------------------------------------------------------------------- */
 
-/*
- *  fn function getHandlerByIdManager($idManager)
- *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
- *  version 0.1
- *  date Tue 30 May 2023 - 23:51:45
-*/
-/**
- *  brief get all the handler of a manager
- *  @param $idManager : the id of the manager
- *  @return all the handler of the manager
- *  @remarks --
- */
-function getHandlerByIdManager($idManager) {
-    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idManager'";
 
-    try {
-        $result = request_db(DB_RETRIEVE, $request);
-    } catch (Exception $e) {
-        throw new Exception("Error getHandlerByIdManager : " . $e->getMessage());
-    }
-
-    return($result);
-}
-
-/* -------------------------------------------------------------------------- */
-
-/*
- *  fn function getHandlerByIdChallenge($idChallenge)
- *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
- *  version 0.1
- *  date Tue 30 May 2023 - 23:52:36
-*/
-/**
- *  brief get all the handler of a challenge
- *  @param $idChallenge : the id of the challenge
- *  @return all the handler of the challenge
- *  @remarks --
- */
-function getHandlerByIdChallenge($idChallenge) {
-    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idChallenge'";
-
-    try {
-        $result = request_db(DB_RETRIEVE, $request);
-    } catch (Exception $e) {
-        throw new Exception("Error getHandlerByIdChallenge : " . $e->getMessage());
-    }
-
-    return($result);
-}
-
-/* -------------------------------------------------------------------------- */
-
-
+?>

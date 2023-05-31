@@ -1,37 +1,41 @@
 <div id="messagerie-container">
-   
-        <input id="user-search-input" type="text" class="sub-msg" name="sender" placeholder="UserName" value="1" oninput="updateNewContact()">
+        <input id="user-search-input" type="text" class="sub-msg" name="sender" placeholder="UserName" value="1" oninput="searchSuggestions()">
+        <datalist id="users-name"></datalist>
 </div>
 
 
 
 <?php
     require_once("bdd.php");
-    if (!is_connected_db()) {
-        try {
-            connect_db();
-        } catch (Exception $e){
-            echo $e->getMessage();
-            exit();
-        }
-    }
 
-
-if (isset($_GET['searchTerm'])) {
-    $searchTerm = $_GET['searchTerm'];
-
-    $query = "SELECT * FROM User WHERE firstName LIKE '%$searchTerm%' OR lastName LIKE '%$searchTerm%'";
+    // Connect to the database
     try {
-        // Call the request_db function and pass the query
-        $result = request_db(DB_RETRIEVE, $query);
-        echo json_encode($result["firstName"]);
-
+        connect_db();
     } catch (Exception $e) {
-        echo "error";
-        throw new Exception("Error getAllMessageFromUser : " . $e->getMessage());
+        // Handle connection error
+        echo "Database connection error: " . $e->getMessage();
+        exit();
     }
-   
 
-}
+    // Fetch suggestions from the database
+    $searchText = $_GET['searchText']; // Assuming you're using GET method
 
+    try {
+        $query = "SELECT `firstName` FROM `User` WHERE `firstName` LIKE '%$searchText%'";
+        $results = request_db(DB_RETRIEVE, $query);
+
+        $suggestions = array();
+        foreach ($results as $row) {
+            $suggestions[] = $row['firstName'];
+        }
+    } catch (Exception $e) {
+        // Handle query execution error
+        echo "Query execution error: " . $e->getMessage();
+        exit();
+    }
+
+    // Echo each name
+    foreach ($suggestions as $name) {
+        echo "<option value='".$name . "'>";
+    }
 ?>
