@@ -361,7 +361,7 @@ function alterManager_db($idManager, $newCompany = null, $newStartDate = null, $
  */
 function alterHandle_db($idManager, $oldIdDataC, $newIdDataC) {
     $request =
-    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC'";
+    "UPDATE `Handle` SET `idDataC` = '$newIdDataC' WHERE `idDataC` = '$oldIdDataC' AND `idUser` = '$idManager'";
 
     try {
         request_db(DB_ALTER, $request);
@@ -403,13 +403,12 @@ function insertHandle_db($idManager, $idDataC) {
     if ($result[0]['Res'] == 0) {
         throw new Exception("" . $error . "the corresponding user does not exist");
     }
-
     /* Inserting the values */
     $request =
-    "INSERT INTO `Handle` VALUES ('$idManager', '$idDataC')";
+    "INSERT INTO `Handle` VALUES ($idManager, $idDataC)";
 
     try {
-        $result = request_db(DB_RETRIEVE, $request);
+        $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("" . $error . $e->getMessage());
     }
@@ -910,7 +909,7 @@ function getStudentsGroup($idGroup) : array  {
  */
 function getManagersDataChallenges() {
     $request = 
-    "SELECT `id`, `firstName`, `lastName`, `password`, `number`, `email`, `company`, M.`startDate`, M.`endDate`, DC.`idDataC`, DC.`name`, 
+    "SELECT `id`, `firstName`, `lastName`, `email`, DC.`idDataC`, DC.`name`, 
     DC.`startDate`, DC.`endDate`, DC.`image`, DC.`description` FROM `User` AS U 
     JOIN `Manager` AS M ON U.`id` = M.`idUser` 
     JOIN `Handle` AS H ON H.`idUser` = M.`idUser` 
@@ -987,7 +986,15 @@ function createUser($firstname, $lastname, $password, $phone, $email) {
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    return (true);
+    $request = "SELECT LAST_INSERT_ID() AS Res";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createUser : " . $e->getMessage());
+    }
+
+    return ($result[0]['Res']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1246,7 +1253,7 @@ function deleteUser($idUser) : bool {
     try {
         $find = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
-        throw new Exception("Error deleteUser : cannot delete the leader of a group");
+        throw new Exception("Error deleteUser : error while checking if the user is a leader");
     } 
 
     if ($find[0]['RES']) {
@@ -1388,6 +1395,14 @@ function alterMessage_db($idSender, $idReceiver, $message = null) : bool {
     return (true);
 }
 
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function roleUser($idUser, $role)
+ *  author Michel-Dansac Lilian François Jean-Philippe <micheldans@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 23 May 2023 - 15:42:59
+*/
 /**
  *  brief check if a user has a certain role
  *  @param $idUser : the id of the user
@@ -1538,5 +1553,56 @@ function getAllUserContacted($idReceiver) : array {
  
 /* -------------------------------------------------------------------------- */
 
+/*
+ *  fn function getHandlerByIdManager($idManager)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:51:45
+*/
+/**
+ *  brief get all the handler of a manager
+ *  @param $idManager : the id of the manager
+ *  @return all the handler of the manager
+ *  @remarks --
+ */
+function getHandlerByIdManager($idManager) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idManager'";
 
-?>
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdManager : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getHandlerByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:52:36
+*/
+/**
+ *  brief get all the handler of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the handler of the challenge
+ *  @remarks --
+ */
+function getHandlerByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idChallenge'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+
