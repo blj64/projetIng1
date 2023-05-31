@@ -91,7 +91,10 @@ $_SESSION['user']["login"] = $result[0]["email"];
 /* check if the user has a group */
 if (roleUser($result[0]['id'], STUDENT))  {
     /* get the student intels */
-    $request = "SELECT * FROM `Student` WHERE `idUser` = " . $result[0]["id"];
+    
+    $request =
+    "SELECT `idGroup` FROM `In` WHERE `idUser` = " . $result[0]["id"];
+    
     try {
         $student = request_db(DB_RETRIEVE, $request);
     } catch (Exception $e) {
