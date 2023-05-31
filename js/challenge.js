@@ -230,3 +230,42 @@ async function valider() {
 
     return (0);
 }
+
+/* -------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function deleteDataC(idDataC)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 15:55:49
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function deleteDataC(idDataC) {
+    if( !confirm("Voulez-vous vraiment supprimer cet évènement ?"))
+        return (false);
+
+    const response = await fetch("/php/ajax_request/deleteDataC.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "idDataC=" + idDataC
+    })
+    .then(response => response.text())
+    .then( function(res) {
+        if(res.startsWith("Success"))
+        {
+            alert("Votre évènement a bien été supprimé !");
+            document.getElementById(idDataC).remove();
+        }
+        else
+        {
+            alert("Une erreur est survenue lors de la suppression de l'évènement !\n" + res);
+        }
+    });
+
+    return (true);
+}

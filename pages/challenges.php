@@ -24,7 +24,8 @@
                     connect_db();
 
                 $dataC = getAllDataCStarted();
-                
+                $isAdmin = roleUser($_SESSION['user']['id'],ADMIN);
+
                 foreach ($dataC as $key => $value) 
                 {
                     $desc = substr($value['description'], 0, 255);
@@ -32,8 +33,12 @@
                         $desc .= '....';
                     
                     echo
-                    '<div class="event">
-                        <div class="event-img">
+                    '<div class="event">';
+
+                    if( $isAdmin )
+                        echo '<button class="delete" onclick="deleteDataC('.$value['idDataC'].')">X</button>';
+                    
+                    echo '<div class="event-img" id="'.$value['idDataC'].'">
                             <img src="'.$value['image'].'" alt="image-event">
                         </div>
                         <div class="event-intel">
@@ -60,7 +65,7 @@
         </div>
 
     </div>
-
+                <script src="/js/challenge.js"></script>
     <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
 </body>
 </html>
