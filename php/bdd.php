@@ -427,6 +427,7 @@ function insertHandle_db($idManager, $idDataC) {
 /**
  * brief send a request to alter the `Student` table
  * @param $idStudent    : the id of the student to which data is updated
+ * @param $oldIdGroup   : the old id of the group for the student
  * @param $newIdGroup   : the id of the new group for the student
  * @param $newLvStudy   : the new study level of the student
  * @param $newSchool    : the new school of the student
@@ -434,7 +435,7 @@ function insertHandle_db($idManager, $idDataC) {
  * @return true if the database was altered successfully
  * @remarks throw an exception if a request is not valid
  */
-function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $newSchool = null, $newCity = null) : bool {
+function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $newLvStudy = null, $newSchool = null, $newCity = null) : bool {
     $error = "Error alterStudent_db : ";
 
     $request = 
@@ -448,17 +449,34 @@ function alterStudent_db($idStudent, $newIdGroup = null, $newLvStudy = null, $ne
 
     $numArgs = func_num_args();
     $listArgs = func_get_args();
+    $i = 1;
 
-    for ($i = 1; $i < $numArgs; $i++) {
+    while ($i < $numArgs) {
         if ($listArgs[$i] != null) {
-            /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
-            $column = $list_columns[$i]['Field'];
-            $request =
-            "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
-            try {
-                request_db(DB_ALTER, $request);
-            } catch (Exception $e) {
-                throw new Exception("" . $error . $e->getMessage());
+            if ($i == 1) {
+                if ($listArgs[$i + 1] != null) {
+                    $request = 
+                    "UPDATE `In` SET `idGroup` = '$newIdGroup' WHERE `idUser` = '$idStudent' AND `idGroup` = '$oldIdGroup'";
+
+                    try {
+                        request_db(DB_ALTER, $request);
+                    } catch (Exception $e) {
+                        throw new Exception("" . $error . $e->getMessage());
+                    }
+                }
+                /* Saut pour changer le niveau d'étude au prochain tour de bouvle */
+                $i = 3;
+            } else {
+                /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
+                $column = $list_columns[$i]['Field'];
+                $request =
+                "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
+                try {
+                    request_db(DB_ALTER, $request);
+                } catch (Exception $e) {
+                    throw new Exception("" . $error . $e->getMessage());
+                }
+                $i++;
             }
         }
     }
@@ -865,7 +883,8 @@ function getStudentsGroup($idGroup) : array  {
     "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
-    WHERE S.`idGroup` = '$idGroup'";
+    JOIN `In` AS I ON I.`idUser` = S.`idUser`
+    WHERE I.`idGroup` = '$idGroup'";
 
     try {
         $result = request_db(DB_RETRIEVE, $request); 
