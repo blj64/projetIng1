@@ -49,7 +49,7 @@
         <div id ="part2">
             <div id="dataPage">
                 <div id="Z0DP">
-                    <p><?php echo $challenge['name']; ?><p>
+                    <p id=main-title <?php if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) echo 'contenteditable="true"'; ?> ><?php echo $challenge['name']; ?><p>
                     <div id="formeZ01">
                     </div>
                     <div id="formeZ02">
@@ -66,22 +66,27 @@
                             <a href="...">Archives  Data Challenges</a>
                         </div>
                         <div id="date">
-                            <input type="date" disabled value="<?php echo $challenge['startDate'] ?>">
-                            <input type="date" disabled value="<?php echo $challenge['endDate'] ?>"> 
+                            <input id=startDate type="date" <?php if(!roleUser($_SESSION['user']['id'], ADMIN) && !roleUser($_SESSION['user']['id'], MANAGER)) echo 'disabled'; ?> value="<?php echo $challenge['startDate'] ?>">
+                            <input id=endDate type="date" <?php if(!roleUser($_SESSION['user']['id'], ADMIN) && !roleUser($_SESSION['user']['id'], MANAGER)) echo 'disabled'; ?> value="<?php echo $challenge['endDate'] ?>"> 
                         </div>   
                     </div>    
                 </div>
                 <div class="main-desc">
-                    <p><?php echo $challenge['description']; ?></p>
+                    <p id=main-desc <?php if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) echo 'contenteditable="true"'; ?>><?php echo $challenge['description']; ?></p>
                     <h2>Les sujets disponibles</h2>
                     
                     <?php
                     
+                    $count = 1;
+                    $op = ""; 
+                    if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) 
+                        $op = " contenteditable='true' ";
+
                     foreach(getSubjectsByIdChallenge($_GET['id']) as $subject)
                     {
                         echo '<div class="subject">';
-                        echo '<h3>'.$subject['name'].'</h3>';
-                        echo '<p>'.$subject['description'].'</p>';
+                        echo '<h3 '.$op.' id=subject-desc-'.$count.'>'.$subject['name'].'</h3>';
+                        echo '<p '.$op.' id=subject-desc-'.$count++.'>'.$subject['description'].'</p>';
                         echo '</div>';
                     }
                     ?>
@@ -89,7 +94,15 @@
                 </div>
 
                 <div class="inscription">
-                    <button>S'inscrire</button>
+                    <?php 
+                        if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER))
+                        {
+                            if(roleUser($_SESSION['user']['id'], ADMIN) ||  getHandlerByIdManager($_SESSION['user']['id'])[0]['idDataC'] == $challenge['idDataC'])
+                                echo '<button id="edit">Sauvegarder les modifications</button>';
+                        }        
+                        else
+                        echo '<button>S\'inscrire</button>';
+                    ?>
                 </div>
             </div>
         </div>
