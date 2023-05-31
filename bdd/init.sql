@@ -32,7 +32,14 @@ CREATE TABLE `User` (
     `email` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 );
-
+CREATE TABLE `Student` (
+    `idUser` INT UNSIGNED NOT NULL,
+    `lvStudy` VARCHAR(2) NOT NULL,
+    `school` VARCHAR(255) NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`idUser`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
+);
 CREATE TABLE `Group` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
@@ -40,7 +47,7 @@ CREATE TABLE `Group` (
     `idLeader` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE,
-    FOREIGN KEY (`idLeader`) REFERENCES `User`(`id`)
+    FOREIGN KEY (`idLeader`) REFERENCES `Student`(`idUser`)
 );
 
 CREATE TABLE `Admin` (
@@ -49,17 +56,13 @@ CREATE TABLE `Admin` (
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `Student` (
+CREATE TABLE `In` (
     `idUser` INT UNSIGNED NOT NULL,
     `idGroup` INT UNSIGNED NOT NULL,
-    `lvStudy` VARCHAR(2) NOT NULL,
-    `school` VARCHAR(255) NOT NULL,
-    `city` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`)
+    PRIMARY KEY (`idUser`,`idGroup`),
+    FOREIGN KEY (`idUser`) REFERENCES `Student`(`idUser`) ON DELETE CASCADE,
+    FOREIGN KEY (`idGroup`) REFERENCES `Group`(`id`) ON DELETE CASCADE
 );
-
 CREATE TABLE `Manager` (
     `idUser` INT UNSIGNED NOT NULL,
     `company` VARCHAR(255) NOT NULL,
