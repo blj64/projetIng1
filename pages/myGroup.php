@@ -5,10 +5,11 @@
         exit();
     }
 
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/php/bdd.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/php/bdd.php';    
     if( !is_connected_db())
         connect_db();
-    
+
+
     $group = getGroupById($_SESSION['user']['group'])[0];
     $groupUser = getStudentsGroup($_SESSION['user']['group']);
     
@@ -87,12 +88,12 @@
                 <!-- Messagerie -->
                 <div class="content-box" id="Messagerie" style="display: none;">
                     <div class="left-bar">
-                        <div class="new-message">
+                        <button onclick="generateFormNewUser()" class="new-message">
                             <div class="student" id="new-msg">
                                 <p>Nouveau message</p>
                                 <img class="mini-menu" src="/asset/icon/plus.ico" alt="menu">
                             </div>
-                        </div>
+                        </button>
                         <div class="list-contact">
 
 
@@ -127,13 +128,16 @@
 
                                 <div id="message">
                                     <form id="msg-new-form">
-                                        <input name="msg" placeholder="message" type="text">
-                                        <!-- REMPLACER LA VALUE PAR L ID DE LA PERSONNE A QUI ON PARLE -->
-                                        <input id="user-contacted" type="hidden" name="sender" value="2">
-                                        <input type="hidden" name="receiver" value="<?php echo $_SESSION['user']['id']?>">
+                                        <div>
+                                            <input name="msg" placeholder="message" type="text">
+                                            <!-- REMPLACER LA VALUE PAR L ID DE LA PERSONNE A QUI ON PARLE -->
+                                            <input id="user-contacted" type="hidden" name="sender" value="2">
+                                            <input type="hidden" name="receiver" value="<?php echo $_SESSION['user']['id']?>">
 
-                                        <button type="button" onclick="loadSendMsg()">Envoyer</button>
-
+                                        </div>
+                                        <div>
+                                            <button type="button" onclick="loadSendMsg()">Envoyer</button>
+                                            </div>
                                     </form>
                                 </div>
                             </div>

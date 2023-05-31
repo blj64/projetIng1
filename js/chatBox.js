@@ -50,3 +50,37 @@ function changeIdSender(idSender) {
 
     
 }
+
+function generateFormNewUser() {
+    // Create the form element
+  var form = document.createElement('form');
+  form.setAttribute('id', 'contact-new-user-form');
+
+  // Add input elements to the form
+  var input1 = document.createElement('input');
+  input1.setAttribute('type', 'text');
+  input1.setAttribute('class', 'sub-msg');
+
+  input1.setAttribute('name', 'newUser');
+  form.appendChild(input1);
+
+  var input2 = document.createElement('input');
+  input2.setAttribute('type', 'text');
+  input2.setAttribute('class', 'sub-msg');
+
+  input2.setAttribute('name', 'message');
+
+  form.appendChild(input2);
+
+  // Add a submit button to the form
+  var submitButton = document.createElement('button');
+  submitButton.setAttribute('type', 'button');
+  submitButton.setAttribute('class', 'sub-msg');
+  submitButton.setAttribute('onclick', 'contactNewUser()');
+  form.appendChild(submitButton);
+
+  // Replace the content of messagerie-container with the form
+  var container = document.getElementById('messagerie-container');
+  container.innerHTML = '';
+  container.appendChild(form);
+}
