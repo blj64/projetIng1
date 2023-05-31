@@ -10,8 +10,8 @@
                 <div id="MRJoin">
                     <form action="">
                         <div id="form">
-                            <input type="text" name="Nom" value="nom">
-                            <input type="text" name="Adresse e-mail" value="adresse e-mail">
+                            <input type="text" name="Nom" placeholder="nom">
+                            <input type="text" name="Adresse e-mail" placeholder="adresse e-mail">
                                 <select name="" id="">
                                     <option>C'est a quel sujet ? </option>
                                     <option>Contact</option>
@@ -20,7 +20,7 @@
                                     <option>J'ai une idee </option>
                                     <option>Besoin d'aide </option>
                                 </select>
-                            <textarea name="" id="" cols="30" rows="10">message</textarea>
+                            <textarea name="" id="" cols="30" rows="10" placeholder="votre message..." style="resize: none;"></textarea>
                         </div>
                         <button>Envoyer</button>
                     </form>
