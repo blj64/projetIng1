@@ -37,6 +37,7 @@ CREATE TABLE `Student` (
     `lvStudy` VARCHAR(2) NOT NULL,
     `school` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
+    `json` VARCHAR(255) DEFAULT NULL,
     PRIMARY KEY (`idUser`),
     FOREIGN KEY (`idUser`) REFERENCES `User`(`id`) ON DELETE CASCADE
 );

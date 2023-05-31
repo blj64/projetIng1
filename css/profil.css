@@ -10,8 +10,8 @@ body {
 #part3Profil {
     margin: 0;
     padding: 5%;
-    background-image: url("/asset/img/istockphoto-1224100497-612x612.jpg");
-    background-size: 100%;
+    background-image: url("/asset/img/profil_background.jpg");
+    background-size: cover;
     
 }
 
@@ -26,7 +26,7 @@ body {
     align-items: center;
     padding-top: 1%;
     padding-bottom: 1%;
-    box-shadow: 10px 5px 5px grey;
+    box-shadow: 10px 5px 5px #00000070;
 }
 
 .sign-box form {
