@@ -66,8 +66,7 @@
         <button onclick="valider()" id=valid>Créer l'event</button>
     </div>
 
-    <?php //require '../php/footer.php'; 
-    ?>
+    <?php require '../php/footer.php'; ?>
 </body>
 <script src="/js/challenge.js"></script>
 </html>

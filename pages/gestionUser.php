@@ -125,7 +125,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                     foreach ($student as $id => $value) {
                         $group = (getGroupByStudentId($value['id']));
                         if (isset($group[0]['name'])){
-                            $groupName = $group['name'];
+                            $groupName = $group[0]['name'];
                         } else {
                             $groupName = "Aucun";
                         }

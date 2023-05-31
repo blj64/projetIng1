@@ -1,7 +1,6 @@
 <?php session_start();
-include( '../php/bdd.php');
-connect_db();
-echo($_SESSION);    
+require( '../php/bdd.php');
+connect_db();  
  ?>
 
 <!DOCTYPE html>
@@ -14,7 +13,8 @@ echo($_SESSION);
         <title>IAPau</title>
     </head>
 <body>
-    
+    <?php require('../php/header.php'); ?>
+
     <div class="main">
         <div class="center">
 
@@ -35,16 +35,16 @@ echo($_SESSION);
                     <input type="text" name="teamName" id="teamName" placeholder="Le nom de votre team" value="">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['teamName'])) echo $_SESSION['error']['teamName'];  ?></span>
                     
-                    <input type="text" name="lvlStudy" id="lvlStudy" placeholder="Niveau d'étude" value="<?php echo($donnees['lvlStudy']);?>">
+                    <input type="text" name="lvlStudy" id="lvlStudy" placeholder="Niveau d'étude" value="">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['lvlStudy'])) echo $_SESSION['error']['lvlStudy'];  ?></span>
 
-                    <input type="text" name="school" id="school" placeholder="Votre école" value="<?php echo($donnees['school']);?>">
+                    <input type="text" name="school" id="school" placeholder="Votre école" value="">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['school'])) echo $_SESSION['error']['school'];  ?></span>
 
-                    <input type="text" name="city" id="city" placeholder="Votre ville" value="<?php echo($donnees['city']);?>">
+                    <input type="text" name="city" id="city" placeholder="Votre ville" value="">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['city'])) echo $_SESSION['error']['city'];  ?></span>
 
-                    <input type="text" name="numStudent" id="numStudent" placeholder="Votre numéro étudiant" value="<?php ?>">
+                    <input type="text" name="numStudent" id="numStudent" placeholder="Votre numéro étudiant" value="">
                     <span class="error-msg"><?php  if (isset($_SESSION['error']['numStudent'])) echo $_SESSION['error']['numStudent'];  ?></span>
 
                     <div class="radioTeam">
@@ -65,6 +65,6 @@ echo($_SESSION);
         </div>
     </div>
 
-    <?php //require_once '../php/footer.php'; ?>
+    <?php require '../php/footer.php'; ?>
 </body>
 </html>

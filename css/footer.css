@@ -1,13 +1,16 @@
 
 #footer {
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: white;
     background-color: #0e8769;
-    height: 150px; 
+    height: 75px; 
     width: 100%;
+    margin-top: auto;
+    z-index: 100;
 }
 
 #contenairF {
