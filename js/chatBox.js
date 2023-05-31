@@ -43,7 +43,6 @@ function changeIdSender(idSender) {
     if (inputElement) {
     // Définition de la nouvelle valeur
         inputElement.value = idSender;
-        console.log(idSender);  
     }
 
     var activeElements = document.querySelectorAll(".active");
@@ -52,35 +51,61 @@ function changeIdSender(idSender) {
 }
 
 function generateFormNewUser() {
-    // Create the form element
-  var form = document.createElement('form');
-  form.setAttribute('id', 'contact-new-user-form');
+    fetch('/php/contactNewUser.php')
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(data) {
+      document.getElementById('messagerie-container').innerHTML = data;
+      const searchInput = document.getElementById('user-search-input');
+    
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value;
 
-  // Add input elements to the form
-  var input1 = document.createElement('input');
-  input1.setAttribute('type', 'text');
-  input1.setAttribute('class', 'sub-msg');
+            const xhr = new XMLHttpRequest();  
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    // Process and display the suggestions
+                    console.log(data);
+                }
+            };
 
-  input1.setAttribute('name', 'newUser');
-  form.appendChild(input1);
+            xhr.open('GET', `/php/contactNewUser.php?searchTerm=${searchTerm}`, true);
+            xhr.send();
+        });
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+    
 
-  var input2 = document.createElement('input');
-  input2.setAttribute('type', 'text');
-  input2.setAttribute('class', 'sub-msg');
-
-  input2.setAttribute('name', 'message');
-
-  form.appendChild(input2);
-
-  // Add a submit button to the form
-  var submitButton = document.createElement('button');
-  submitButton.setAttribute('type', 'button');
-  submitButton.setAttribute('class', 'sub-msg');
-  submitButton.setAttribute('onclick', 'contactNewUser()');
-  form.appendChild(submitButton);
-
-  // Replace the content of messagerie-container with the form
-  var container = document.getElementById('messagerie-container');
-  container.innerHTML = '';
-  container.appendChild(form);
+      
 }
+
+function contactNewUser() {
+    changeIdSender(6);
+    const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                const response = this.responseText;
+                const msgContainer = document.getElementById("messagerie-container");
+                const newMsg = document.createElement("div");
+                newMsg.setAttribute("class", "msg right");
+                newMsg.innerHTML = response;
+                msgContainer.appendChild(newMsg);
+                
+            }
+
+            // Get the form data
+            const form = document.getElementById("contact-new-user-form");
+            const formData = new FormData(form);
+            console.log(formData);
+
+            xmlhttp.open("POST", "/php/sendMsg.php");
+            xmlhttp.send(formData);
+
+        }
+
+
+
+    

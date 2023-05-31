@@ -192,7 +192,7 @@
 </body>
 <script src="/js/myGroup.js"></script>
 <script src="/js/chatBox.js"></script>
-<script>setInterval(changeConversation, 2000, <?php echo $idReceiver?>);</script>
+<script>//setInterval(changeConversation, 2000, <?php //echo $idReceiver?>);</script>
 
 
 </html>
