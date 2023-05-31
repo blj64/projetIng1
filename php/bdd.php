@@ -988,10 +988,10 @@ function existUserByEmail($email) : bool {
  *  @param $password    : the password of the user
  *  @param $phone       : the phone of the user
  *  @param $address     : the address of the user
- *  @return true if the user has been created
+ *  @return int id of the new user
  *  @remarks re-check if the email already exists before inserting the user
  */
-function createUser($firstname, $lastname, $password, $phone, $email) {
+function createUser($firstname, $lastname, $password, $phone, $email) : int  {
     
     if (existUserByEmail($email)) {
         throw new Exception("Error createUser : email already used.");
