@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/challenges.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <title>Data battles</title>
 </head>
 <body>
@@ -24,7 +25,8 @@
                     connect_db();
 
                 $dataC = getAllDataCStarted();
-                
+                $isAdmin = roleUser($_SESSION['user']['id'],ADMIN);
+
                 foreach ($dataC as $key => $value) 
                 {
                     $desc = substr($value['description'], 0, 255);
@@ -32,8 +34,12 @@
                         $desc .= '....';
                     
                     echo
-                    '<div class="event">
-                        <div class="event-img">
+                    '<div class="event">';
+
+                    if( $isAdmin )
+                        echo '<button class="delete" onclick="deleteDataC('.$value['idDataC'].')">X</button>';
+                    
+                    echo '<div class="event-img" id="'.$value['idDataC'].'">
                             <img src="'.$value['image'].'" alt="image-event">
                         </div>
                         <div class="event-intel">
@@ -48,7 +54,7 @@
                                 <span>:</span>
                                 <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
                             </div>
-                            <a href="resumeChall.php?id='. $value['idDataC'] .'">En savoir plus</a>
+                            <a href="challengesPage.php?id='. $value['idDataC'] .'">En savoir plus</a>
                         </div>
                     </div>';
                 }
@@ -60,7 +66,7 @@
         </div>
 
     </div>
-
+                <script src="/js/challenge.js"></script>
     <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
 </body>
 </html>

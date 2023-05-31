@@ -58,7 +58,7 @@ session_start();
                     </div>
                 </a>');
                 }else if(roleUser($_SESSION['user']['id'], ADMIN)==1){
-                    echo('<a href="/pages/myGroup.php" id="Team" class="card">
+                    echo('<a href="/pages/gestionUser.php" id="setManager" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Gestion des gestionnaires</h1>
@@ -67,7 +67,7 @@ session_start();
                 </a>
 
 
-                <a href="/pages/dataC.php" id="DataC" class="card">
+                <a href="/pages/createChallenge.php" id="DataC" class="card">
                     <div class="filter">
                             <div class="card-img">
                             <h1>Gestion des challenges</h1>
@@ -84,7 +84,7 @@ session_start();
                     </div>
                 </a>');
                 }else if(roleUser($_SESSION['user']['id'], MANAGER)==1){
-                    echo('<a href="/pages/myGroup.php" id="Team" class="card">
+                    echo('<a href="/pages/allTeam.php" id="setChallenge" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Gérer les challenges</h1>
@@ -93,7 +93,7 @@ session_start();
                 </a>
 
 
-                <a href="/pages/dataC.php" id="DataC" class="card">
+                <a href="/pages/myChallenges.php" id="setTeam" class="card">
                     <div class="filter">
                             <div class="card-img">
                             <h1>Gérer les équipes</h1>
@@ -109,6 +109,8 @@ session_start();
                         </div>
                     </div>
                 </a>');
+                }else{
+                    header('Location: /pages/index.php');
                 }
                 ?>
             </div>

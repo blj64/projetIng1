@@ -129,3 +129,35 @@ function updateThumbnail(dropZoneElement, file) {
         send_button.disabled = true;
     }
 }
+
+
+/* -------------------------------------------------------------------------- */
+
+document.getElementById('body').onload = function() {
+    const pages = {
+        "Main": document.getElementById("Main"),
+        "Messagerie": document.getElementById("Messagerie"),
+        "Setting": document.getElementById("Setting"),
+        "Rendu": document.getElementById("Rendu")
+    };
+    
+    /*get the # in url */
+    let full_url = window.location.href.split("#");
+    let url = full_url[1];
+
+
+    if(url == undefined || url == "Setting" || pages[url] == undefined)
+    {
+        pages["Main"].style.display = "flex";
+        document.getElementById("menu-Main").className += " active";
+        window.location.href = full_url[0] + "#Main";
+        return;
+    }
+
+    /* get active class */
+    pages[url].style.display = "flex";
+
+    /* change active class */
+    document.getElementById("menu-" + url).className += " active";
+
+}

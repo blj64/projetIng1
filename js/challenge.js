@@ -141,6 +141,10 @@ async function valider() {
         "endDate": document.getElementById("endDate").value,
     };
 
+    /* add '\' before ' */
+    data["titre"] = data["titre"].replace(/'/g, "\\'");
+    data["description"] = data["description"].replace(/'/g, "\\'");
+
     let img = new FormData();
     img.append("image", document.getElementById("main-image").files[0]);
 
@@ -156,7 +160,7 @@ async function valider() {
     data["subjects"] = {};
     for(let subject of document.getElementsByClassName("subject"))
     {
-        const datas2 = {
+        let datas2 = {
             "name":subject.children[1].value, 
             "description": subject.children[2].value
         };
@@ -168,6 +172,11 @@ async function valider() {
                 return;
             }
         }
+        
+        /* add '\' before ' */
+        datas2["name"] = datas2["name"].replace(/'/g, "\\'");
+        datas2["description"] = datas2["description"].replace(/'/g, "\\'");
+
         data["subjects"][count - 1] = {"idS": count, "name": datas2['name'], "description": datas2["description"]};
         count++;
     }
@@ -220,4 +229,103 @@ async function valider() {
     });
 
     return (0);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function deleteDataC(idDataC)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 15:55:49
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function deleteDataC(idDataC) {
+    if( !confirm("Voulez-vous vraiment supprimer cet évènement ?"))
+        return (false);
+
+    const response = await fetch("/php/ajax_request/deleteDataC.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "idDataC=" + idDataC
+    })
+    .then(response => response.text())
+    .then( function(res) {
+        if(res.startsWith("Success"))
+        {
+            alert("Votre évènement a bien été supprimé !");
+            document.getElementById(idDataC).remove();
+        }
+        else
+        {
+            alert("Une erreur est survenue lors de la suppression de l'évènement !\n" + res);
+        }
+    });
+
+    return (true);
+}
+
+/* ------------------------------------------------------------------------------------------ */
+
+/*!
+ *  \fn function Sauvegarder()
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Wed 31 May 2023 - 17:39:31
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function Sauvegarder(idDataC) {
+    if( !confirm("Voulez-vous sauvegarder les modifications de cet évènement ?"))
+        return (false);
+
+    let data = {
+        "name" : document.getElementById("main-title").textContent.replace(/'/g, "\\'"),
+        "description" : document.getElementById("main-desc").textContent.replace(/'/g, "\\'"),
+        "startDate" : document.getElementById("startDate").value.replace(/'/g, "\\'"),
+        "endDate" : document.getElementById("endDate").value.replace(/'/g, "\\'"),
+        "idDataC" : idDataC,
+    };
+
+    /* get all subjects */
+    let count = 1;
+    data["subjects"] = {};
+    for(let subject of document.getElementsByClassName("subject"))
+    {
+        let datas2 = {
+            "name":subject.children[0].textContent.replace(/'/g, "\\'"),
+            "description": subject.children[1].textContent.replace(/'/g, "\\'")
+        };
+
+        data["subjects"][count - 1] = {"idS": count, "name": datas2['name'], "description": datas2["description"]};
+        count++;
+    }
+
+    const response = await fetch("/php/ajax_request/UpdateDataC.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "data=" + JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then( function(res) {
+        if(res.startsWith("Success"))
+        {
+            alert("Votre évènement a bien été modifié !");
+        }
+        else
+        {
+            alert("Une erreur est survenue lors de la modification de l'évènement !\n" + res);
+        }
+    });
+
+    return (true);
 }

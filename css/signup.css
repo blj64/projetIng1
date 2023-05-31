@@ -103,3 +103,19 @@ body{
     color: #0693e3;
     text-decoration: none;
 }
+
+.radioTeam {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+#createGroup {
+    width: 25px;
+    margin-right: 15px;
+}
+
+#nameCreateGroupe {
+    position: relative;
+    top : 20px;
+}

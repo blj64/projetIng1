@@ -1,9 +1,36 @@
 <?php
-session_start();
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if(!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])){
+        header('Location: pages/index.php?error=notConnected');
+        exit();
+    }
+
+    if(!isset($_GET['id'])){
+        header('Location: /pages/index.php?error=missingId');
+        exit();
+    }
+
+    require_once('../php/bdd.php');
+
+    if (!is_connected_db())
+        connect_db();
+
+    $challenge = getDataChallengeById($_GET['id']);
+    
+    if(!$challenge){
+        header('Location: /pages/index.php?error=challengeNotFound');
+        exit();
+    }
+
+    $challenge = $challenge[0];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,43 +43,75 @@ session_start();
 		<title>Accueil</title>
 	</head>
 	<body>
-		<div id="part1">
-			<?php include('../php/header.php'); ?>
+        <div id="part1">
+            <?php require('../php/header.php'); ?>
         </div>
         <div id ="part2">
             <div id="dataPage">
                 <div id="Z0DP">
-                    <p>Nom du data Challenge<p>
-                    <div id="formeZ01">
-                    </div>
-                    <div id="formeZ02">
-                    </div>
-                    <div id="formeZ03">
-                    </div>
-                </div>
-                <div id="Z1DP">
-                    <div id="img-dataPage" class="imgSpaceBetween">
-                        <img width="400px" src="https://iapau.org/wp-content/uploads/2023/01/dc-decembre-2022-archive-site-web.jpg" alt="" class="imgSpaceBetween">
-                    </div>
-                    <div id="info-dataPage"> 
-                        <div id="archive">
-                            <a href="...">Archives  Data Challenges</a>
+                    <p id=main-title <?php if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) echo 'contenteditable="true"'; ?> ><?php echo $challenge['name']; ?><p>
+                        <div id="formeZ01">
+                            </div>
+                            <div id="formeZ02">
+                                </div>
+                                <div id="formeZ03">
+                                    </div>
+                                </div>
+                                <div id="Z1DP">
+                                    <div id="img-dataPage" class="imgSpaceBetween">
+                                        <img width="400px" src="<?php echo $challenge['image']; ?>" alt="" class="imgSpaceBetween">
+                                    </div>
+                                    <div id="info-dataPage"> 
+                                        <div id="archive">
+                                            <a href="...">Archives  Data Challenges</a>
                         </div>
                         <div id="date">
-                            <p> date <p> 
+                            <input id=startDate type="date" <?php if(!roleUser($_SESSION['user']['id'], ADMIN) && !roleUser($_SESSION['user']['id'], MANAGER)) echo 'disabled'; ?> value="<?php echo $challenge['startDate'] ?>">
+                            <input id=endDate type="date" <?php if(!roleUser($_SESSION['user']['id'], ADMIN) && !roleUser($_SESSION['user']['id'], MANAGER)) echo 'disabled'; ?> value="<?php echo $challenge['endDate'] ?>"> 
                         </div>   
                     </div>    
                 </div>
-                <div id="Z2DP">
-                    <p>ctn<p>
+                <div class="main-desc">
+                    <p id=main-desc <?php if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) echo 'contenteditable="true"'; ?>><?php echo $challenge['description']; ?></p>
+                    <h2>Les sujets disponibles</h2>
+                    
+                    <?php
+                    
+                    $count = 1;
+                    $op = ""; 
+                    if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER)) 
+                    $op = " contenteditable='true' ";
+                    
+                    foreach(getSubjectsByIdChallenge($_GET['id']) as $subject)
+                    {
+                        echo '<div class="subject">';
+                        echo '<h3 '.$op.' id=subject-desc-'.$count.'>'.$subject['name'].'</h3>';
+                        echo '<p '.$op.' id=subject-desc-'.$count++.'>'.$subject['description'].'</p>';
+                        echo '</div>';
+                    }
+                    ?>
+
+</div>
+
+<div class="inscription">
+    <?php 
+                        if(roleUser($_SESSION['user']['id'], ADMIN) || roleUser($_SESSION['user']['id'], MANAGER))
+                        {
+                            if(roleUser($_SESSION['user']['id'], ADMIN) ||  getHandlerByIdManager($_SESSION['user']['id'])[0]['idDataC'] == $challenge['idDataC'])
+                                echo '<button id="edit" onclick="Sauvegarder('.$challenge['idDataC'].')">Sauvegarder les modifications</button>';
+                        }        
+                        else
+                        echo '<button>S\'inscrire</button>';
+                        ?>
                 </div>
             </div>
         </div>
 		<div id = "part6">
-		<?php include('../php/join.php'); ?>
+            <?php require('../php/join.php'); ?>
 		</div>
 		<div id="part7">
-			<?php include('../php/footer.php'); ?>
+            <?php require('../php/footer.php'); ?>
 		</div>	
 	</body>
-</html
+    <script src="/js/challenge.js"></script>
+</html>

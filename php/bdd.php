@@ -626,7 +626,7 @@ function alterResource_db($idResource, $newIdDataC = null, $newName = null, $new
  *  @return array w/ null if altering the database else is the result of the request when retrieving data
  *  @remarks throw an exception if the request is not valid
  */
-function request_db($dbRequestType, $request = null) : array | null {
+function request_db($dbRequestType, $request = null) {
     global $bdd;
 
     if (!is_connected_db()) {
@@ -967,10 +967,10 @@ function existUserByEmail($email) : bool {
  *  @param $password    : the password of the user
  *  @param $phone       : the phone of the user
  *  @param $address     : the address of the user
- *  @return true if the user has been created
+ *  @return int id of the new user
  *  @remarks re-check if the email already exists before inserting the user
  */
-function createUser($firstname, $lastname, $password, $phone, $email) {
+function createUser($firstname, $lastname, $password, $phone, $email) : int  {
     
     if (existUserByEmail($email)) {
         throw new Exception("Error createUser : email already used.");
@@ -1538,5 +1538,109 @@ function getAllUserContacted($idReceiver) : array {
  
 /* -------------------------------------------------------------------------- */
 
+<<<<<<< HEAD
 
 ?>
+=======
+/*
+ *  fn function getHandlerByIdManager($idManager)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:51:45
+*/
+/**
+ *  brief get all the handler of a manager
+ *  @param $idManager : the id of the manager
+ *  @return all the handler of the manager
+ *  @remarks --
+ */
+function getHandlerByIdManager($idManager) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idManager'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdManager : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getHandlerByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Tue 30 May 2023 - 23:52:36
+*/
+/**
+ *  brief get all the handler of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the handler of the challenge
+ *  @remarks --
+ */
+function getHandlerByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Handle` WHERE `idUser` = '$idChallenge'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getHandlerByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getDataChallengeById($idDataC)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 31 May 2023 - 10:52:34
+*/
+/**
+ *  brief get a data challenge by its id
+ *  @param $idDataC : the id of the data challenge
+ *  @return the data challenge
+ *  @remarks throw an exception if the request is not valid
+ */
+function getDataChallengeById($idDataC) {
+    $request = "SELECT * FROM `DataChallenge` WHERE `idDataC` = $idDataC";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getDataChallengeById : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getSubjectsByIdChallenge($idChallenge)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Wed 31 May 2023 - 11:02:52
+*/
+/**
+ *  brief get all the subjects of a challenge
+ *  @param $idChallenge : the id of the challenge
+ *  @return all the subjects of the challenge
+ *  @remarks throw an exception if the request is not valid
+ */
+function getSubjectsByIdChallenge($idChallenge) {
+    $request = "SELECT * FROM `Subject` WHERE `idDataC` = $idChallenge";
+    
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getSubjectsByIdChallenge : " . $e->getMessage());
+    }
+
+    return($result);
+}
+>>>>>>> refs/remotes/origin/main
