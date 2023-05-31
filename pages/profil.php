@@ -36,7 +36,6 @@
                 <h1> Vous êtes sur votre profil </h1> <br>
                 
                 <form action="/php/modifProfil.php" method="POST">
-                    
                     <input type="text" name="firstname" id="firstName" placeholder="prenom" value="<?php echo($donnees["firstName"]); ?>">
                     
                     

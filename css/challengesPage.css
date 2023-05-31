@@ -1,0 +1,50 @@
+#dataPage{
+    
+    margin-top: 100px;
+}
+
+/*#formeZ01 {
+    height: 100px;
+    width: 100%;
+    background-color: red;
+    clip-path: ellipse();
+}*/
+
+#Z0DP {
+    color: white;
+    font-size: 75px;
+    padding: 50px;
+    background-color: #0e8769;
+    background-image: url("/asset/img/background.png");
+    text-align: center;
+    border-bottom-right-radius: 50%;
+}
+
+
+#img-dataPage {
+    margin-right: 10%;
+    border-radius: 15px 15px 15px 15px;
+    box-shadow: 10px 10px 5px 5px grey;
+}
+
+
+#Z1DP {
+    position: relative;
+    bottom: 50px;
+    align-items: center;
+    text-align: justify;
+    display: flex;
+    margin-left: 30%;
+    margin-right: 30%;
+    
+    
+}
+
+#Z2DP {
+    text-align: justify;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+

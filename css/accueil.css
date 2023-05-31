@@ -1,12 +1,16 @@
 body {
+    margin: 0;
     height: auto;
     width: 100%;
     text-align: center;
     align-items: center;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 #part1, #part7 {
     height: 10%;
+    margin: 0;
 }
 
 #part2, #part3, #part4, #part5, #part6{
@@ -98,5 +102,10 @@ body {
 
 #DataC  {
     background-image: url("../asset/img/bigbrains.jpg");
+    background-position-x: 50%;
+}
+
+#accueilNC {
+    background-image: url("../asset/img/IMG20210808093633-scaled.jpg");
     background-position-x: 50%;
 }
