@@ -133,7 +133,7 @@ function updateThumbnail(dropZoneElement, file) {
 
 /* -------------------------------------------------------------------------- */
 
-document.getElementById('body').onload = function() {
+document.getElementsByTagName('body')[0].onload = function() {
     const pages = {
         "Main": document.getElementById("Main"),
         "Messagerie": document.getElementById("Messagerie"),
