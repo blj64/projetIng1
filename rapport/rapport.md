@@ -112,12 +112,20 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 ![Création d'un data event](images/dataC/createDataC.png){height=40%}
 
-&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description.
+&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description. La création et la suppresion (depuis le menu Data Challenges) peut seulement être effectuées par un administrateur
 
 ## &nbsp;&nbsp;&nbsp; 4. Gestion des data challenges
 
+&nbsp;&nbsp;&nbsp; La liste de tous les data challenges sont visibles dans le menu Data Challenges. Les administrateurs peuvent modifier les informations de tous les data challenges alors que les gestionnaires peuvent seulement le faire pour les data challenges dont ils s'occupent.
+
+(TBA afficher l'id d'un DataC pour l'admin)
 333   (TBA when updated)
       (Pour l'instant on a : le menu du suivi des dataC associés à un manager, les équipes pour ce dataC et la possibilité d'envoyer un quiz (form))
+
+![Liste des équipes et envoyer quiz](images/dataC/dataCGroupsQuiz.png){height=40%}
+
+(Attention non implémentée) (changer de partie si nécessaire) &nbsp;&nbsp;&nbsp; Cette page permet à un manager de visualiser toutes les équipes pour un data challenge donné.
+De plus, si nécessaire il peut aussi envoyer un quiz aux équipes et voir leurs membres.
 
 ## &nbsp;&nbsp;&nbsp; 5. La messagerie
 444   (TBA)
@@ -292,3 +300,9 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 Another paragraph
 
 (TBA)
+
+# V. Bilan du projet
+
+(TBA)
+
+
