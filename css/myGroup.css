@@ -29,7 +29,8 @@ body{
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 80%;
+    height: 100%;
+    margin-bottom: -75px;
     background-image: url('/asset/img/background.png') !important;
     background-size: cover;
 }
@@ -510,6 +511,90 @@ body{
 
 
 /* css for 'Setting' sub-page */
+    .formInSetting {
+        margin: 0 auto;
+        min-width: 481px;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        align-items: center;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        border-radius: 15px;
+    }
+
+    .formInSetting fieldset {
+        height: 100%;
+        width: 100%;
+        border: 1px solid rgba(100,100,100, 0.4);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        
+    }
+
+    .formInSetting form {
+        padding: 20px;
+        width: 75%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: justify;
+        
+    }
+
+    .formInSetting form input, select {
+        min-width: 300px;
+        position: relative;
+        padding-left: 10px;
+        background-position: 50%;
+        background-size: cover;
+        color: #666;
+        line-height: 1.7em;
+        font-weight: 500;
+        width: 100%;
+        height: 58px;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+    }
+    .error-msg {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        color: red;
+        font-size: 12px;
+    }
+
+    .spaceOver {
+        margin-top: 15px;
+    }
+
+    .addMemberSetting {
+        display: flex;
+    }
+
+    .addMemberSetting button{
+        position: relative;
+        top: 15px;
+        background-color: white;
+        color: #0e8769;
+        height: 25px;
+        width: 35px;
+        border: 1px solid #0e8769;
+        border-radius: 5px;
+    }
+
+    .addMemberSetting button:hover {
+        
+        background-color: #0e8769;
+        color: white;
+        
+    }
+
+
+    
 
 
 
@@ -683,3 +768,4 @@ body{
     border-radius: 25px;
     color: black;
 }
+
