@@ -16,11 +16,6 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']['group']) || $_SESSION
     ?>
 
 
-$group = getGroupById($_SESSION['user']['group'])[0];
-$groupUser = getStudentsGroup($_SESSION['user']['group']);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
