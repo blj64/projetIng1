@@ -80,6 +80,6 @@ try {
 
 /* redirect to a page */
 /* A MODIFER */
-header('Location: /pages/login.php?success=USER_CREATED');
+header('Location: /pages/signIn.php?success=USER_CREATED');
 exit();
 ?>
