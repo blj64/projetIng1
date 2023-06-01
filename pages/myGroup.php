@@ -275,7 +275,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                 <div class="box__uploading">Uploading…</div>
                                 <div class="box__success">Upload success!</div>
                                 <div class="box__error">Upload error! <span id="add_error"></span>.</div>
-                                <div class="send-data">
+                                <div id=send_btn_div class="send-data">
                                     <button id="send_button" type="submit">Charger le fichier</button>
                                 </div>
                             </form>
