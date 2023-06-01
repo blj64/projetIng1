@@ -50,22 +50,21 @@
 
 <script>
 
+var h = document.createElement("h2");
+h.innerHTML = "Aucun rendu n'a été envoyé";
+var check = true;
+
     function charger() {
         const queryString = window.location.search;
-        console.log(queryString);
         const urlParams = new URLSearchParams(queryString);
         const idE = urlParams.get("idE");
-        console.log(idE);
-        console.log("TEST");
         let jsonContent;
         if (document.getElementById("result").textContent === '') {
             const queryString = window.location.search;
-            console.log(queryString);
 
 
             const formData = new FormData();
             formData.append('0', idE);
-
 
             fetch("http://localhost:8080/php/recupJsonGestionnaire.php",
                 {
@@ -79,23 +78,24 @@
                     throw new Error("Erreur de réseau.");
                 })
                 .then(data => {
-                    console.log(data);
                     document.getElementById("result").textContent = data;
                     if(data !== ''){
                         afficher();
+                        document.getElementById("Rendu").removeChild(h);
                     } else {
-                        alert("Vous n'avez jamais sauvegardé vos données.");
+                        if(!check)
+                        {
+                            alert("Le leader n'a sauvegardé ses données.");
+                        }
                     }
+                    check = false;
                 })
                 .catch(error => {
                     console.error(error);
                 });
-
-
-        } else {
-            alert("Le fichier est déjà chargé");
-        }
-
+            } else {
+                alert("Le fichier est déjà chargé");
+            }
     }
 
     function sauvegarder() {
@@ -159,12 +159,12 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="right-box">
-                        <a class="card" href="#LINK TO THE DATA">
+                    <div id=main-right class="right-box">
+                        <a class="card" href="/pages/challengesPage.php?id=<?php echo $group['idDataC'] ?>">
                             <div class="filter">
-                                <div class="dataC-img">
+                                <div class="dataC-img" style="background-image: url('<?php echo getDataChallengeById($group['idDataC'])[0]['image']; ?>');">
                                     <div class="dataC-text">
-                                        <h1>DATA CHALL NAME</h1>
+                                        <h1><?php echo getDataChallengeById($group['idDataC'])[0]['name']; ?></h1>
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@
                 <!-- Rendu -->
                 <div class="content-box" id="Rendu" style="display:none">
                     <div class="left-box">
-                        <div class="rendu-box">
+                        <div id=rendu-box class="rendu-box">
 
 
 
@@ -283,6 +283,15 @@
     <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/php/footer.php'; 
     ?>
 </body>
+    <script>    
+ 
+ /* get url */
+    if( window.location.href.split("#")[1] == "Rendu" ) {
+        document.getElementById("Rendu").appendChild(h);
+        setTimeout(charger, 500);
+    } else
+        check= false;
+    </script>
 <script src="/js/myGroup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/chatBox.js"></script>

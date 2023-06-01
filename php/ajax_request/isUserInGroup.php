@@ -45,12 +45,11 @@ if (!isset($_POST['login']) )
     exit(1);
 }
 
-$user = getUserByEmail($_POST['login']);
-
-if(!isset($user))
-{
-    echo "Error: User do not existe";
-    exit(0);
+try {
+    $user = getUserByEmail($_POST['login']);
+} catch (Exception $e) {
+    echo "Erreur: Utilisateur introuvable";
+    exit(1);
 }
 
 if(!roleUser($user['id'], STUDENT))
@@ -60,7 +59,7 @@ if(!roleUser($user['id'], STUDENT))
 }
 
 $group = getGroupByStudentId($user['id']);
-if(!isset($group))
+if($group != NULL)
 {
     echo "Error: User already in a group";
     exit(0);

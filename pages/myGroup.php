@@ -44,7 +44,6 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
 <body>
     <script>
         function charger() {
-            console.log("TEST");
             let jsonContent;
             if (document.getElementById("result").textContent === '') {
 
@@ -56,7 +55,6 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                         throw new Error("Erreur de réseau.");
                     })
                     .then(data => {
-                        console.log(data);
                         document.getElementById("result").textContent = data;
                         if (data !== '') {
                             afficher();
@@ -131,7 +129,10 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                     if ($user['id'] == $_SESSION['user']['id'])
                                         $me = ' class="me"';
 
-                                    echo '<p' . $me . '>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
+                                    echo '<p' . $me . ' id='.$user['id'].'>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
+
+                                    if ($_SESSION['user']['id'] == $group['idLeader'] && $user['id'] != $_SESSION['user']['id'])
+                                        echo '<img class="mini-menu" src="/asset/icon/kick.jpg" alt="menu" onclick="kick('.$user['id'].')">';
                                     echo '</div>';
                                 }
                                 ?>
@@ -139,16 +140,17 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             </fieldset>
                         </div>
                     </div>
-                    <div class="right-box">
-                        <a class="card" href="#LINK TO THE DATA">
+                    <div id=main-right class="right-box">
+                        <a class="card" href="/pages/challengesPage.php?id=<?php echo $group['idDataC'] ?>">
                             <div class="filter">
-                                <div class="dataC-img">
+                                <div class="dataC-img" style="background-image: url('<?php echo getDataChallengeById($group['idDataC'])[0]['image']; ?>');">
                                     <div class="dataC-text">
-                                        <h1>DATA CHALL NAME</h1>
+                                        <h1><?php echo getDataChallengeById($group['idDataC'])[0]['name']; ?></h1>
                                     </div>
                                 </div>
                             </div>
                         </a>
+                        <?php if($group['idLeader'] != $_SESSION['user']['id']) echo '<button onclick=leave()>Quitter le groupe</button>';?>
                     </div>
                 </div>
 
@@ -222,7 +224,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
 
                             <div class="addMemberSetting">
                                 <input type="text" name="email" id="email" placeholder="email" value="<?php ?>">
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['email']))  echo $_SESSION['error']['email'];   ?></span>
+                                <span class="error-msg"></span>
                                 <button onclick="inviteGroup()" type="button">add</button>
                             </div>
                         </form>
@@ -237,10 +239,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                     }
                                     ?>
                                 </select>
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['selectInSettings'])) {
-                                                            echo $_SESSION['error']['selectInSettings'];
-                                                            unset($_SESSION['error']);
-                                                        }  ?></span>
+                                <span class="error-msg"></span>
 
                                 <input class="spaceOver" type="button" onclick="changeLeader()" value="Choisir mon capitaine">
                             </fieldset>
@@ -250,12 +249,11 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                     <div class="formInSetting">
 
                         <form action="" method="POST">
-                            <p>Rendez votre questionnaire
+                            <p>Questionnaire du moment
                             <p>
                             <div class="addMemberSetting">
-                                <input type="text" name="sendQCM" id="sendQCM" placeholder="Votre questionnaire" value="<?php ?>">
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['sendQCM']))  echo $_SESSION['error']['sendQCM'];   ?></span>
-                                <button type="button">add</button>
+                                <input type="text" name="sendQCM" id="sendQCM" disabled placeholder="Votre questionnaire" value="<?php ?>">
+                                <span class="error-msg"></span>
                             </div>
                         </form>
 
@@ -277,7 +275,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                 <div class="box__uploading">Uploading…</div>
                                 <div class="box__success">Upload success!</div>
                                 <div class="box__error">Upload error! <span id="add_error"></span>.</div>
-                                <div class="send-data">
+                                <div id=send_btn_div class="send-data">
                                     <button id="send_button" type="submit">Charger le fichier</button>
                                 </div>
                             </form>

@@ -41,8 +41,7 @@
                 ],
 
                 // back to pages accessible by all
-                'Contact' => '/pages/contact.php',
-                'Profil' => '/pages/profil.php'
+                'Contact' => '/pages/contact.php'
             ];
 
             require_once($_SERVER['DOCUMENT_ROOT'] . '/php/bdd.php');
@@ -89,6 +88,11 @@
                     echo "<a href='$url' $added>$name</a>";
                 }
             }
+            
+            if (isset($_SESSION['user'])) {
+                echo '<a href="/pages/profil.php">Profil</a>';
+            }
+
             ?>
 
         </div>

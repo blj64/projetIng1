@@ -38,7 +38,10 @@ Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.
 
 &nbsp;&nbsp;&nbsp; Afin de réaliser ce projet, nous avons dû travailler en équipe. Ce défi peut effrayer mais avec un peu d'organisation et de travail, nous sommes arrivés à un résultat plutôt convaincant. 
 
-Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer le site. 
+Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer le site.  
+Après s'être concerté pour le visuel du site et l'architecture de nos dossiers nous avons commencé à travailler chacun dans nos parties respectives. 
+Afin de maintenir un rythme de travail élevé, nous utilisions github pour regrouper toutes nos avancés. Suite à ça, Nicolas à laissé Lilian finir les fonctions utiles à la base de donnée pour lier le back et le front. 
+Une semaine avant la date de rendu, nous avons fait une réunion afin de déterminer les fonctionnalités qu'il fallait finir à tous prix.
 
 
 # III. Stockage des données
@@ -343,6 +346,26 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
     -Les nouveaux messages s'envoient avec une requete AJAX mais lorsque l'utilisateur appuyait sur la touche "entre" lor form etait envoye et reactualise la page. Pour resoudre ce probleme nous avons force l'action de touche entre pour qu'elle simule l'appui du boutton envoyer.
     -Comme dit precedemment lorsqu'on desire contacter un nouvel utilisateur il faut saisir son nom dans un input et des noms sont proposés en fonctions de ce que l'utilisateur saisit. Pour une raison inconnue cela ne marche pas. Pourtant si on saisie manuellement la datalist, la suggestion marche bien.
 
+<<<<<<< HEAD
+=======
+![header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Choix du CSS
+
+&nbsp;&nbsp;&nbsp; Pour la page d'accueil, nous avons choisis de rester proche du style de la page du site IA Pau ainsi que pour les pages d'inscription et de connexion. 
+Cependant les pages d'accueil en tant qu'utilisateurs (admin, manager et student) connectés changent radicalement du style original. Souvent des zones à bordures arrondies où nous retrevons les fonctionnalités principales, dans un fond de nature. Nous pouvons retrouver parfois le background du site IA Pau et son header qui reste le même quand il est utilisé.
+
+Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains bouttons et lien. 
+
+![header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
+Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
+>>>>>>> cc15324acf2cf13044bfdea308c602de8ee95674
 # VI. Bilan du projet
 
 &nbsp;&nbsp;&nbsp; Pendant ces trois semaines, nous avons travaillé en équipe sur un sujet des plus intéressants, qui a été un véritable défi pour nous en tant qu'étudiants. C'était la première fois que nous étions assignés à un groupe pour un projet, et malgré les difficultés rencontrées, nous avons fait preuve de patience et d'organisation pour mettre en place la plupart des fonctionnalités demandées. Nous avons réussi à développer la base de données, la gestion des data battles et challenges, les différentes parties utilisateur ainsi que le design.En conclusion, ce projet nous a non seulement permis de développer nos compétences techniques, mais il nous a également appris l'importance de la collaboration en équipe et de l'adaptabilité face aux défis. Nous sommes fiers du travail accompli et nous sommes confiants dans notre capacité à relever de futurs projets ambitieux.
