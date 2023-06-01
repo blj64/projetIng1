@@ -154,6 +154,13 @@
     color: white;
 }
 
+#rendu {
+    color:chartreuse;
+}
+
+#non-rendu {
+    color: red;
+}
 
 #bold {
     font-weight: bold;

@@ -96,6 +96,20 @@
                     exit(1);
                 }
                 $nb = $nb[0]['COUNT(*)'];
+
+                $request = "SELECT `json` FROM `Student` WHERE idUser = " . $value['idLeader'];
+                try {
+                    $json = request_db(DB_RETRIEVE, $request);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                    exit(1);
+                }
+
+                $res = "";
+                if ($json[0]['json'] == null)
+                    $res = "non-";
+
+
                 echo "<div class='team'>
                         <div>
                             <p>
@@ -108,7 +122,7 @@
                         </div>
                         
                         <div>
-                            <p id=rendu></p>
+                            <p id=".$res."rendu>" .$res ."rendu</p>
                         </div>
 
                         <a href='gestionTeam.php?idE=" . $value['id'] . "'>details ici</a>
