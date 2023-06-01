@@ -48,7 +48,12 @@
                             '. $desc .'
                             </p>
                         </div>
-                        <div class="bottom-event">
+                        <div class="bottom-event">';
+                        
+                        if ($isAdmin)
+                            echo '<span class="show-id">Id du challenge : ' . $value['idDataC'] . '</span>';
+
+                        echo'
                             <div class="delais">
                                 <input type="date" id=deb value="'.$value["startDate"].'" disabled="true">
                                 <span>:</span>
