@@ -330,6 +330,9 @@ Another paragraph
 
 # VII. Bilan du projet
 
-(TBA)
+Pendant ces trois semaines, nous avons travailler en équipe sur un sujet des plus interessant, et qui as challengé les étudiants que nous sommes. C'était la première fois que nous travaillions dans un groupe imposé et nous trouvons que nous nous sommes plutôt bien débrouillé dans la réalisation du site. Que ce soit en back ou en front End, nous avons réalisé les principales fonctionnalités du site web. Dans la création de la base de donnée, la gestion des data batles et challenges, dans les fonctionnalités des utilisateurs et dans le design, nous nous sommes surpassés pour rendre un projet finis. 
+
+Nous sommes content car nous avons pu nous améliorer mais nous sommes ausis fier de ce que nous avons fait.
+
 
 
