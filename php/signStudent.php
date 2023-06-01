@@ -47,7 +47,7 @@ $newGroup = null;
 if( isset($_POST['teamName']) && $_POST['teamName'] != EMPTY_STRING)
 {
     try {
-        $newGroup = createGroup($_POST['teamName'], $_POST['idDataC'], $_POST['id']);
+        $newGroup = createGroup($_POST['teamName'], $_POST['idDataC'], null);
         $_SESSION['user']['group'] = array('id' => $newGroup, 'group' => $_POST['teamName'], "login" => $_SESSION['user']['login']);
     } catch (Exception $e) {
         echo "Error : " . $e->getMessage();
@@ -69,12 +69,15 @@ if (roleUser($_POST['id'], STUDENT))
 }
 else
 {
+    $test = $_POST['id'];
+    $request = "UPDATE `Group` SET `idLeader` = '$test' WHERE `id` = '$newGroup'";
     try {
         createStudent($_POST['id'], $newGroup,  $_POST['lvlStudy'], $_POST['school'], $_POST['city']);
+        request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         echo "Error : " . $e->getMessage();
         exit();
-    }
+    } 
 }
 echo "Success";
 header("Location: /pages/accueil.php");

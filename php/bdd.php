@@ -1073,13 +1073,15 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city): bool
 
     /* Insert in the `In` table for the group */
 
-    $request =
-    "INSERT INTO `In` VALUES ('$idUser', '$idGroup')";
+    if ($idGroup != null) {
+        $request =
+        "INSERT INTO `In` VALUES ('$idUser', '$idGroup')";
 
-    try {
-        $result = request_db(DB_ALTER, $request);
-    } catch (Exception $e) {
-        throw new Exception("Error createStudent: " . $e->getMessage());
+        try {
+            $result = request_db(DB_ALTER, $request);
+        } catch (Exception $e) {
+            throw new Exception("Error createStudent: " . $e->getMessage());
+        }
     }
 
     return (true);
@@ -1787,10 +1789,13 @@ function getStudentByIdUser($idUser)
  * @return the id of the group
  * @remarks do not check if the group already exist
  */
-function createGroup($name, int $idDataC, int $idLeader)
+function createGroup($name, $idDataC, $idLeader)
 {
-    $request = "INSERT INTO `Group` VALUES (null, '$name', $idDataC, $idLeader)";
-
+    if ($idLeader != null) {
+        $request = "INSERT INTO `Group` VALUES (null, '$name', '$idDataC', '$idLeader')";
+    } else {
+        $request = "INSERT INTO `Group` VALUES (null, '$name', '$idDataC', null)";
+    }
     try {
         $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
