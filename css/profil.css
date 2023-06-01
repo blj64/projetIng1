@@ -16,17 +16,21 @@ body {
 }
 
 .sign-box {
-    margin: 0 auto;
+    margin-right: 30% ;
+    margin-left: 30%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     min-width: 481px;
     height: fit-content;
-    background-color: #ffffff;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
     align-items: center;
     padding-top: 1%;
     padding-bottom: 1%;
-        box-shadow: 10px 5px 5px #00000070;
+    padding-right: 50px;
+    padding-left: 50px;
+    border-radius: 15px;
 }
 
 .sign-box form {
@@ -39,9 +43,10 @@ body {
 }
 
 .sign-box form input {
+    min-width: 450px;
     position: relative;
     padding-left: 15px;
-    margin: 50px;
+    margin-bottom: 50px;
     background-position: 50%;
     background-size: cover;
     color: #666;
@@ -61,3 +66,4 @@ body {
     text-align: justify;
 
 }
+
