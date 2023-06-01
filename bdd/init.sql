@@ -45,7 +45,7 @@ CREATE TABLE `Group` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `idDataC` INT UNSIGNED NOT NULL,
-    `idLeader` INT UNSIGNED NOT NULL,
+    `idLeader` INT UNSIGNED,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDataC`) REFERENCES `DataChallenge`(`idDataC`) ON DELETE CASCADE,
     FOREIGN KEY (`idLeader`) REFERENCES `Student`(`idUser`)
