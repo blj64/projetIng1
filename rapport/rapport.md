@@ -129,19 +129,18 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 ## &nbsp;&nbsp;&nbsp; 4. Gestion des data challenges
 
-&nbsp;&nbsp;&nbsp; La liste de tous les data challenges sont visibles dans le menu Data Challenges. Les administrateurs peuvent modifier les informations de tous les data challenges alors que les gestionnaires peuvent seulement le faire pour les data challenges dont ils s'occupent.
+![Liste des data events](images/dataC/listDataC.png){height=40%}
 
-(TBA afficher l'id d'un DataC pour l'admin)
-333   (TBA when updated)
-      (Pour l'instant on a : le menu du suivi des dataC associés à un manager, les équipes pour ce dataC et la possibilité d'envoyer un quiz (form))
+&nbsp;&nbsp;&nbsp; La liste de tous les data events sont visibles dans le menu Data Challenges. 
 
-(data challenge côté manager, l'aspect gestion)
+![Modification des informations d'un data event](images/dataC/alterDataC.png){height=40%}
 
-(update image)
+&nbsp;&nbsp;&nbsp; Les administrateurs peuvent modifier les informations de tous les data challenges alors que les gestionnaires peuvent seulement le faire pour les data challenges dont ils s'occupent.
+
 ![Liste des équipes et envoyer quiz](images/dataC/dataCGroupsQuiz.png){height=40%}
 
-(Attention non implémentée) (changer de partie si nécessaire) &nbsp;&nbsp;&nbsp; Cette page permet à un manager de visualiser toutes les équipes pour un data challenge donné.
-De plus, si nécessaire il peut aussi envoyer un quiz aux équipes et voir leurs membres.
+&nbsp;&nbsp;&nbsp; Cette page permet à un manager de visualiser toutes les équipes pour un data challenge donné.
+De plus, si nécessaire il peut aussi envoyer un quiz (data battle) aux équipes et voir leurs membres.
 
 ## &nbsp;&nbsp;&nbsp; 5. La messagerie
 &nbsp;&nbsp;&nbsp; La liste de tout les personnes avec qui l'utilisateur a une conversation est affiché en colonne dans la partie gauche. Il est possible d'afficher la conversation en cour avec eux en cliquant dessus. La liste s'actualise automatiquement. Les messages sont stockés dans la base de données dans la table message. Chaque message possède un id, l'id de celui qui envoit le message, celui qui le recoit, le message, sa date et son heure qui sont générées automatiquement ainsi qu'une variable equivalente à un type boolean qui prend 0 ou 1 en fonction de si le message a été lu ou non.
@@ -156,9 +155,22 @@ Ensuite il suffit juste de rédiger le message et de l'envoyer pour finaliser la
 La messagerie est instantané, chaque seconde une fonction va rechercher les messages qui n'ont pas été vu. Cette méthode est efficace mais bien trop energivore et peu adaptable dans le cas d'un vrai site. Nous avons en revanche trouvé une méthode plus efficace: HTTP Long Polling. L'utilisateur envoit une requete au serveur et tant que le serveur ne detecte pas de changement il ne renvoit pas de requete la ou dans notre solution initial il la renvoit imediatement et ainsi de suite toutes les secondes. Par soucis de temps, nous n'avons pas adapter la methode HTTP Long Polling.
 
 ## &nbsp;&nbsp;&nbsp; 6. Gestion des groupes
-555   (maybe available later ?)
 
-(images du menu groupe (celui student leader suffit) avec un pour chaque partie : groupe, messagerie, paramètre, rendu avec graphe)
+![Menu de l'équipe](images/group/membersGroup.png){height=40%}
+
+&nbsp;&nbsp;&nbsp; Le menu principal pour un groupe. Mon équipe correspond à l'équipe de l'utilisateur pour un data event (la couronne indique le capitaine, le nom en gras est le nom de l'utilisateur).
+
+
+![La messagerie]()
+
+&nbsp;&nbsp;&nbsp; La messagerie est accessible sur cette même page bien que pas totalement implémentée (voir : [V. Problèmes rencontrés](#issues))
+
+![Modification paramètres groupe](images/group/parametersGroup.png){height=40%}
+
+&nbsp;&nbsp;&nbsp; Le menu unique au capitaine qui peut ajouter de nouveaux membres et changer le capitaine de l'équipe
+
+
+![Rendu d'un fichier python et visualisation résultats](images/group/pythonGroup.png){height=40%}
 
 ## &nbsp;&nbsp;&nbsp; 7. L'API en Java
 
@@ -314,7 +326,15 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 
 ![Visualisation des résultats 3](images/graph_result_3.png){height=80%}
 
-# V. Problèmes rencontres
+## &nbsp;&nbsp;&nbsp; 8. Autre
+
+![Header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
+&nbsp;&nbsp;&nbsp; Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'accueil quand on est connecté.
+
+# V. Problèmes rencontrés {#issues}
 
 &nbsp;&nbsp;&nbsp;&nbsp; Lors de ce projet nous avons fait face a plusieurs problèmes. Nous avons réussi an resoudre une bonne partie d'entre eux mais certain d'entre ont persistés.
 
@@ -323,14 +343,8 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
     -Les nouveaux messages s'envoient avec une requete AJAX mais lorsque l'utilisateur appuyait sur la touche "entre" lor form etait envoye et reactualise la page. Pour resoudre ce probleme nous avons force l'action de touche entre pour qu'elle simule l'appui du boutton envoyer.
     -Comme dit precedemment lorsqu'on desire contacter un nouvel utilisateur il faut saisir son nom dans un input et des noms sont proposés en fonctions de ce que l'utilisateur saisit. Pour une raison inconnue cela ne marche pas. Pourtant si on saisie manuellement la datalist, la suggestion marche bien.
 
-![header et underheader](images/header.png){height=80%}
-
-![Cartes](images/card.png){height=80%}
-
-Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
-
 # VI. Bilan du projet
 
-(TBA)
+&nbsp;&nbsp;&nbsp; Pendant ces trois semaines, nous avons travaillé en équipe sur un sujet des plus intéressants, qui a été un véritable défi pour nous en tant qu'étudiants. C'était la première fois que nous étions assignés à un groupe pour un projet, et malgré les difficultés rencontrées, nous avons fait preuve de patience et d'organisation pour mettre en place la plupart des fonctionnalités demandées. Nous avons réussi à développer la base de données, la gestion des data battles et challenges, les différentes parties utilisateur ainsi que le design.En conclusion, ce projet nous a non seulement permis de développer nos compétences techniques, mais il nous a également appris l'importance de la collaboration en équipe et de l'adaptabilité face aux défis. Nous sommes fiers du travail accompli et nous sommes confiants dans notre capacité à relever de futurs projets ambitieux.
 
 
