@@ -145,12 +145,10 @@ document.getElementsByTagName('body')[0].onload = function() {
     let full_url = window.location.href.split("#");
     let url = full_url[1];
 
-
     if(url == undefined || url == "Setting" || pages[url] == undefined)
     {
-        pages["Main"].style.display = "flex";
-        document.getElementById("menu-Main").className += " active";
         window.location.href = full_url[0] + "#Main";
+        window.location.reload();
         return;
     }
 
