@@ -4,8 +4,8 @@
             <div id="cssSurForme1"></div>
             <div id="Z1SM2">
 
-                <iframe class="video" href="https://youtu.be/CxMZnR713Xs">
-                </iframe>
+                <a href="https://youtu.be/CxMZnR713Xs"><iframe class="video" href="https://youtu.be/CxMZnR713Xs">
+                </iframe></a>
             </div>
             <!--<div id="cssForme2"></div>-->
             <div id="Z2SM2">
