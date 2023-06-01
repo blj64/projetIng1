@@ -27,8 +27,8 @@
 /*                          DEFINE                                             */
 
 define("DB_HOST", "localhost");
-define("DB_USER", "blj");
-define("DB_PASS", "root");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "IAPau");
 
 define("DB_RETRIEVE", 1);
@@ -900,10 +900,12 @@ function getGroupsDataC($idDataC): array
 function getStudentsGroup($idGroup): array
 {
     $request =
-        "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
+    "SELECT U.`id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `Student` AS S
     JOIN `User` AS U ON S.`idUser` = U.`id`
-    WHERE S.`idGroup` = '$idGroup'";
+    join `In` as I on I.`idUser` = U.`id`
+    join `Group` as G on G.`id` = I.`idGroup`
+    WHERE G.`id` = '$idGroup'";
 
     try {
         $result = request_db(DB_RETRIEVE, $request);
