@@ -38,9 +38,7 @@ Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.
 
 &nbsp;&nbsp;&nbsp; Afin de réaliser ce projet, nous avons dû travailler en équipe. Ce défi peut effrayer mais avec un peu d'organisation et de travail, nous sommes arrivés à un résultat plutôt convaincant. 
 
-Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer les éléments que nous devions mettre dans chaque page. 
-
-Le MLD et le schéma réalisés, Nous nous sommes concertés pour le nombre de page dans le site, sur son visuel et sur les élément 
+Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer le site. 
 
 
 # III. Stockage des données
@@ -64,6 +62,10 @@ Enfin, on considère qu'un gestionnaire gère le data challenge complet (on aura
 &nbsp;&nbsp;&nbsp; Nous avons choisi d'utiliser la base de données mySQL pour stocker les informations nécessaires.
 
 Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group puisque le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
+
+Ci-dessous une visualisation de la base de données utilisée :
+
+![Base de données IAPau](images/db.png){height=40%}
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Gestion de la connexion à la base de données
 
