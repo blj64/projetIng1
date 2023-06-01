@@ -41,7 +41,7 @@ session_start();
                 </a>
 
 
-                <a href="/pages/dataC.php" id="DataC" class="card">
+                <a href="/pages/challenges.php" id="DataC" class="card">
                     <div class="filter">
                             <div class="card-img">
                             <h1>Les challenges</h1>
@@ -61,7 +61,7 @@ session_start();
                     echo('<a href="/pages/gestionUser.php" id="setManager" class="card">
                     <div class="filter">
                         <div class="card-img">
-                            <h1>Gestion des gestionnaires</h1>
+                            <h1>Gestion des utilisateurs</h1>
                         </div>
                     </div>
                 </a>
