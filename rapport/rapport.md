@@ -316,7 +316,7 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 
 # V. Problèmes rencontres
 
-&nbsp;&nbsp;&nbsp;&nbsp; Lors de ce rpojet nous avons fait face a plusieurs problèmes. Nous avons réussi an resoudre une bonne partie d'entre eux mais certain d'entre ont persistés.
+&nbsp;&nbsp;&nbsp;&nbsp; Lors de ce projet nous avons fait face a plusieurs problèmes. Nous avons réussi an resoudre une bonne partie d'entre eux mais certain d'entre ont persistés.
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. La messagerie
 &nbsp;&nbsp;&nbsp;&nbsp; Il y a eu plusieurs problèmes rencontrés dans la conception de la messagerie: 
