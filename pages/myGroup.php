@@ -141,11 +141,11 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                         </div>
                     </div>
                     <div id=main-right class="right-box">
-                        <a class="card" href="#LINK TO THE DATA">
+                        <a class="card" href="/pages/challengesPage.php?id=<?php echo $group['idDataC'] ?>">
                             <div class="filter">
-                                <div class="dataC-img">
+                                <div class="dataC-img" style="background-image: url('<?php echo getDataChallengeById($group['idDataC'])[0]['image']; ?>');">
                                     <div class="dataC-text">
-                                        <h1>DATA CHALL NAME</h1>
+                                        <h1><?php echo getDataChallengeById($group['idDataC'])[0]['name']; ?></h1>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
 
                             <div class="addMemberSetting">
                                 <input type="text" name="email" id="email" placeholder="email" value="<?php ?>">
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['email']))  echo $_SESSION['error']['email'];   ?></span>
+                                <span class="error-msg"></span>
                                 <button onclick="inviteGroup()" type="button">add</button>
                             </div>
                         </form>
@@ -239,10 +239,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                     }
                                     ?>
                                 </select>
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['selectInSettings'])) {
-                                                            echo $_SESSION['error']['selectInSettings'];
-                                                            unset($_SESSION['error']);
-                                                        }  ?></span>
+                                <span class="error-msg"></span>
 
                                 <input class="spaceOver" type="button" onclick="changeLeader()" value="Choisir mon capitaine">
                             </fieldset>
@@ -256,7 +253,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             <p>
                             <div class="addMemberSetting">
                                 <input type="text" name="sendQCM" id="sendQCM" disabled placeholder="Votre questionnaire" value="<?php ?>">
-                                <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['sendQCM']))  echo $_SESSION['error']['sendQCM'];   ?></span>
+                                <span class="error-msg"></span>
                             </div>
                         </form>
 

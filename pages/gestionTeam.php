@@ -159,12 +159,12 @@ var check = true;
                             </fieldset>
                         </div>
                     </div>
-                    <div class="right-box">
-                        <a class="card" href="#LINK TO THE DATA">
+                    <div id=main-right class="right-box">
+                        <a class="card" href="/pages/challengesPage.php?id=<?php echo $group['idDataC'] ?>">
                             <div class="filter">
-                                <div class="dataC-img">
+                                <div class="dataC-img" style="background-image: url('<?php echo getDataChallengeById($group['idDataC'])[0]['image']; ?>');">
                                     <div class="dataC-text">
-                                        <h1>DATA CHALL NAME</h1>
+                                        <h1><?php echo getDataChallengeById($group['idDataC'])[0]['name']; ?></h1>
                                     </div>
                                 </div>
                             </div>
