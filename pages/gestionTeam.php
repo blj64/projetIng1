@@ -47,6 +47,75 @@
 </head>
 
 <body>
+
+<script>
+
+    function charger() {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        const idE = urlParams.get("idE");
+        console.log(idE);
+        console.log("TEST");
+        let jsonContent;
+        if (document.getElementById("result").textContent === '') {
+            const queryString = window.location.search;
+            console.log(queryString);
+
+
+            const formData = new FormData();
+            formData.append('0', idE);
+
+
+            fetch("http://localhost:8080/php/recupJsonGestionnaire.php",
+                {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error("Erreur de réseau.");
+                })
+                .then(data => {
+                    console.log(data);
+                    document.getElementById("result").textContent = data;
+                    if(data !== ''){
+                        afficher();
+                    } else {
+                        alert("Vous n'avez jamais sauvegardé vos données.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+
+        } else {
+            alert("Le fichier est déjà chargé");
+        }
+
+    }
+
+    function sauvegarder() {
+        let jsonContent;
+        if (document.getElementById("result").textContent !== '') {
+            jsonContent = document.getElementById("result").textContent;
+
+            const formData = new FormData();
+            formData.append('0', jsonContent);
+
+            fetch("http://localhost:8080/php/saveJson.php", {
+                method: "POST",
+                body: formData
+            })
+            alert("Les données sont correctement sauvegardées");
+        } else {
+            alert("Le fichier n'est pas chargé");
+        }
+    }
+</script>
     <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/php/header.php'; 
     ?>
     
@@ -175,26 +244,8 @@
                 <div class="content-box" id="Rendu" style="display:none">
                     <div class="left-box">
                         <div class="rendu-box">
-                            <h1>Mettez votre fichier python ici ↓↓</h1>
-                            <form class="box" id="yourForm" enctype="multipart/form-data">
-                                <div class="drop-zone">
-                                    <span class="drop-zone__prompt">Drop file here or <span id="click">click</span> to upload</span>
-                                    <label for="yourFile"></label>
-                                    <input type="file" id="yourFile" name="yourFile" class="drop-zone__input" required>
-                                </div>
-                                <div class="box__uploading">Uploading…</div>
-                                <div class="box__success">Upload success!</div>
-                                <div class="box__error">Upload error! <span id="add_error"></span>.</div>
-                                <div class="send-data">
-                                    <button id="send_button" type="submit">Charger le fichier</button>
-                                </div>
-                            </form>
-                            <div class="send-data">
-                                <button>Sauvegarder les données</button>
-                            </div>
-                            <div class="send-data">
-<!--                                <button onclick="charger()">Charger les données précédentes</button>-->
-                            </div>
+
+
 
                         </div>
                         <div class="stats-box">
@@ -209,7 +260,7 @@
                     <div class="right-box">
 
                         <div class="send-data">
-                            <button id="send_button" onclick="afficher()">Générer les graphiques</button>
+                            <button id="send_button" onclick="charger()">Générer les graphiques</button>
                             <div id="result" style="display: none"></div>
 
                         </div>
