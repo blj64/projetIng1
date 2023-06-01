@@ -20,7 +20,7 @@
             /* adapt the menu to the user */
 
             const PAGES = [  // pages accessible by all
-                'Accueil' => '/pages/accueilAdmin.php',
+                'Accueil' => '/pages/accueil.php',
                 'Data Challenges' => '/pages/challenges.php',
 
                 'CUSTOME' => [ //custom menu for each role

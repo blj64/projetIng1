@@ -77,5 +77,5 @@ else
     }
 }
 echo "Success";
-header("Location: /pages/accueilAdmin.php");
+header("Location: /pages/accueil.php");
 exit();

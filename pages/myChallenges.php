@@ -65,7 +65,7 @@
                                 <span>:</span>
                                 <input type="date" id=fin value="'.$value["endDate"].'" disabled="true">
                             </div>
-                            <a href="resumeChall.php?id='. $value['idDataC'] .'">En savoir plus</a>
+                            <a href="challengesPage.php?id='. $value['idDataC'] .'">En savoir plus</a>
                         </div>
                     </div>';
                 }

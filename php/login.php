@@ -107,4 +107,4 @@ if (roleUser($result[0]['id'], STUDENT))  {
 unset($_SESSION['old']);
 unset($_SESSION['error']);
 
-header("Location: /pages/accueilAdmin.php");
+header("Location: /pages/accueil.php");

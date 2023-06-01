@@ -91,7 +91,7 @@ session_start();
                     </div>
                 </a>');
                 }else if(roleUser($_SESSION['user']['id'], MANAGER)==1){
-                    echo('<a href="/pages/allTeam.php" id="setChallenge" class="card">
+                    echo('<a href="/pages/challenges.php" id="setChallenge" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Les challenges</h1>
@@ -100,7 +100,7 @@ session_start();
                 </a>
 
 
-                <a href="/pages/myChallenges.php" id="setTeam" class="card">
+                <a href="/pages/allTeam.php" id="setTeam" class="card">
                     <div class="filter">
                             <div class="card-img">
                             <h1>Les équipes</h1>
@@ -108,7 +108,7 @@ session_start();
                     </div>
                 </a>
 
-                <a href="/pages/allTeam.php" id="setMyChallenge" class="card">
+                <a href="/pages/myChallenges.php" id="setMyChallenge" class="card">
                     <div class="filter">
                         <div class="card-img">
                             <h1>Mes challenges</h1>
