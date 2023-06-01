@@ -44,7 +44,6 @@ var IS_HIDE_PREVIEW =  true;
 function change_preview() {
 
     const quit = document.getElementById("quit-btn");
-    console.log(quit);
     if(IS_HIDE_PREVIEW)
     {
         preview.style.display = "flex";
@@ -308,11 +307,8 @@ function gather_data_preview() {
  *  \remarks 
  */
 async function deleteUser() {
-    console.log("deleteUser");
 
     let data = gather_data_preview();
-
-    console.log(data.get("id"));
 
     const response = await fetch("/php/ajax_request/deleteUser.php", {
         method: "POST",
@@ -350,8 +346,12 @@ async function deleteUser() {
 async function MakeManager() {
     
     let data = gather_data_preview();
-    
-    data.set("company", prompt("Quel est le nom de l'entreprise ?", "IA Pau"));
+    let company = prompt("Quel est le nom de l'entreprise ?", "IA Pau");
+
+    if( !company)
+        return;
+
+    data.set("company", company);
 
     const response = await fetch("/php/ajax_request/addManager.php", {
         method: "POST",
@@ -362,7 +362,6 @@ async function MakeManager() {
     })
     .then(response => response.text())
     .then( function (res) {
-        console.log(res);
         if (res.startsWith("Success"))
         {
             dom_change_user_to_manager(data.get("id"));
@@ -398,7 +397,6 @@ async function updateUser() {
     })
     .then(response => response.text())
     .then( function (res) {
-        console.log(res);
         if (res.startsWith("Success"))
         {
             window.location.reload();
@@ -542,7 +540,6 @@ async function createUser() {
     })
     .then(response => response.text())
     .then( function (res) {
-        console.log(res);
         if (res.startsWith("Success"))
         {
             dom_add_user(res.split(":")[2], data.get("lastName"), data.get("firstName"), data.get("email"), data.get("number"), "USER");

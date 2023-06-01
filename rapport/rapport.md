@@ -40,6 +40,12 @@ Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.
 
 Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer le site. 
 
+Après s'être concerté pour le visuel du site et l'architecture de nos dossiers nous avons commencé à travailler chacun dans nos parties respectives. 
+
+Afin de maintenir un rythme de travail élevé, nous utilisions github pour regrouper toutes nos avancés. Suite à ça, Nicolas à laissé Lilian finir les fonctions utiles à la base de donnée pour lier le back et le front. 
+
+Une semaine avant la date de rendu, nous avons fait une réunion afin de déterminer les fonctionnalités qu'il fallait finir à tous prix. 
+
 
 # III. Stockage des données
 
@@ -304,15 +310,29 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 ![Visualisation des résultats 3](images/graph_result_3.png){height=80%}
 
 
+# V. Choix du CSS
+
+&nbsp;&nbsp;&nbsp; Pour la page d'accueil, nous avons choisis de rester proche du style de la page du site IA Pau ainsi que pour les pages d'inscription et de connexion. 
+Cependant les pages d'accueil en tant qu'utilisateurs (admin, manager et student) connectés changent radicalement du style original. Souvent des zones à bordures arrondies où nous retrevons les fonctionnalités principales, dans un fond de nature. Nous pouvons retrouver parfois le background du site IA Pau et son header qui reste le même quand il est utilisé.
+
+Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains bouttons et lien. 
+
+Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
 
 
-# V. Les fonctionnalités qui restent à implémenter
+
+
+
+# VI. Les fonctionnalités qui restent à implémenter
 Another paragraph
 
 (TBA)
 
-# VI. Bilan du projet
+# VII. Bilan du projet
 
-(TBA)
+Pendant ces trois semaines, nous avons travailler en équipe sur un sujet des plus interessant, et qui as challengé les étudiants que nous sommes. C'était la première fois que nous travaillions dans un groupe imposé et nous trouvons que nous nous sommes plutôt bien débrouillé dans la réalisation du site. Que ce soit en back ou en front End, nous avons réalisé les principales fonctionnalités du site web. Dans la création de la base de donnée, la gestion des data batles et challenges, dans les fonctionnalités des utilisateurs et dans le design, nous nous sommes surpassés pour rendre un projet finis. 
+
+Nous sommes content car nous avons pu nous améliorer mais nous sommes ausis fier de ce que nous avons fait.
+
 
 
