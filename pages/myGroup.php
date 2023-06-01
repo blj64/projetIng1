@@ -100,7 +100,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
     ?>
 
     <div class="main">
-
+        <input id=idGroup type="hidden" value="<?php echo $group['id'] ?>">
         <div class="center">
             <nav class="menu">
                 <a id=menu-Main href="#Main" class="list" onclick="changeMenu(this)">Mon équipe</a>
@@ -117,7 +117,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             <h1><?php echo $group['name'] ?></h1>
                         </div>
                         <div class="list-group-name">
-                            <fieldset>
+                            <fieldset id=list-group-name>
                                 <legend>My team</legend>
 
                                 <?php
@@ -218,12 +218,12 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                     <div class="formInSetting">
 
                         <form action="" method="POST">
-                            <p>Ajouter un membre
-                            <p>
+                            <p>Ajouter un membre<p>
+
                             <div class="addMemberSetting">
                                 <input type="text" name="email" id="email" placeholder="email" value="<?php ?>">
                                 <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['email']))  echo $_SESSION['error']['email'];   ?></span>
-                                <button type="submit">add</button>
+                                <button onclick="inviteGroup()" type="button">add</button>
                             </div>
                         </form>
                         <form>
@@ -242,7 +242,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                                             unset($_SESSION['error']);
                                                         }  ?></span>
 
-                                <input class="spaceOver" type="submit" value="Choisir mon capitaine">
+                                <input class="spaceOver" type="button" onclick="changeLeader()" value="Choisir mon capitaine">
                             </fieldset>
                         </form>
 
@@ -255,7 +255,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             <div class="addMemberSetting">
                                 <input type="text" name="sendQCM" id="sendQCM" placeholder="Votre questionnaire" value="<?php ?>">
                                 <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['sendQCM']))  echo $_SESSION['error']['sendQCM'];   ?></span>
-                                <button>add</button>
+                                <button type="button">add</button>
                             </div>
                         </form>
 
