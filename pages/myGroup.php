@@ -44,7 +44,6 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
 <body>
     <script>
         function charger() {
-            console.log("TEST");
             let jsonContent;
             if (document.getElementById("result").textContent === '') {
 
@@ -56,7 +55,6 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                         throw new Error("Erreur de réseau.");
                     })
                     .then(data => {
-                        console.log(data);
                         document.getElementById("result").textContent = data;
                         if (data !== '') {
                             afficher();

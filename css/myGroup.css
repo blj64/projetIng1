@@ -606,12 +606,21 @@ body{
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: chocolate;
 }
 
 .rendu-box h1 {
     margin: 0 auto;
     font-size: large;
+}
+
+#Rendu h2 {
+    position: absolute;
+    margin: 0 auto;
+    font-size: xx-large;
+    align-self: center;
+    top:50%;
+    left: 20%;
+
 }
 
 .send-data {
@@ -747,11 +756,6 @@ body{
 .stats-box {
     width: 100%;
     height: 100%;
-    background-color: lightblue;
-}
-
-.right-box {
-    background-color: lightpink;
 }
 
 
