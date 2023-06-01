@@ -323,6 +323,11 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
     -Les nouveaux messages s'envoient avec une requete AJAX mais lorsque l'utilisateur appuyait sur la touche "entre" lor form etait envoye et reactualise la page. Pour resoudre ce probleme nous avons force l'action de touche entre pour qu'elle simule l'appui du boutton envoyer.
     -Comme dit precedemment lorsqu'on desire contacter un nouvel utilisateur il faut saisir son nom dans un input et des noms sont proposés en fonctions de ce que l'utilisateur saisit. Pour une raison inconnue cela ne marche pas. Pourtant si on saisie manuellement la datalist, la suggestion marche bien.
 
+![header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
+Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
 
 # VI. Bilan du projet
 
