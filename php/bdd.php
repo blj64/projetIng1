@@ -436,6 +436,7 @@ function insertHandle_db($idManager, $idDataC) {
  * @remarks throw an exception if a request is not valid
  */
 function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $newLvStudy = null, $newSchool = null, $newCity = null) : bool {
+
     $error = "Error alterStudent_db : ";
 
     $request = 
@@ -1056,6 +1057,9 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city) : bool {
     } catch (Exception $e) {
         throw new Exception("Error createStudent: " . $e->getMessage());
     }
+
+    if ($idGroup == null)
+        return(true);
 
     /* Insert in the `In` table for the group */
 
@@ -1716,4 +1720,95 @@ function getGroupByStudentId($idStudent) {
     }
 
     return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getStudentByIdUser($idUser)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Thu 01 June 2023 - 00:41:10
+*/
+/**
+ *  brief 
+ *  @param 
+ *  @return 
+ *  @remarks 
+ */
+function getStudentByIdUser($idUser) {
+    $request = "SELECT * FROM `Student` 
+    JOIN `User` ON `Student`.`idUser` = `User`.`id`
+    WHERE `Student`.`idUser` = '$idUser'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getStudentByIdUser : " . $e->getMessage());
+    }
+
+    return($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createGroup()
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Thu 01 June 2023 - 01:27:02
+*/
+/**
+ *  brief create a group
+ *  @param $name        : the name of the group
+ *  @param $idDataC     : the id of the data challenge
+ *  @param $idLeader    : the id of the leader of the group
+ *  @return the id of the group
+ *  @remarks do not check if the group already exist
+ */
+function createGroup($name, int $idDataC, int $idLeader) {
+    $request = "INSERT INTO `Group` VALUES (null, '$name', $idDataC, $idLeader)";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createGroup : " . $e->getMessage());
+    }
+
+    $request = "SELECT LAST_INSERT_ID() AS `id`";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createGroup : " . $e->getMessage());
+    }
+
+    return($result[0]['id']);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createIn($idUser, $idGroup)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Thu 01 June 2023 - 01:34:18
+*/
+/**
+ *  brief create a link between a user and a group
+ *  @param $idUser  : the id of the user
+ *  @param $idGroup : the id of the group
+ *  @return true if the link is created
+ *  @remarks do not check if the link already exist
+ */
+function createIn($idUser, $idGroup) {
+    $request = "INSERT INTO `In` VALUES ('$idUser', '$idGroup')";
+
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createIn : " . $e->getMessage());
+    }
+
+    return ($result);
 }
