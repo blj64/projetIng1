@@ -85,7 +85,7 @@ var check = true;
                     } else {
                         if(!check)
                         {
-                            alert("Vous n'avez jamais sauvegardé vos données.");
+                            alert("Le leader n'a sauvegardé ses données.");
                         }
                     }
                     check = false;
@@ -284,8 +284,13 @@ var check = true;
     ?>
 </body>
     <script>    
-    document.getElementById("Rendu").appendChild(h);
-    setTimeout(charger, 500);
+ 
+ /* get url */
+    if( window.location.href.split("#")[1] == "Rendu" ) {
+        document.getElementById("Rendu").appendChild(h);
+        setTimeout(charger, 500);
+    } else
+        check= false;
     </script>
 <script src="/js/myGroup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
