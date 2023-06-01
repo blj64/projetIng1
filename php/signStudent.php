@@ -48,6 +48,7 @@ if( isset($_POST['teamName']) && $_POST['teamName'] != EMPTY_STRING)
 {
     try {
         $newGroup = createGroup($_POST['teamName'], $_POST['idDataC'], $_POST['id']);
+        $_SESSION['user']['group'] = array('id' => $newGroup, 'group' => $_POST['teamName'], "login" => $_SESSION['user']['login']);
     } catch (Exception $e) {
         echo "Error : " . $e->getMessage();
         exit();
