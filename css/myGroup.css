@@ -210,6 +210,25 @@ body{
     height: 100%;
 }
 
+#main-right {
+    flex-direction: column;
+}
+
+#main-right button {
+    padding: 2%;
+    background-color: rgb(238, 84, 84);
+    transition: all 0.2s;
+}
+
+#main-right button:hover {
+    background-color: rgb(238, 40, 40 );
+}
+
+#main-right button:active {
+    background-color: rgb(255, 0,0 );
+    transform: translateY(4px);
+}
+
 .card {
     position: relative;
     width: 70%;

@@ -283,3 +283,39 @@ async function changeLeader() {
     });
     return (0);
 }
+
+/* ------------------------------------------------------------------------------------ */
+
+/*!
+ *  \fn function leave()
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Thu 01 June 2023 - 21:34:58
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+function leave() {
+    
+    const response = fetch('/php/ajax_request/leaveGroup.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+        },
+        body: "idUser=" + document.getElementsByClassName("me")[0].id + "&idGroup=" + document.getElementById('idGroup').value
+    })
+    .then(response => response.text())
+    .then( function(res)  {
+        console.log(res);
+        if(!res.startsWith("Success"))
+        {
+            alert(res.split(":")[1]);
+            return;
+        }
+        alert("Vous avez quitté le groupe !");
+        window.location.href = "/pages/index.php";
+    });
+
+    return (0);
+}

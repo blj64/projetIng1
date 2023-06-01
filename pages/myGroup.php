@@ -129,7 +129,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                     if ($user['id'] == $_SESSION['user']['id'])
                                         $me = ' class="me"';
 
-                                    echo '<p' . $me . '>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
+                                    echo '<p' . $me . ' id='.$user['id'].'>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
                                     echo '</div>';
                                 }
                                 ?>
@@ -137,7 +137,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             </fieldset>
                         </div>
                     </div>
-                    <div class="right-box">
+                    <div id=main-right class="right-box">
                         <a class="card" href="#LINK TO THE DATA">
                             <div class="filter">
                                 <div class="dataC-img">
@@ -147,6 +147,7 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                 </div>
                             </div>
                         </a>
+                        <?php if($group['idLeader'] != $_SESSION['user']['id']) echo '<button onclick=leave()>Quitter le groupe</button>';?>
                     </div>
                 </div>
 
@@ -248,12 +249,11 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                     <div class="formInSetting">
 
                         <form action="" method="POST">
-                            <p>Rendez votre questionnaire
+                            <p>Questionnaire du moment
                             <p>
                             <div class="addMemberSetting">
-                                <input type="text" name="sendQCM" id="sendQCM" placeholder="Votre questionnaire" value="<?php ?>">
+                                <input type="text" name="sendQCM" id="sendQCM" disabled placeholder="Votre questionnaire" value="<?php ?>">
                                 <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['sendQCM']))  echo $_SESSION['error']['sendQCM'];   ?></span>
-                                <button type="button">add</button>
                             </div>
                         </form>
 
