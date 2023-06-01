@@ -1028,7 +1028,16 @@ function createUser($firstname, $lastname, $password, $phone, $email): int
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    return (true);
+
+    $request = "SELECT LAST_INSERT_ID() AS id";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createUser : " . $e->getMessage());
+    }
+
+    return ($result[0]['id']);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1063,7 +1072,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city): bool
 
     /* Insert the new student in the database */
     $request =
-    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city')";
+    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city', null)";
 
     try {
         $result = request_db(DB_ALTER, $request);

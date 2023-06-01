@@ -148,8 +148,10 @@ document.getElementsByTagName('body')[0].onload = function() {
     if(url == undefined || url == "Setting" || pages[url] == undefined)
     {
         window.location.href = full_url[0] + "#Main";
-        window.location.reload();
-        return;
+        for(let active of document.getElementsByClassName("active"))
+            active.className.replace("active", "");
+        
+        url = "Main"
     }
 
     /* get active class */
@@ -160,3 +162,124 @@ document.getElementsByTagName('body')[0].onload = function() {
 
 }
 
+/* -------------------------------------------------------------------------- */
+
+/*!
+ *  \fn function passLead(that)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Thu 01 June 2023 - 17:03:15
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function inviteGroup(that) {
+    let mail = document.getElementById("email").value;
+    let idGroup;
+    if(mail == "")
+    {
+        alert("Entrez une adresse mail");
+        return;
+    }
+
+
+    const response = await fetch('/php/ajax_request/isUserInGroup.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+        },
+        body: "login=" + mail
+    })
+    .then(response => response.text())
+    .then( function(res)  {
+        console.log(res);
+        if(!res.startsWith("Success"))
+        {
+            alert(res.split(":")[1]);
+            return;
+        }
+        idGroup = res.split(':')[1];
+    });
+
+    const response2 = await fetch('/php/ajax_request/inviteGroup.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "login=" + mail + "&idGroup=" + idGroup
+    })
+    .then(response => response.text())
+    .then( function(res)  {
+        console.log(res);
+        if(res.startsWith("Success"))
+        {
+            alert("Utilisateur invité");
+            document.getElementById("email").value = "";
+            let data = {
+                "fn" : res.split(':')[1],
+                "ln" : res.split(':')[2],
+                "id" : res.split(':')[3]
+            };
+
+            /* add dom option */
+            let option = document.createElement('option');
+            option.innerHTML = data['fn'] + ' ' + data['ln'];
+            option.id=data['id'];
+            document.getElementById('selectInSettings').appendChild(option);
+
+            /*add dom user list */
+            let div = document.createElement('option');
+            div.className = "student";
+
+            let p = document.createElement("p");
+            p.innerHTML = data['fn'] + ' ' + data['ln'];
+
+            div.appendChild(p);
+            document.getElementById('list-group-name').appendChild(div);
+
+        }
+        else {
+            alert(res);
+            return;
+        }
+    });
+}
+
+/* ------------------------------------- */
+
+/*!
+ *  \fn function changeLeader(that)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Thu 01 June 2023 - 18:26:42
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+async function changeLeader() {
+    console.log(document.getElementById("selectInSettings").options[document.getElementById("selectInSettings").selectedIndex]);
+    let id = document.getElementById("selectInSettings").options[document.getElementById("selectInSettings").selectedIndex].id;
+    let idGroup = document.getElementById('idGroup').value;
+
+    const response = await fetch('/php/ajax_request/changeLeader.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+        },
+        body: "idLeader=" + id + "&idGroup=" + idGroup
+    })
+    .then(response => response.text())
+    .then( function(res)  {
+        console.log(res);
+        if(!res.startsWith("Success"))
+        {
+            alert(res.split(":")[1]);
+            return;
+        }
+        alert("Le group à un nouveau leader !");
+        window.location.reload();
+    });
+    return (0);
+}
