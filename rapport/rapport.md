@@ -163,8 +163,7 @@ La messagerie est instantané, chaque seconde une fonction va rechercher les mes
 
 &nbsp;&nbsp;&nbsp; Le menu principal pour un groupe. Mon équipe correspond à l'équipe de l'utilisateur pour un data event (la couronne indique le capitaine, le nom en gras est le nom de l'utilisateur).
 
-
-![La messagerie]()
+![La messagerie](images/group/messagesGroup.png){height=40%}
 
 &nbsp;&nbsp;&nbsp; La messagerie est accessible sur cette même page bien que pas totalement implémentée (voir : [V. Problèmes rencontrés](#issues))
 
