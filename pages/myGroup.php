@@ -223,9 +223,10 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                             <div class="addMemberSetting">
                                 <input type="text" name="email" id="email" placeholder="email" value="<?php ?>">
                                 <span class="error-msg"><?php if ($retrive && isset($_SESSION['error']['email']))  echo $_SESSION['error']['email'];   ?></span>
-                                <button>add</button>
+                                <button type="submit">add</button>
                             </div>
-
+                        </form>
+                        <form>
                             <fieldset class="spaceOver">
                                 <legend>Mon capitaine</legend>
 
