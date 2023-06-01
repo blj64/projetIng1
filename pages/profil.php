@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include('../php/bdd.php');
+    require('../php/bdd.php');
     /*connect_db();
     echo(is_connected_db());
     $donnees = getUserByEmail($_SESSION['login']);
@@ -40,31 +40,35 @@
                 <?php if(isset($_SESSION['user']['id'])){
                     $donnees = getUserByEmail($_SESSION['user']['login']);
                     echo('
-                    <p>Votre prénom<p>
+                    <p>Votre prénom</p>
                     <input type="text" name="firstname" id="firstName" placeholder="prenom" value="'.$donnees["firstName"].'">    
                     
-                    <p>Votre nom<p>
+                    <p>Votre nom</p>
                     <input type="text" name="lastname" id="lastName" placeholder="nom" value="'.$donnees["lastName"].'">
 
-                    <p>Votre numéro de téléphone<p>
+                    <p>Votre numéro de téléphone</p>
                     <input type="text" name="number" id="number" placeholder="numéro" value="'.$donnees["number"].'">
                 
-                    <p>Votre email<p>
+                    <p>Votre email</p>
                     <input type="text" name="email" id="email" placeholder="email" value="'.$donnees["email"].'">');
                     
                     
                     if(roleUser($_SESSION['user']['id'], STUDENT)){
-                        echo('
-                        <p>Votre école<p>
+                        $donnees = getStudentByIdUser($_SESSION['user']['id'])[0];
+                        echo '
+                        <p>Votre école</p>
                         <input type="text" name="school" id="school" placeholder="école" value="'.$donnees["school"].'">
-                        <p>Votre niveau scolaire<p>
-                        <input type="text" name="lvlStudy" id="lvlStudy" placeholder="niveau scolaire" value="'.$donnees["lvlStudy"].'">
-                        <p>Votre ville<p>
-                        <input type="text" name="city" id="city" placeholder="ville" value="'.$donnees["city"].'">');
+                        <p>Votre niveau scolaire</p>
+                        <input type="text" name="lvStudy" id="lvStudy" placeholder="niveau scolaire" value="'.$donnees["lvStudy"].'">
+                        <p>Votre ville</p>
+                        <input type="text" name="city" id="city" placeholder="ville" value="'.$donnees["city"].'">';
                     }
                     if(roleUser($_SESSION['user']['id'], MANAGER)){
-                        echo(`<p>Votre entreprise<p>
-                        <input type="text" name="company" id="company" placeholder="entreprise" value="`.$donnees["company"].`">`);
+                        $donnees = getManagerByIdUser($_SESSION['user']['id'])[0];
+
+                        echo 
+                            '<p>Votre entreprise</p>
+                            <input type="text" name="company" id="company" placeholder="entreprise" value="'.$donnees["company"].'">';
                     } 
                     
                     

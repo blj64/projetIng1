@@ -487,7 +487,6 @@ function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $ne
                 }
             }
         }
-        $i++;
     }
 
     return (true);
@@ -1909,6 +1908,32 @@ function createFormulaire($idDataC, $url, $startDate, $endDate) {
         $result = request_db(DB_ALTER, $request);
     } catch (Exception $e) {
         throw new Exception("Error createFormulaire : " . $e->getMessage());
+    }
+
+    return ($result);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function getManagerByIdUser($idUser)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Thu 01 June 2023 - 23:16:10
+*/
+/**
+ *  brief 
+ *  @param 
+ *  @return 
+ *  @remarks 
+ */
+function getManagerByIdUser($idUser) {
+    $request = "SELECT * FROM `Manager` WHERE `idUser` = '$idUser'";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error getManagerByIdUser : " . $e->getMessage());
     }
 
     return ($result);
