@@ -11,8 +11,8 @@ Son objectif est de vulgariser et partager les connaissances autour de ce progr√
         </div>
     </div>
     <div id="ZIAP2">
-        <a href="" class="spaceBetweenLinkIAP"> in </a>
-        <a href="" class="spaceBetweenLinkIAP"> insta </a>
-        <a href=""> f </a>
+        <a href="" class="spaceBetweenLinkIAP"> linkedIn </a>
+        <a href="" class="spaceBetweenLinkIAP"> instagram </a>
+        <a href=""> facebook </a>
     </div>
 </div>

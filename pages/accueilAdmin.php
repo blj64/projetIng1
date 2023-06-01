@@ -41,7 +41,7 @@ session_start();
                 </a>
 
 
-                <a href="/pages/dataC.php" id="DataC" class="card">
+                <a href="/pages/challenges.php" id="DataC" class="card">
                     <div class="filter">
                             <div class="card-img">
                             <h1>Les challenges</h1>
@@ -61,16 +61,23 @@ session_start();
                     echo('<a href="/pages/gestionUser.php" id="setManager" class="card">
                     <div class="filter">
                         <div class="card-img">
-                            <h1>Gestion des gestionnaires</h1>
+                            <h1>Gestion des utilisateurs</h1>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="/pages/challenges.php" id="DataC" class="card">
+                    <div class="filter">
+                            <div class="card-img">
+                            <h1>Les challenges</h1>
                         </div>
                     </div>
                 </a>
 
-
-                <a href="/pages/createChallenge.php" id="DataC" class="card">
+                <a href="/pages/createChallenge.php" id="createDataC" class="card">
                     <div class="filter">
                             <div class="card-img">
-                            <h1>Gestion des challenges</h1>
+                            <h1>Créer des challenges</h1>
                         </div>
                     </div>
                 </a>
@@ -87,7 +94,7 @@ session_start();
                     echo('<a href="/pages/allTeam.php" id="setChallenge" class="card">
                     <div class="filter">
                         <div class="card-img">
-                            <h1>Gérer les challenges</h1>
+                            <h1>Les challenges</h1>
                         </div>
                     </div>
                 </a>
@@ -96,7 +103,15 @@ session_start();
                 <a href="/pages/myChallenges.php" id="setTeam" class="card">
                     <div class="filter">
                             <div class="card-img">
-                            <h1>Gérer les équipes</h1>
+                            <h1>Les équipes</h1>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/pages/allTeam.php" id="setMyChallenge" class="card">
+                    <div class="filter">
+                        <div class="card-img">
+                            <h1>Mes challenges</h1>
                         </div>
                     </div>
                 </a>

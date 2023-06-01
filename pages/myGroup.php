@@ -5,9 +5,15 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']['group']) || $_SESSION
     exit();
 }
 
-require_once $_SERVER["DOCUMENT_ROOT"] . '/php/bdd.php';
-if (!is_connected_db())
-    connect_db();
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/php/bdd.php';    
+    if( !is_connected_db())
+        connect_db();
+
+
+    $group = getGroupById($_SESSION['user']['group'])[0];
+    $groupUser = getStudentsGroup($_SESSION['user']['group']);
+    
+    ?>
 
 
 $group = getGroupById($_SESSION['user']['group'])[0];
@@ -27,14 +33,14 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
     <link rel="stylesheet" href="../css/footer.css">
     <title>IAPau my group</title>
     <style>
-        canvas {
+        canvas{
             display: block;
             box-sizing: border-box;
             height: 250px;
             width: 250px;
         }
 
-        .chart-container {
+        .chart-container{
             padding: 15px;
         }
 
@@ -214,9 +220,48 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
             </div>
 
 
-            <!-- Paramètre -->
-            <div class="content-box" id="Setting" style="display: none;">
-            </div>
+                <!-- Paramètre -->
+                <div class="content-box" id="Setting" style="display: none;">
+
+                    <div class="formInSetting">
+                        
+                            <form action="" method="POST">
+                                <p>Ajouter un membre<p>
+                                <div class="addMemberSetting">
+                                    <input type="text" name="email" id="email" placeholder="email" value="<?php ?>">
+                                    <span class="error-msg"><?php  if ($retrive && isset($_SESSION['error']['email']))  echo $_SESSION['error']['email'];   ?></span>
+                                    <button>add</button>
+                                </div>
+
+                                <fieldset class="spaceOver">
+                                    <legend>Mon capitaine</legend>
+                    
+                                    <select name="user" id="selectInSettings">
+                                        <option value="">user1</option>
+                                        <option value="">user2</option>
+                                        <option value="">user3</option>
+                                        <option value="">user4</option>
+                                    </select>
+                                    <span class="error-msg"><?php  if ($retrive && isset($_SESSION['error']['selectInSettings'])) {echo $_SESSION['error']['selectInSettings']; unset($_SESSION['error']);}  ?></span>
+                    
+                                    <input class="spaceOver" type="submit" value="Choisir mon capitaine">
+                                </fieldset>
+                            </form>
+                            
+                        </div>   
+                        <div class="formInSetting">
+                        
+                            <form action="" method="POST">
+                                <p>Rendez votre questionnaire<p>
+                                <div class="addMemberSetting">
+                                    <input type="text" name="sendQCM" id="sendQCM" placeholder="Votre questionnaire" value="<?php ?>">
+                                    <span class="error-msg"><?php  if ($retrive && isset($_SESSION['error']['sendQCM']))  echo $_SESSION['error']['sendQCM'];   ?></span>
+                                    <button>add</button>
+                                </div>
+                            </form>
+                            
+                        </div>           
+                </div>
 
 
             <!-- Rendu -->
@@ -286,6 +331,13 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
 <script src="/js/chatBox.js"></script>
 <script>
 
+    // function charger(){
+    //     if(/* Prendre la valeur du JSON dans la BDD et regarder si != null */){
+    //         //res = Récupérer la chaine de caractère de la BDD
+    //         document.getElementById("result").textContent = res;
+    //         afficher();
+    //     }
+    // }
 
     document.getElementById("yourForm").addEventListener("submit", function (event) {
         event.preventDefault(); // Annuler le comportement par défaut du formulaire
