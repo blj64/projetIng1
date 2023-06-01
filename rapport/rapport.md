@@ -330,8 +330,19 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 
 ![Cartes](images/card.png){height=80%}
 
-Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
 
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Choix du CSS
+
+&nbsp;&nbsp;&nbsp; Pour la page d'accueil, nous avons choisis de rester proche du style de la page du site IA Pau ainsi que pour les pages d'inscription et de connexion. 
+Cependant les pages d'accueil en tant qu'utilisateurs (admin, manager et student) connectés changent radicalement du style original. Souvent des zones à bordures arrondies où nous retrevons les fonctionnalités principales, dans un fond de nature. Nous pouvons retrouver parfois le background du site IA Pau et son header qui reste le même quand il est utilisé.
+
+Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains bouttons et lien. 
+
+![header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
+Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
 # VI. Bilan du projet
 
 (TBA)
