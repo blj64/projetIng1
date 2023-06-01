@@ -130,6 +130,9 @@ $groupUser = getStudentsGroup($_SESSION['user']['group']);
                                         $me = ' class="me"';
 
                                     echo '<p' . $me . ' id='.$user['id'].'>' . $user['firstName'] . ' ' . $user['lastName'] . '</p>';
+
+                                    if ($_SESSION['user']['id'] == $group['idLeader'] && $user['id'] != $_SESSION['user']['id'])
+                                        echo '<img class="mini-menu" src="/asset/icon/kick.jpg" alt="menu" onclick="kick('.$user['id'].')">';
                                     echo '</div>';
                                 }
                                 ?>

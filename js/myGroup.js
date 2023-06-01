@@ -177,6 +177,7 @@ document.getElementsByTagName('body')[0].onload = function() {
 async function inviteGroup(that) {
     let mail = document.getElementById("email").value;
     let idGroup;
+    let pass =true;
     if(mail == "")
     {
         alert("Entrez une adresse mail");
@@ -196,11 +197,17 @@ async function inviteGroup(that) {
         console.log(res);
         if(!res.startsWith("Success"))
         {
-            alert(res.split(":")[1]);
-            return;
+            throw new Error(res.split(":")[1]);
         }
         idGroup = res.split(':')[1];
+    })
+    .catch(error => {
+        alert(error);
+        pass = false;
     });
+
+    if(!pass)
+        return;
 
     const response2 = await fetch('/php/ajax_request/inviteGroup.php', {
         method: 'POST',
@@ -234,8 +241,15 @@ async function inviteGroup(that) {
 
             let p = document.createElement("p");
             p.innerHTML = data['fn'] + ' ' + data['ln'];
-
             div.appendChild(p);
+
+            let img = document.createElement("img");
+            img.className = "mini-menu";
+            img.src = "/asset/icon/kick.jpg";
+            img.alt = "menu";
+            img.onclick = function() { kick(data['id']); };
+            div.appendChild(img);
+
             document.getElementById('list-group-name').appendChild(div);
 
         }
@@ -315,6 +329,42 @@ function leave() {
         }
         alert("Vous avez quitté le groupe !");
         window.location.href = "/pages/index.php";
+    });
+
+    return (0);
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+/*!
+ *  \fn function kick(idUser)
+ *  \author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  \version 0.1
+ *  \date Thu 01 June 2023 - 21:50:51
+ *  \brief 
+ *  \param 
+ *  \return 
+ *  \remarks 
+ */
+function kick(idUser) {
+    
+    const response = fetch('/php/ajax_request/leaveGroup.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+        },
+        body: "idUser=" + idUser + "&idGroup=" + document.getElementById('idGroup').value
+    })
+    .then(response => response.text())
+    .then( function(res)  {
+        console.log(res);
+        if(!res.startsWith("Success"))
+        {
+            alert(res.split(":")[1]);
+            return;
+        }
+        alert("Vous avez explusé le joueur !");
+        document.getElementById(idUser).parentNode.remove();
     });
 
     return (0);

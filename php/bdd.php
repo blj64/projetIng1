@@ -766,6 +766,10 @@ function getUserByEmail($email): array
         throw new Exception("Error getUsersByEmail : " . $e->getMessage());
     }
 
+    if (count($result) == 0) {
+        throw new Exception("Error getUsersByEmail : no user found.");
+    }
+    
     /* return the first (and only) user */
     return ($result[0]);
 }

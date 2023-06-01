@@ -194,9 +194,9 @@ body{
 
 .mini-menu {
     position: absolute;
-    height: 80%;
+    height: 110%;
     right: 2%;
-    top: 10%;
+    top: 7%;
     padding-left: 2%;
     object-fit: cover;
 }
