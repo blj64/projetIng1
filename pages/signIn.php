@@ -18,10 +18,6 @@
      ?>
     <div class="main">
         <div class="center">
-
-            <div class="box-left">
-                <h1>Venez challenger vos données</h1>
-            </div>
             
             <div class="sign-box">
                 <img src="" alt="">
