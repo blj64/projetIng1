@@ -1063,7 +1063,7 @@ function createStudent($idUser, $idGroup, $lvStudy, $school, $city): bool
 
     /* Insert the new student in the database */
     $request =
-    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city')";
+    "INSERT INTO `Student` VALUES ('$idUser', '$lvStudy', '$school', '$city', null)";
 
     try {
         $result = request_db(DB_ALTER, $request);
