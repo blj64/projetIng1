@@ -474,10 +474,10 @@ function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $ne
                     }
                 }
                 /* Saut pour changer le niveau d'étude au prochain tour de bouvle */
-                $i = 3;
+                $i = 2;
             } else {
                 /* The result of request_db(DB_RETRIEVE, $request) has a column 'Field' which contains the name of the columns in the `Student` table */
-                $column = $list_columns[$i]['Field'];
+                $column = $list_columns[$i - 2]['Field'];
                 $request =
                 "UPDATE `Student` SET $column = '$listArgs[$i]' WHERE `idUser` = '$idStudent'";
                 try {
@@ -485,9 +485,9 @@ function alterStudent_db($idStudent, $oldIdGroup = null, $newIdGroup = null, $ne
                 } catch (Exception $e) {
                     throw new Exception("" . $error . $e->getMessage());
                 }
-                $i++;
             }
         }
+        $i++;
     }
 
     return (true);

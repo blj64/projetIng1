@@ -59,7 +59,7 @@ if( isset($_POST['teamName']) && $_POST['teamName'] != EMPTY_STRING)
 if (roleUser($_POST['id'], STUDENT))
 {
     try {
-        //alterStudent_db($_POST['id'], null, null , $_POST['lvlStudy'], $_POST['school'], $_POST['city']);
+        alterStudent_db($_POST['id'], null, null , $_POST['lvlStudy'], $_POST['school'], $_POST['city']);
         if ($newGroup != null)
             createIn($_POST['id'], $newGroup);
     } catch (Exception $e) {
