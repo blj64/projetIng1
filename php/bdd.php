@@ -813,7 +813,7 @@ function getAllManagers() {
  */
 function getAllStudents() {
     $request = 
-    "SELECT `id`, I.`idGroup`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
+    "SELECT `id`, `firstName`, `lastName`, `number`, `email`, `lvStudy`, `school`, `city`
     FROM `User` AS U 
     JOIN `Student` AS S ON U.`id` = S.`idUser`";
 
