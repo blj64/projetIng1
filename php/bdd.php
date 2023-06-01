@@ -1863,3 +1863,33 @@ function existJsonFromStudent($idStudent)
 
         return $result;
 }
+
+
+/* -------------------------------------------------------------------------- */
+
+/*
+ *  fn function createFormulaire($idDataC, $url, $startDate, $endDate)
+ *  author DURAND Nicolas Erich Pierre <durandnico@cy-tech.fr>
+ *  version 0.1
+ *  date Thu 01 June 2023 - 11:11:09
+*/
+/**
+ *  brief create a formulaire
+ *  @param $idDataC     : the id of the data challenge
+ *  @param $url         : the url of the formulaire
+ *  @param $startDate   : the start date of the formulaire
+ *  @param $endDate     : the end date of the formulaire
+ *  @return --
+ *  @remarks --
+ */
+function createFormulaire($idDataC, $url, $startDate, $endDate) {
+    $request = "INSERT INTO `Quiz` VALUES (null, '$idDataC', '$url', '$startDate', '$endDate')";
+    
+    try {
+        $result = request_db(DB_ALTER, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createFormulaire : " . $e->getMessage());
+    }
+
+    return ($result);
+}

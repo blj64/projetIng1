@@ -52,8 +52,8 @@
                 <h1>
                     <?php echo $res['name'] ?>
                 </h1>
-
-                <div onclick="location.href='test'" class="event-img" style="background-image: url('<?php echo $res['image'] ?>');"></div>
+                <input type="hidden" name="idDataC" id=idDataC value="<?php echo $res['idDataC'] ?>">
+                <div onclick="location.href='challengesPage.php?id=<?php echo $res['idDataC'];?>'" class="event-img" style="background-image: url('<?php echo $res['image'] ?>');"></div>
 
                 <div class="date">
                     <input type="date" name="" id="" disabled value="<?php echo $res['startDate'] ?>">
@@ -65,8 +65,14 @@
             <div class="send_form">
                 <p>Envoyer un form à toutes les équipes</p>
                 <div>
-                    <input type="text" name=formulaire id=formulaire>
-                    <button>Envoyer</button>
+                    <input type="text" name=formulaire id=url>
+                    <button onclick="send_form()">Envoyer</button>
+                </div>
+                <div style="margin-top: 15px;">
+                    <p>de :</p>
+                    <input type="date" name="startD" id="startD">
+                    <p>à :</p>
+                    <input type="date" name="endD" id="endD">
                 </div>
             </div>
 
@@ -105,7 +111,7 @@
                             <p id=rendu></p>
                         </div>
 
-                        <a href='GestionTeam?idE=" . $value['id'] . "'>details ici</a>
+                        <a href='gestionTeam.php?idE=" . $value['id'] . "'>details ici</a>
                     </div>";
             }
             ?>
@@ -114,5 +120,5 @@
     </div>
     <?php require '../php/footer.php' ?>
 </body>
-
+<script src="/js/allTeam.js"></script>
 </html>
