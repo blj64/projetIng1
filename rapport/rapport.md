@@ -31,17 +31,17 @@ header-includes: |
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dans le cadre de notre première année du cycle ingénieur, il nous est proposé la réalisation d'un projet pour mettre en pratique nos connaissances.
 Ce projet consiste en la réalisation d'une application pour IA Pau permettant la création et l'administration de data challenges.
 
-Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.git](https://github.com/blj64/projetIng1.git)
+&nbsp;&nbsp;&nbsp;&nbsp; Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.git](https://github.com/blj64/projetIng1.git)
 
 
 # II. Notre organisation
 
-&nbsp;&nbsp;&nbsp; Afin de réaliser ce projet, nous avons dû travailler en équipe. Ce défi peut effrayer mais avec un peu d'organisation et de travail, nous sommes arrivés à un résultat plutôt convaincant. 
+&nbsp;&nbsp;&nbsp; Afin de réaliser ce projet, nous avons dû travailler en équipe. Ce défi peut effrayer, mais avec un peu d'organisation et de travail, nous sommes arrivés à un résultat plutôt convaincant. 
 
-Le premier jour, nous avons tous déclarer nos préféences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réaliser un mld pour la base de donnée et un diagramme afin de structurer le site.  
-Après s'être concerté pour le visuel du site et l'architecture de nos dossiers nous avons commencé à travailler chacun dans nos parties respectives. 
-Afin de maintenir un rythme de travail élevé, nous utilisions github pour regrouper toutes nos avancés. Suite à ça, Nicolas à laissé Lilian finir les fonctions utiles à la base de donnée pour lier le back et le front. 
-Une semaine avant la date de rendu, nous avons fait une réunion afin de déterminer les fonctionnalités qu'il fallait finir à tous prix.
+&nbsp;&nbsp;&nbsp;&nbsp; Le premier jour, nous avons tous déclarer nos preferences au niveau du code. Lilian et Nicolas souhaitaient travailler sur le Backend, Matt sur l'analyseur de code et l'API Java, Jérémi s'occuperait de la messagerie et Lucas du Frontend. Nous avons ensuite réalisé un mld pour la base de donnée et un diagramme afin de structurer le site.  
+&nbsp;&nbsp;&nbsp;&nbsp; Après s'être concerté pour le visuel du site et l'architecture de nos dossiers, nous avons commencé à travailler chacun dans nos parties respectives. 
+Pour maintenir un rythme de travail élevé, nous utilisions github pour regrouper toutes nos avancées. Suite à ça, Nicolas a laissé Lilian finir les fonctions utiles à la base de donnée pour lier le back et le front. 
+Une semaine avant la date de rendu, nous avons fait une réunion pour déterminer les fonctionnalités qu'il fallait finir à tout prix.
 
 
 # III. Stockage des données
@@ -54,17 +54,17 @@ Ainsi, nous avons réalisé un modèle conceptuel de données (MCD) pour réalis
 ![MCD](images/CDM_db.jpeg){height=40%}
 
 &nbsp;&nbsp;&nbsp; Un utilisateur peut être soit un administrateur, un gestionnaire ou un étudiant (un participant).
-Un ensemble d'utilisateurs quelconques peut recevoir un message donné et un utilisateur peut aussi envoyer un message. On peut considérer qu'un étudiant puisse envoyer un message à un administrateur sous des conditions particulières (requête pour résoudre un bug, etc) qui peuvent être gérées lors du développement de l'application.
+Un ensemble d'utilisateurs quelconques peut recevoir un message donné et un utilisateur peut aussi envoyer un message. Nous pouvons considérer qu'un étudiant puisse envoyer un message à un administrateur sous des conditions particulières (requête pour résoudre un bug, etc) qui peuvent être gérées lors du développement de l'application.
 Un même groupe peut participer à plusieurs data challenge en même temps d'où la cardinalité dans le MCD.
 
-Cependant, tous les data challenges ont des sujets différents, des resources différentes et s'ils contiennent un quiz, un quiz différent les uns des autres. D'où la cardinalité (1, 1) du côté de la table DataChallenge.
-Enfin, on considère qu'un gestionnaire gère le data challenge complet (on aurait pu définir des gestionnaires qui gèrent seulement un ou des sujets d'un data challenge).
+&nbsp;&nbsp;&nbsp;&nbsp; Cependant, tous les data challenges ont des sujets différents, des resources différentes et s'ils contiennent un quiz, un quiz différent les uns des autres. D'où la cardinalité (1, 1) du côté de la table DataChallenge.
+Enfin, nous considérons qu'un gestionnaire gère le data challenge complet (nous aurions pu définir des gestionnaires qui gèrent seulement un ou des sujets d'un data challenge).
 
 ## &nbsp;&nbsp;&nbsp; 2. La base de données
 
 &nbsp;&nbsp;&nbsp; Nous avons choisi d'utiliser la base de données mySQL pour stocker les informations nécessaires.
 
-Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group puisque le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
+&nbsp;&nbsp;&nbsp;&nbsp; Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group parce que le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
 
 Ci-dessous une visualisation de la base de données utilisée :
 
@@ -81,7 +81,7 @@ Ci-dessous une visualisation de la base de données utilisée :
 
 - disconnect_db()
 
-Ces fonctions servent respectivement dans le cas général à se connecter à la base de données, vérifier si on est connecté et enfin se déconnecter.
+&nbsp;&nbsp;&nbsp;&nbsp; Ces fonctions servent respectivement dans le cas général à se connecter à la base de données, vérifier si nous sommes connecté et enfin se déconnecter.
 
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Récupération des données de la base de données
@@ -114,6 +114,10 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 &nbsp;&nbsp;&nbsp; Tous les types d'utilisateur ont accès à leur propre profil avec la possibilité de modifier certaines informations de base comme l'adresse e-mail, le mot de passe, le nom, etc.
 
+![Profil pour tous les utilisateurs (1)](images/profil_1.png){height=40%}
+
+![Profil pour tous les utilisateurs (2)](images/profil_2.png){height=40%}
+
 ## &nbsp;&nbsp;&nbsp; 2. Administration des utilisateurs {#adminUsers}
 
 ![Gestion et création d'un utilisateur](images/users/h_users.png){height=40%}
@@ -128,7 +132,7 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 ![Création d'un data event](images/dataC/createDataC.png){height=40%}
 
-&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description. La création et la suppresion (depuis le menu Data Challenges) peut seulement être effectuées par un administrateur
+&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description. La création et la suppression (depuis le menu Data Challenges) peut seulement être effectuées par un administrateur.
 
 ## &nbsp;&nbsp;&nbsp; 4. Gestion des data challenges
 
@@ -138,24 +142,43 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 ![Modification des informations d'un data event](images/dataC/alterDataC.png){height=40%}
 
-&nbsp;&nbsp;&nbsp; Les administrateurs peuvent modifier les informations de tous les data challenges alors que les gestionnaires peuvent seulement le faire pour les data challenges dont ils s'occupent.
+![Mon data challenge modifiable](images/gestionnaire/myDataCModif.png){height=40%}
+
+![Les autres data challenges non modifiables](images/gestionnaire/otherDataCNModif.png){height=40%}
+
+
+&nbsp;&nbsp;&nbsp; Cette page permet à un gestionnaire de visualiser toutes les équipes pour un data challenge donné.
+De plus, si nécessaire, il peut aussi envoyer un quiz (data battle) aux équipes et voir leurs membres.
 
 ![Liste des équipes et envoyer quiz](images/dataC/dataCGroupsQuiz.png){height=40%}
 
-&nbsp;&nbsp;&nbsp; Cette page permet à un manager de visualiser toutes les équipes pour un data challenge donné.
-De plus, si nécessaire il peut aussi envoyer un quiz (data battle) aux équipes et voir leurs membres.
+![Liste des équipes avec rendu](images/dataC/dataCGroupsQuiz2.png){height=40%}
+
+![Détails équipe](images/dataC/detailGroup.png){height=40%}
+
+![Rendu de l'équipe](images/dataC/renduGroup.png){height=40%}
+
+
+### &nbsp;&nbsp;&nbsp; b. Partie administrateur
+
+&nbsp;&nbsp;&nbsp; L'administrateur peut voir tous les data challenges, les modifier ainsi que les supprimer. Il peut en créer vu ici [3. Administration des data challenges](#adminData).
+
+![Tous les data challenges visibles et modifiables](images/admin/allDataC.png){height=40%}
+
 
 ## &nbsp;&nbsp;&nbsp; 5. La messagerie
-&nbsp;&nbsp;&nbsp; La liste de tout les personnes avec qui l'utilisateur a une conversation est affiché en colonne dans la partie gauche. Il est possible d'afficher la conversation en cour avec eux en cliquant dessus. La liste s'actualise automatiquement. Les messages sont stockés dans la base de données dans la table message. Chaque message possède un id, l'id de celui qui envoit le message, celui qui le recoit, le message, sa date et son heure qui sont générées automatiquement ainsi qu'une variable equivalente à un type boolean qui prend 0 ou 1 en fonction de si le message a été lu ou non.
 
+&nbsp;&nbsp;&nbsp; La liste de toutes les personnes avec qui l'utilisateur a une conversation est affiché en colonne dans la partie gauche. Il est possible d'afficher la conversation en cours avec eux en cliquant dessus. La liste s'actualise automatiquement. Les messages sont stockés dans la base de données dans la table message. Chaque message possède un id, l'id de celui qui envoi le message, celui qui le reçoit, le message, sa date et son heure qui sont générées automatiquement ainsi qu'une variable équivalente à un type boolean qui prend 0 ou 1 en fonction de si le message a été lu ou non.
+
+![Messagerie vue par le gestionnaire](images/gestionnaire/messagerie.png){height:40%}
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Contacter un nouvel utilisateur
-&nbsp;&nbsp;&nbsp; Le boutton nouveaux message sert a contacter un nouvel utilisateur. Il inclut dans la zone ou les messages apparaissent normalement un input ou l'utilisateur sélectionne la personne qu'il souhaite contacter. A partir de la saisie de l'utilisateur, le serveur est censé proposer les noms des personnes contactables en créant une datalist dynamique mais cette fonctionnalité ne marche pas très bien.
-Ensuite il suffit juste de rédiger le message et de l'envoyer pour finaliser la création d'un échange avec une nouvel personne.
+&nbsp;&nbsp;&nbsp; Le button *nouveau message* sert à contacter un nouvel utilisateur. Il inclut dans la zone où les messages apparaissent normalement un input ou l'utilisateur sélectionne la personne qu'il souhaite contacter. À partir de la saisie de l'utilisateur, le serveur est censé proposer les noms des personnes contactable en créant une datalist dynamique, mais cette fonctionnalité ne marche pas très bien.
+Ensuite, il suffit juste de rédiger le message et de l'envoyer pour finaliser la création d'un échange avec une nouvelle personne.
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Contacter les utilisateurs
-&nbsp;&nbsp;&nbsp; Comme dit precedement, pour parler avec une personne deja contacter, il suffit de selectionner l'utilisateur dans la liste à gauche. La liste de tous les messages va donc s'afficher dans leur ordres d'envoi. Ils sont egalement separer en deux parties, a gauche ceux recus et a droite ceux envoyer. 
-La messagerie est instantané, chaque seconde une fonction va rechercher les messages qui n'ont pas été vu. Cette méthode est efficace mais bien trop energivore et peu adaptable dans le cas d'un vrai site. Nous avons en revanche trouvé une méthode plus efficace: HTTP Long Polling. L'utilisateur envoit une requete au serveur et tant que le serveur ne detecte pas de changement il ne renvoit pas de requete la ou dans notre solution initial il la renvoit imediatement et ainsi de suite toutes les secondes. Par soucis de temps, nous n'avons pas adapter la methode HTTP Long Polling.
+&nbsp;&nbsp;&nbsp; Comme dit précédemment, pour parler avec une personne deja contacter, il suffit de sélectionner l'utilisateur dans la liste à gauche. La liste de tous les messages va donc s'afficher dans leurs ordres d'envoi. Ils sont également séparés en deux parties, à gauche ceux reçus et à droite ceux envoyer. 
+La messagerie est instantané, chaque seconde une fonction va rechercher les messages qui n'ont pas été vu. Cette méthode est efficace, mais bien trop énergivore et peu adaptable dans le cas d'un vrai site. Nous avons en revanche trouvé une méthode plus efficace : HTTP Long Polling. L'utilisateur envoi une requête au serveur et tant que le serveur ne détecte pas de changement, il ne renvoie pas de requête la où dans notre solution initiale, il la renvoie immédiatement et ainsi de suite toutes les secondes. Par soucis de temps, nous n'avons pas adapté la methode HTTP Long Polling.
 
 ## &nbsp;&nbsp;&nbsp; 6. Gestion des groupes
 
@@ -213,7 +236,7 @@ Nous n'avons qu'un seul getter qui est *getNb_lignes()* puisqu'il est le seul ut
 
 
 &nbsp;&nbsp;&nbsp; Suite à cela, nous avons créé plusieurs méthodes au sein de notre classe, certaines privées qui ne sont pas utiles pour l'utilisateur et d'autres publiques car essentielles pour ce dernier.
-Voici notre diagramme de classes que l'on avait à ce moment-là :
+Voici notre diagramme de classes que nous avions à ce moment-là :
 
 ![Diagramme de classes temporaire](images/java_uml_1.png){height=50%}
 
@@ -330,41 +353,33 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 
 ## &nbsp;&nbsp;&nbsp; 8. Autre
 
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. Choix du CSS
+
+&nbsp;&nbsp;&nbsp; Pour la page d'accueil, nous avons choisi de rester proche du style de la page du site IA Pau ainsi que pour les pages d'inscription et de connexion.
+Cependant, les pages d'accueil en tant qu'utilisateurs (admin, gestionnaire et student) connectés changent radicalement du style original. Souvent des zones à bordures arrondies où nous retrouvons les fonctionnalités principales, dans un fond de nature. Nous pouvons retrouver parfois le background du site IA Pau et son header qui reste le même quand il est utilisé.
+
+&nbsp;&nbsp;&nbsp;&nbsp; Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains boutons et lien.
+
 ![Header et underheader](images/header.png){height=80%}
 
 ![Cartes](images/card.png){height=80%}
 
-&nbsp;&nbsp;&nbsp; Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'accueil quand on est connecté.
+&nbsp;&nbsp;&nbsp;&nbsp; Nous avons choisi de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utilisateur, ainsi que l'accueil quand nous sommes connecté.
 
 # V. Problèmes rencontrés {#issues}
 
-&nbsp;&nbsp;&nbsp;&nbsp; Lors de ce projet nous avons fait face a plusieurs problèmes. Nous avons réussi an resoudre une bonne partie d'entre eux mais certain d'entre ont persistés.
+&nbsp;&nbsp;&nbsp;&nbsp; Lors de ce projet, nous avons fait face à plusieurs problèmes. Nous avons réussi an résoudre une bonne partie d'entre eux, mais certain d'entre ont persisté.
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. La messagerie
-&nbsp;&nbsp;&nbsp;&nbsp; Il y a eu plusieurs problèmes rencontrés dans la conception de la messagerie: 
-    -Les nouveaux messages s'envoient avec une requete AJAX mais lorsque l'utilisateur appuyait sur la touche "entre" lor form etait envoye et reactualise la page. Pour resoudre ce probleme nous avons force l'action de touche entre pour qu'elle simule l'appui du boutton envoyer.
-    -Comme dit precedemment lorsqu'on desire contacter un nouvel utilisateur il faut saisir son nom dans un input et des noms sont proposés en fonctions de ce que l'utilisateur saisit. Pour une raison inconnue cela ne marche pas. Pourtant si on saisie manuellement la datalist, la suggestion marche bien.
 
-<<<<<<< HEAD
-=======
-![header et underheader](images/header.png){height=80%}
-
-![Cartes](images/card.png){height=80%}
+&nbsp;&nbsp;&nbsp;&nbsp; Il y a eu plusieurs problèmes rencontrés dans la conception de la messagerie : 
 
 
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Choix du CSS
+- Les nouveaux messages s'envoient avec une requête AJAX mais lorsque l'utilisateur appuyait sur la touche "entre" lorsque le form était envoyé et réactualise la page. Pour résoudre ce problème, nous avons forcé l'action de touche entre pour qu'elle simule l'appui du bouton envoyer.
+- Comme dit précédemment lorsque nous désirons contacter un nouvel utilisateur, il faut saisir son nom dans un input et des noms sont proposés en fonctions de ce que l'utilisateur saisit. Pour une raison inconnue cela ne marche pas. Pourtant, si nous saisissons manuellement la datalist, la suggestion marche bien.
 
-&nbsp;&nbsp;&nbsp; Pour la page d'accueil, nous avons choisis de rester proche du style de la page du site IA Pau ainsi que pour les pages d'inscription et de connexion. 
-Cependant les pages d'accueil en tant qu'utilisateurs (admin, manager et student) connectés changent radicalement du style original. Souvent des zones à bordures arrondies où nous retrevons les fonctionnalités principales, dans un fond de nature. Nous pouvons retrouver parfois le background du site IA Pau et son header qui reste le même quand il est utilisé.
 
-Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains bouttons et lien. 
 
-![header et underheader](images/header.png){height=80%}
-
-![Cartes](images/card.png){height=80%}
-
-Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
->>>>>>> cc15324acf2cf13044bfdea308c602de8ee95674
 # VI. Bilan du projet
 
 &nbsp;&nbsp;&nbsp; Pendant ces trois semaines, nous avons travaillé en équipe sur un sujet des plus intéressants, qui a été un véritable défi pour nous en tant qu'étudiants. C'était la première fois que nous étions assignés à un groupe pour un projet, et malgré les difficultés rencontrées, nous avons fait preuve de patience et d'organisation pour mettre en place la plupart des fonctionnalités demandées. Nous avons réussi à développer la base de données, la gestion des data battles et challenges, les différentes parties utilisateur ainsi que le design.En conclusion, ce projet nous a non seulement permis de développer nos compétences techniques, mais il nous a également appris l'importance de la collaboration en équipe et de l'adaptabilité face aux défis. Nous sommes fiers du travail accompli et nous sommes confiants dans notre capacité à relever de futurs projets ambitieux.
