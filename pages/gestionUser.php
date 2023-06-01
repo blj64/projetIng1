@@ -83,6 +83,11 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                     }
 
                     foreach ($manager as $id => $value) {
+                        if (isset($idEvent[$value['id']])){
+                            $idEvent = $idEvent[$value['id']];
+                        } else {
+                            $idEvent = "";
+                        }
                         echo '
                             <div onclick="show(this)" class="user" id=' . $value['id'] . '>
                                 <input id=email type=hidden value="' . $value['email'] . '">
@@ -91,7 +96,7 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                                 <input id=company type=hidden value="' . $value['company'] . '">
                                 <input id=startDate type=hidden value="' . $value['startDate'] . '">
                                 <input id=endDate type=hidden value="' . $value['endDate'] . '">
-                                <input id=idEvent type=hidden value="' . $idEvent[$value['id']] . '">
+                                <input id=idEvent type=hidden value="' . $idEvent . '">
                                 <div class="profile-picture">
                                     <img id=img src="/asset/icon/profile.ico" alt="profile-picture">
                                 </div>
@@ -118,8 +123,12 @@ if (!roleUser($_SESSION['user']['id'], ADMIN)) {
                     $student = getAllStudents();
 
                     foreach ($student as $id => $value) {
-                        $groupName = getGroupById($value['idGroup'])[0]["name"];
-
+                        $group = (getGroupByStudentId($value['id']));
+                        if (isset($group[0]['name'])){
+                            $groupName = $group[0]['name'];
+                        } else {
+                            $groupName = "Aucun";
+                        }
                         echo '
                             <div onclick="show(this)" class="user" id=' . $value['id'] . '>
                                 <input id=mail type=hidden value="' . $value['email'] . '">

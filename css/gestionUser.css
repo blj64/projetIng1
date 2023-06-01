@@ -61,14 +61,13 @@ body {
     margin-left: 2%;
     border-radius: 75px;  
     color: white;
-    transition: 0.2s ease-in-out;  
+    transition: all 0.2s ease-in-out;  
     filter: brightness(0.8);
 }
 
 .banner button:hover {
     color: black;
     filter: brightness(1);
-    transition: 0.05s;
 }
 
 .banner button:active {

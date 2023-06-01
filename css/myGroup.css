@@ -29,7 +29,8 @@ body{
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 80%;
+    height: 100%;
+    margin-bottom: -75px;
     background-image: url('/asset/img/background.png') !important;
     background-size: cover;
 }
@@ -539,6 +540,31 @@ body{
     border-radius: 25px;
     background-color: rgb(17, 62, 77, 1);
 }
+
+.send-data2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 2%;
+    margin-bottom: 5%;
+    padding: 2%;
+    border-radius: 25px;
+    background-color: rgb(17, 62, 77, 1);
+}
+
+.send-data2:hover {
+    background-color: rgb(17, 62, 77, 0.8);
+    cursor: pointer;
+}
+
+.send-data2:active {
+    background-color: rgb(17, 62, 77, 0.5);
+}
+
+.send-data2 * {
+    cursor: pointer;
+}
+
 
 .send-data:hover {
     background-color: rgb(17, 62, 77, 0.8);

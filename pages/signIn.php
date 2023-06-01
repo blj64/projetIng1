@@ -9,7 +9,7 @@
     </head>
 <body>
     <?php 
-    //require_once '../php/header.php';
+    require_once '../php/header.php';
     
     if (SESSION_STATUS() == PHP_SESSION_NONE)
         session_start();
@@ -44,6 +44,6 @@
         </div>
     </div>
 
-    <?php //require_once '../php/footer.php'; ?>
+    <?php require_once '../php/footer.php'; ?>
 </body>
 </html>

@@ -67,6 +67,5 @@
 
     </div>
                 <script src="/js/challenge.js"></script>
-    <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
 </body>
 </html>

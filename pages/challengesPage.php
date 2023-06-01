@@ -5,7 +5,7 @@
     }
 
     if(!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])){
-        header('Location: pages/index.php?error=notConnected');
+        header('Location: /pages/index.php?error=notConnected');
         exit();
     }
 
@@ -101,7 +101,7 @@
                                 echo '<button id="edit" onclick="Sauvegarder('.$challenge['idDataC'].')">Sauvegarder les modifications</button>';
                         }        
                         else
-                        echo '<button>S\'inscrire</button>';
+                        echo '<button onclick="inscrire('.$_GET['id'].')" > S\'inscrire </button>';
                         ?>
                 </div>
             </div>

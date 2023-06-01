@@ -12,10 +12,6 @@
 <body>
     <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/php/header.php'; ?>
 
-    <div style="height: 10vh; background-color:blueviolet;">
-        <h1>I'm a header</h1>
-    </div>
-
     <div class="main">
         <div class="center">
             <nav class="menu">
@@ -23,16 +19,12 @@
             <div class="rest">
                 <div class="all-box">
                     <h1>Vous n'êtes dans aucune équipe actuellement !</h1>
-                    <a href="/pages/DataC.php">Rejoindre la compétition</a>
+                    <a href="/pages/challenges.php">Rejoindre la compétition</a>
                 </div>
             </div>
         </div>
     </div>
 
-    
-    <div style="height: 10vh; background-color:red;padding-top:0px;">
-        <h1>I'm a footer</h1>
-    </div>
 
     <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/php/footer.php'; ?>
 </body>
