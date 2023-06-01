@@ -5,7 +5,7 @@
     }
 
     if(!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])){
-        header('Location: pages/index.php?error=notConnected');
+        header('Location: /pages/index.php?error=notConnected');
         exit();
     }
 
