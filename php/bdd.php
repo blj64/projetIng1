@@ -1028,7 +1028,16 @@ function createUser($firstname, $lastname, $password, $phone, $email): int
         throw new Exception("Error createUser : " . $e->getMessage());
     }
 
-    return (true);
+
+    $request = "SELECT LAST_INSERT_ID() AS id";
+
+    try {
+        $result = request_db(DB_RETRIEVE, $request);
+    } catch (Exception $e) {
+        throw new Exception("Error createUser : " . $e->getMessage());
+    }
+
+    return ($result[0]['id']);
 }
 
 /* -------------------------------------------------------------------------- */
