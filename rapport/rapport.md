@@ -31,6 +31,8 @@ header-includes: |
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dans le cadre de notre première année du cycle ingénieur, il nous est proposé la réalisation d'un projet pour mettre en pratique nos connaissances.
 Ce projet consiste en la réalisation d'une application pour IA Pau permettant la création et l'administration de data challenges.
 
+Le dépôt git se trouve au lien suivant : [https://github.com/blj64/projetIng1.git](https://github.com/blj64/projetIng1.git)
+
 
 # II. Notre organisation
 
@@ -46,7 +48,7 @@ Ainsi, nous avons réalisé un modèle conceptuel de données (MCD) pour réalis
 
 ## &nbsp;&nbsp;&nbsp; 1. Le Modèle conceptuel de données
 
-![MCD](images/MCD_db.jpeg){height=40%}
+![MCD](images/CDM_db.jpeg){height=40%}
 
 &nbsp;&nbsp;&nbsp; Un utilisateur peut être soit un administrateur, un gestionnaire ou un étudiant (un participant).
 Un ensemble d'utilisateurs quelconques peut recevoir un message donné et un utilisateur peut aussi envoyer un message. On peut considérer qu'un étudiant puisse envoyer un message à un administrateur sous des conditions particulières (requête pour résoudre un bug, etc) qui peuvent être gérées lors du développement de l'application.
@@ -55,14 +57,11 @@ Un même groupe peut participer à plusieurs data challenge en même temps d'où
 Cependant, tous les data challenges ont des sujets différents, des resources différentes et s'ils contiennent un quiz, un quiz différent les uns des autres. D'où la cardinalité (1, 1) du côté de la table DataChallenge.
 Enfin, on considère qu'un gestionnaire gère le data challenge complet (on aurait pu définir des gestionnaires qui gèrent seulement un ou des sujets d'un data challenge).
 
-
 ## &nbsp;&nbsp;&nbsp; 2. La base de données
 
 &nbsp;&nbsp;&nbsp; Nous avons choisi d'utiliser la base de données mySQL pour stocker les informations nécessaires.
 
-
-
-Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group puique le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
+Nous avons pris parti d'inclure l'identifiant des data challenge en tant que clé étrangère dans les tables Quiz et Resource puisqu'elles sont uniques à chaque data challenge ainsi qu'à la table Group puisque le cas d'un même groupe qui participe à plusieurs data challenges en même temps reste un cas très particulier.
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Gestion de la connexion à la base de données
 
@@ -92,7 +91,23 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 &nbsp;&nbsp;&nbsp;&nbsp; Les fonctionnalités qui ont pu être implémentées dans l'application sont présentées dans cette partie.
 
-## &nbsp;&nbsp;&nbsp; 1. Administration des utilisateurs
+## &nbsp;&nbsp;&nbsp; 1. Compte utilisateur
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Inscription et connexion
+
+![Inscription](images/users/signUp.png){height=40%}
+
+&nbsp;&nbsp;&nbsp; Le menu d'inscription pour un utilisateur de type élève. Les gestionnaires sont quant à eux à ajouter manuellement par un administrateur (voir : [2. Administration des utilisateurs](#adminUsers)).
+
+![Connexion](images/users/signIn.png){height=40%}
+
+&nbsp;&nbsp;&nbsp; Tous les utilisateurs peuvent se connecter depuis ce menu. Une redirection vers la page de connexion depuis la page d'inscription et inversement est implémentée.
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Profil
+
+&nbsp;&nbsp;&nbsp; Tous les types d'utilisateur ont accès à leur propre profil avec la possibilité de modifier certaines informations de base comme l'adresse e-mail, le mot de passe, le nom, etc.
+
+## &nbsp;&nbsp;&nbsp; 2. Administration des utilisateurs {#adminUsers}
 
 ![Gestion et création d'un utilisateur](images/users/h_users.png){height=40%}
 
@@ -100,30 +115,37 @@ Ces fonctions dans bdd.php sont identifiables par un "alter" au début du nom de
 
 ![Modification des informations d'un utilisateur](images/users/changeUser.png){height=30%}
 
-&nbsp;&nbsp;&nbsp; La modification des informations d'un utilisateur, le supprimer ainsi que la possibilité de créer un gestionnaire à partir d'un utilisateur. À noter que les données d'un administrateur peuvent seulement être modifiées à partir de ce menu. En d'autres termes la suppression d'un administrateur n'y est pas possible.
+&nbsp;&nbsp;&nbsp; La modification des informations d'un utilisateur, le supprimer ainsi que la possibilité de créer un gestionnaire à partir d'un utilisateur. À noter qu'un administrateur peut tout de même être supprimé depuis cette interface.
 
-## &nbsp;&nbsp;&nbsp; 2. Administration des data challenges
+## &nbsp;&nbsp;&nbsp; 3. Administration des data challenges
 
 ![Création d'un data event](images/dataC/createDataC.png){height=40%}
 
-&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description.
+&nbsp;&nbsp;&nbsp; Le menu de création d'un data challenge avec ses informations de base. L'ajout de sujets est possible dans la limite de 3 sujets avec chacun son nom et sa description. La création et la suppresion (depuis le menu Data Challenges) peut seulement être effectuées par un administrateur
 
-## &nbsp;&nbsp;&nbsp; 3. Gestion des data challenges
-333
+## &nbsp;&nbsp;&nbsp; 4. Gestion des data challenges
 
-## &nbsp;&nbsp;&nbsp; 4. La messagerie
-444
+&nbsp;&nbsp;&nbsp; La liste de tous les data challenges sont visibles dans le menu Data Challenges. Les administrateurs peuvent modifier les informations de tous les data challenges alors que les gestionnaires peuvent seulement le faire pour les data challenges dont ils s'occupent.
 
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. La messagerie entre utilisateurs
-aaa
+(TBA afficher l'id d'un DataC pour l'admin)
+333   (TBA when updated)
+      (Pour l'instant on a : le menu du suivi des dataC associés à un manager, les équipes pour ce dataC et la possibilité d'envoyer un quiz (form))
 
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. La messagerie pour un gestionnaire
-bbb
 
-## &nbsp;&nbsp;&nbsp; 5. Gestion des groupes
-555
+(update image)
 
-## &nbsp;&nbsp;&nbsp; 6. L'API en Java
+![Liste des équipes et envoyer quiz](images/dataC/dataCGroupsQuiz.png){height=40%}
+
+(Attention non implémentée) (changer de partie si nécessaire) &nbsp;&nbsp;&nbsp; Cette page permet à un manager de visualiser toutes les équipes pour un data challenge donné.
+De plus, si nécessaire il peut aussi envoyer un quiz aux équipes et voir leurs membres.
+
+## &nbsp;&nbsp;&nbsp; 5. La messagerie 
+444   (TBA)
+
+## &nbsp;&nbsp;&nbsp; 6. Gestion des groupes
+555   (maybe available later ?)
+
+## &nbsp;&nbsp;&nbsp; 7. L'API en Java
 
 &nbsp;&nbsp;&nbsp; Dans cette partie, il nous était demandé de réaliser un analyseur de code source Python en Java, pour ensuite créer un web service REST sous forme d'API en Java.
 Ainsi, nous allons expliquer comment nous nous sommes débrouillés pour répondre à cette demande en détaillant les étapes.
@@ -277,6 +299,16 @@ Voilà à quoi ressemble la visualisation des résultats d'un fichier Python (le
 
 ![Visualisation des résultats 3](images/graph_result_3.png){height=80%}
 
+
+
+
 # V. Les fonctionnalités qui restent à implémenter
 Another paragraph
-    
+
+(TBA)
+
+# VI. Bilan du projet
+
+(TBA)
+
+
