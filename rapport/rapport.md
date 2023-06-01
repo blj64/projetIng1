@@ -317,6 +317,10 @@ Cependant les pages d'accueil en tant qu'utilisateurs (admin, manager et student
 
 Au niveau des animations, nous pouvons retrouver des pop ups comme dans le header, ou des changements de couleurs et de tailles pour les cartes dans le menu de l'accueil, les liens vers les réseaux sociaux ou certains bouttons et lien. 
 
+![header et underheader](images/header.png){height=80%}
+
+![Cartes](images/card.png){height=80%}
+
 Nous avons choisis de rester sobres dans les pages pour faciliter l'utilisation à l'utilisateur. Le header et underheader changent en fonction de l'utlisateur, ainsi que l'acceuil quand on est connecté.
 
 
